@@ -27,6 +27,7 @@ entity HealthCentreCategory {
 }
 entity HealthCentre {
 	name String
+    logo ImageBlob
 }
 relationship OneToOne {
 	HealthCentre{address} to Address
@@ -36,6 +37,7 @@ relationship ManyToOne {
 }
 entity Pharmacy {
 	name String
+    logo ImageBlob
 }
 relationship OneToOne {
 	Pharmacy{address} to Address
@@ -72,6 +74,7 @@ entity Patient {
 	civility Civility
     surname String
     firstname String
+    picture ImageBlob
 }
 relationship OneToOne {
 	Patient{address} to Address

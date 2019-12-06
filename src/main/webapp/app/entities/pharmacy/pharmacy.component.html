@@ -35,6 +35,7 @@
             <tr>
             <th scope="col" ><span jhiTranslate="global.field.id">ID</span></th>
             <th scope="col" ><span jhiTranslate="yikondiApp.pharmacy.name">Name</span></th>
+            <th scope="col" ><span jhiTranslate="yikondiApp.pharmacy.logo">Logo</span></th>
             <th scope="col" ><span jhiTranslate="yikondiApp.pharmacy.address">Address</span></th>
             <th scope="col"></th>
             </tr>
@@ -43,6 +44,12 @@
             <tr *ngFor="let pharmacy of pharmacies ;trackBy: trackId">
                 <td><a [routerLink]="['/pharmacy', pharmacy.id, 'view' ]">{{pharmacy.id}}</a></td>
                 <td>{{pharmacy.name}}</td>
+                <td>
+                    <a *ngIf="pharmacy.logo" (click)="openFile(pharmacy.logoContentType, pharmacy.logo)">
+                        <img [src]="'data:' + pharmacy.logoContentType + ';base64,' + pharmacy.logo" style="max-height: 30px;" alt="pharmacy image"/>
+                    </a>
+                    <span *ngIf="pharmacy.logo">{{pharmacy.logoContentType}}, {{byteSize(pharmacy.logo)}}</span>
+                </td>
                 <td>
                     <div *ngIf="pharmacy.address">
                         <a [routerLink]="['/address', pharmacy.address?.id, 'view' ]" >{{pharmacy.address?.id}}</a>

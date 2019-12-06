@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { JhiDataUtils } from 'ng-jhipster';
 
 import { IHealthCentre } from 'app/shared/model/health-centre.model';
 
@@ -10,7 +11,7 @@ import { IHealthCentre } from 'app/shared/model/health-centre.model';
 export class HealthCentreDetailComponent implements OnInit {
   healthCentre: IHealthCentre;
 
-  constructor(protected activatedRoute: ActivatedRoute) {}
+  constructor(protected dataUtils: JhiDataUtils, protected activatedRoute: ActivatedRoute) {}
 
   ngOnInit() {
     this.activatedRoute.data.subscribe(({ healthCentre }) => {
@@ -18,6 +19,13 @@ export class HealthCentreDetailComponent implements OnInit {
     });
   }
 
+  byteSize(field) {
+    return this.dataUtils.byteSize(field);
+  }
+
+  openFile(contentType, field) {
+    return this.dataUtils.openFile(contentType, field);
+  }
   previousState() {
     window.history.back();
   }

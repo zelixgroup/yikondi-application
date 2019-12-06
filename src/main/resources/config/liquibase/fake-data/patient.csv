@@ -1,11 +1,11 @@
-id;civility;surname;firstname
-1;MISTER;Gorgeous Money Market Account;Danish Krone parse
-2;MADAM;Designer;mindshare
-3;MADAM;generating SDD bypassing;Algerian Dinar Fantastic Fresh Salad
-4;MISS;PCI SAS;Interactions
-5;MISS;mesh system Triple-buffered;Cotton
-6;MISS;hack;Fresh payment synthesize
-7;MISS;Refined;Mandatory Assistant
-8;MISS;success;Tuvalu
-9;MISTER;Tuna magenta;Wells
-10;MADAM;Product;Brand Regional Court
+id;civility;surname;firstname;picture;picture_content_type
+1;MISTER;Gorgeous Money Market Account;Danish Krone parse;../fake-data/blob/hipster.png;image/png
+2;MADAM;Designer;mindshare;../fake-data/blob/hipster.png;image/png
+3;MADAM;generating SDD bypassing;Algerian Dinar Fantastic Fresh Salad;../fake-data/blob/hipster.png;image/png
+4;MISS;PCI SAS;Interactions;../fake-data/blob/hipster.png;image/png
+5;MISS;mesh system Triple-buffered;Cotton;../fake-data/blob/hipster.png;image/png
+6;MISS;hack;Fresh payment synthesize;../fake-data/blob/hipster.png;image/png
+7;MISS;Refined;Mandatory Assistant;../fake-data/blob/hipster.png;image/png
+8;MISS;success;Tuvalu;../fake-data/blob/hipster.png;image/png
+9;MISTER;Tuna magenta;Wells;../fake-data/blob/hipster.png;image/png
+10;MADAM;Product;Brand Regional Court;../fake-data/blob/hipster.png;image/png

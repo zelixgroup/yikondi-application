@@ -17,6 +17,15 @@
                 <dd>
                     <span>{{patient.firstname}}</span>
                 </dd>
+                <dt><span jhiTranslate="yikondiApp.patient.picture">Picture</span></dt>
+                <dd>
+                    <div *ngIf="patient.picture">
+                        <a (click)="openFile(patient.pictureContentType, patient.picture)">
+                            <img [src]="'data:' + patient.pictureContentType + ';base64,' + patient.picture" style="max-width: 100%;" alt="patient image"/>
+                        </a>
+                        {{patient.pictureContentType}}, {{byteSize(patient.picture)}}
+                    </div>
+                </dd>
                 <dt><span jhiTranslate="yikondiApp.patient.address">Address</span></dt>
                 <dd>
                     <div *ngIf="patient.address">

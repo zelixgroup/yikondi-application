@@ -9,6 +9,15 @@
                 <dd>
                     <span>{{healthCentre.name}}</span>
                 </dd>
+                <dt><span jhiTranslate="yikondiApp.healthCentre.logo">Logo</span></dt>
+                <dd>
+                    <div *ngIf="healthCentre.logo">
+                        <a (click)="openFile(healthCentre.logoContentType, healthCentre.logo)">
+                            <img [src]="'data:' + healthCentre.logoContentType + ';base64,' + healthCentre.logo" style="max-width: 100%;" alt="healthCentre image"/>
+                        </a>
+                        {{healthCentre.logoContentType}}, {{byteSize(healthCentre.logo)}}
+                    </div>
+                </dd>
                 <dt><span jhiTranslate="yikondiApp.healthCentre.address">Address</span></dt>
                 <dd>
                     <div *ngIf="healthCentre.address">

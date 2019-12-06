@@ -21,7 +21,7 @@ describe('Service Tests', () => {
       service = injector.get(PatientService);
       httpMock = injector.get(HttpTestingController);
 
-      elemDefault = new Patient(0, Civility.MISTER, 'AAAAAAA', 'AAAAAAA');
+      elemDefault = new Patient(0, Civility.MISTER, 'AAAAAAA', 'AAAAAAA', 'image/png', 'AAAAAAA');
     });
 
     describe('Service methods', () => {
@@ -59,7 +59,8 @@ describe('Service Tests', () => {
           {
             civility: 'BBBBBB',
             surname: 'BBBBBB',
-            firstname: 'BBBBBB'
+            firstname: 'BBBBBB',
+            picture: 'BBBBBB'
           },
           elemDefault
         );
@@ -79,7 +80,8 @@ describe('Service Tests', () => {
           {
             civility: 'BBBBBB',
             surname: 'BBBBBB',
-            firstname: 'BBBBBB'
+            firstname: 'BBBBBB',
+            picture: 'BBBBBB'
           },
           elemDefault
         );

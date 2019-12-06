@@ -1,11 +1,11 @@
-id;name
-1;portal calculating Metal
-2;real-time discrete redundant
-3;Synergistic Personal Loan Account Sleek
-4;Borders
-5;olive Handcrafted Cotton Bacon Unbranded Fresh Pants
-6;incubate
-7;interfaces
-8;Garden Dale Wallis and Futuna
-9;generating
-10;Computers Small Fresh Gloves back-end
+id;name;logo;logo_content_type
+1;portal calculating Metal;../fake-data/blob/hipster.png;image/png
+2;real-time discrete redundant;../fake-data/blob/hipster.png;image/png
+3;Synergistic Personal Loan Account Sleek;../fake-data/blob/hipster.png;image/png
+4;Borders;../fake-data/blob/hipster.png;image/png
+5;olive Handcrafted Cotton Bacon Unbranded Fresh Pants;../fake-data/blob/hipster.png;image/png
+6;incubate;../fake-data/blob/hipster.png;image/png
+7;interfaces;../fake-data/blob/hipster.png;image/png
+8;Garden Dale Wallis and Futuna;../fake-data/blob/hipster.png;image/png
+9;generating;../fake-data/blob/hipster.png;image/png
+10;Computers Small Fresh Gloves back-end;../fake-data/blob/hipster.png;image/png

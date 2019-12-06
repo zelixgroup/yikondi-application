@@ -1,11 +1,11 @@
-id;name
-1;interface
-2;compress lavender Investment Account
-3;backing up
-4;Iran
-5;Philippine Peso Metal
-6;Strategist
-7;card Licensed Cotton Ball
-8;mindshare Gorgeous
-9;Chips
-10;navigating
+id;name;logo;logo_content_type
+1;interface;../fake-data/blob/hipster.png;image/png
+2;compress lavender Investment Account;../fake-data/blob/hipster.png;image/png
+3;backing up;../fake-data/blob/hipster.png;image/png
+4;Iran;../fake-data/blob/hipster.png;image/png
+5;Philippine Peso Metal;../fake-data/blob/hipster.png;image/png
+6;Strategist;../fake-data/blob/hipster.png;image/png
+7;card Licensed Cotton Ball;../fake-data/blob/hipster.png;image/png
+8;mindshare Gorgeous;../fake-data/blob/hipster.png;image/png
+9;Chips;../fake-data/blob/hipster.png;image/png
+10;navigating;../fake-data/blob/hipster.png;image/png

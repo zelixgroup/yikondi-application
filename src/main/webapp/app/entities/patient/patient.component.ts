@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { JhiEventManager } from 'ng-jhipster';
+import { JhiEventManager, JhiDataUtils } from 'ng-jhipster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { IPatient } from 'app/shared/model/patient.model';
@@ -20,6 +20,7 @@ export class PatientComponent implements OnInit, OnDestroy {
 
   constructor(
     protected patientService: PatientService,
+    protected dataUtils: JhiDataUtils,
     protected eventManager: JhiEventManager,
     protected modalService: NgbModal,
     protected activatedRoute: ActivatedRoute
@@ -69,6 +70,14 @@ export class PatientComponent implements OnInit, OnDestroy {
 
   trackId(index: number, item: IPatient) {
     return item.id;
+  }
+
+  byteSize(field) {
+    return this.dataUtils.byteSize(field);
+  }
+
+  openFile(contentType, field) {
+    return this.dataUtils.openFile(contentType, field);
   }
 
   registerChangeInPatients() {

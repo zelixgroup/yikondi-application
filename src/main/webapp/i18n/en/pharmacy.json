@@ -18,6 +18,7 @@
         "title": "Pharmacy"
       },
       "name": "Name",
+      "logo": "Logo",
       "address": "Address"
     }
   }

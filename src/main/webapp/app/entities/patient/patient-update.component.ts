@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { JhiAlertService } from 'ng-jhipster';
+import { JhiAlertService, JhiDataUtils } from 'ng-jhipster';
 import { IPatient, Patient } from 'app/shared/model/patient.model';
 import { PatientService } from './patient.service';
 import { IAddress } from 'app/shared/model/address.model';
@@ -29,15 +29,19 @@ export class PatientUpdateComponent implements OnInit {
     civility: [],
     surname: [],
     firstname: [],
+    picture: [],
+    pictureContentType: [],
     address: [],
     correspondingUser: []
   });
 
   constructor(
+    protected dataUtils: JhiDataUtils,
     protected jhiAlertService: JhiAlertService,
     protected patientService: PatientService,
     protected addressService: AddressService,
     protected userService: UserService,
+    protected elementRef: ElementRef,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
   ) {}
@@ -73,9 +77,54 @@ export class PatientUpdateComponent implements OnInit {
       civility: patient.civility,
       surname: patient.surname,
       firstname: patient.firstname,
+      picture: patient.picture,
+      pictureContentType: patient.pictureContentType,
       address: patient.address,
       correspondingUser: patient.correspondingUser
     });
+  }
+
+  byteSize(field) {
+    return this.dataUtils.byteSize(field);
+  }
+
+  openFile(contentType, field) {
+    return this.dataUtils.openFile(contentType, field);
+  }
+
+  setFileData(event, field: string, isImage) {
+    return new Promise((resolve, reject) => {
+      if (event && event.target && event.target.files && event.target.files[0]) {
+        const file: File = event.target.files[0];
+        if (isImage && !file.type.startsWith('image/')) {
+          reject(`File was expected to be an image but was found to be ${file.type}`);
+        } else {
+          const filedContentType: string = field + 'ContentType';
+          this.dataUtils.toBase64(file, base64Data => {
+            this.editForm.patchValue({
+              [field]: base64Data,
+              [filedContentType]: file.type
+            });
+          });
+        }
+      } else {
+        reject(`Base64 data was not set as file could not be extracted from passed parameter: ${event}`);
+      }
+    }).then(
+      // eslint-disable-next-line no-console
+      () => console.log('blob added'), // success
+      this.onError
+    );
+  }
+
+  clearInputImage(field: string, fieldContentType: string, idInput: string) {
+    this.editForm.patchValue({
+      [field]: null,
+      [fieldContentType]: null
+    });
+    if (this.elementRef && idInput && this.elementRef.nativeElement.querySelector('#' + idInput)) {
+      this.elementRef.nativeElement.querySelector('#' + idInput).value = null;
+    }
   }
 
   previousState() {
@@ -99,6 +148,8 @@ export class PatientUpdateComponent implements OnInit {
       civility: this.editForm.get(['civility']).value,
       surname: this.editForm.get(['surname']).value,
       firstname: this.editForm.get(['firstname']).value,
+      pictureContentType: this.editForm.get(['pictureContentType']).value,
+      picture: this.editForm.get(['picture']).value,
       address: this.editForm.get(['address']).value,
       correspondingUser: this.editForm.get(['correspondingUser']).value
     };
