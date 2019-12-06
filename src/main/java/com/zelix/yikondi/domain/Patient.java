@@ -36,6 +36,13 @@ public class Patient implements Serializable {
     @Column(name = "firstname")
     private String firstname;
 
+    @Lob
+    @Column(name = "picture")
+    private byte[] picture;
+
+    @Column(name = "picture_content_type")
+    private String pictureContentType;
+
     @OneToOne
     @JoinColumn(unique = true)
     private Address address;
@@ -92,6 +99,32 @@ public class Patient implements Serializable {
         this.firstname = firstname;
     }
 
+    public byte[] getPicture() {
+        return picture;
+    }
+
+    public Patient picture(byte[] picture) {
+        this.picture = picture;
+        return this;
+    }
+
+    public void setPicture(byte[] picture) {
+        this.picture = picture;
+    }
+
+    public String getPictureContentType() {
+        return pictureContentType;
+    }
+
+    public Patient pictureContentType(String pictureContentType) {
+        this.pictureContentType = pictureContentType;
+        return this;
+    }
+
+    public void setPictureContentType(String pictureContentType) {
+        this.pictureContentType = pictureContentType;
+    }
+
     public Address getAddress() {
         return address;
     }
@@ -142,6 +175,8 @@ public class Patient implements Serializable {
             ", civility='" + getCivility() + "'" +
             ", surname='" + getSurname() + "'" +
             ", firstname='" + getFirstname() + "'" +
+            ", picture='" + getPicture() + "'" +
+            ", pictureContentType='" + getPictureContentType() + "'" +
             "}";
     }
 }

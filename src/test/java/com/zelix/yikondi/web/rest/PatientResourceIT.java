@@ -18,6 +18,7 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Base64Utils;
 import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
@@ -47,6 +48,11 @@ public class PatientResourceIT {
 
     private static final String DEFAULT_FIRSTNAME = "AAAAAAAAAA";
     private static final String UPDATED_FIRSTNAME = "BBBBBBBBBB";
+
+    private static final byte[] DEFAULT_PICTURE = TestUtil.createByteArray(1, "0");
+    private static final byte[] UPDATED_PICTURE = TestUtil.createByteArray(1, "1");
+    private static final String DEFAULT_PICTURE_CONTENT_TYPE = "image/jpg";
+    private static final String UPDATED_PICTURE_CONTENT_TYPE = "image/png";
 
     @Autowired
     private PatientRepository patientRepository;
@@ -103,7 +109,9 @@ public class PatientResourceIT {
         Patient patient = new Patient()
             .civility(DEFAULT_CIVILITY)
             .surname(DEFAULT_SURNAME)
-            .firstname(DEFAULT_FIRSTNAME);
+            .firstname(DEFAULT_FIRSTNAME)
+            .picture(DEFAULT_PICTURE)
+            .pictureContentType(DEFAULT_PICTURE_CONTENT_TYPE);
         return patient;
     }
     /**
@@ -116,7 +124,9 @@ public class PatientResourceIT {
         Patient patient = new Patient()
             .civility(UPDATED_CIVILITY)
             .surname(UPDATED_SURNAME)
-            .firstname(UPDATED_FIRSTNAME);
+            .firstname(UPDATED_FIRSTNAME)
+            .picture(UPDATED_PICTURE)
+            .pictureContentType(UPDATED_PICTURE_CONTENT_TYPE);
         return patient;
     }
 
@@ -143,6 +153,8 @@ public class PatientResourceIT {
         assertThat(testPatient.getCivility()).isEqualTo(DEFAULT_CIVILITY);
         assertThat(testPatient.getSurname()).isEqualTo(DEFAULT_SURNAME);
         assertThat(testPatient.getFirstname()).isEqualTo(DEFAULT_FIRSTNAME);
+        assertThat(testPatient.getPicture()).isEqualTo(DEFAULT_PICTURE);
+        assertThat(testPatient.getPictureContentType()).isEqualTo(DEFAULT_PICTURE_CONTENT_TYPE);
 
         // Validate the Patient in Elasticsearch
         verify(mockPatientSearchRepository, times(1)).save(testPatient);
@@ -184,7 +196,9 @@ public class PatientResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(patient.getId().intValue())))
             .andExpect(jsonPath("$.[*].civility").value(hasItem(DEFAULT_CIVILITY.toString())))
             .andExpect(jsonPath("$.[*].surname").value(hasItem(DEFAULT_SURNAME)))
-            .andExpect(jsonPath("$.[*].firstname").value(hasItem(DEFAULT_FIRSTNAME)));
+            .andExpect(jsonPath("$.[*].firstname").value(hasItem(DEFAULT_FIRSTNAME)))
+            .andExpect(jsonPath("$.[*].pictureContentType").value(hasItem(DEFAULT_PICTURE_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].picture").value(hasItem(Base64Utils.encodeToString(DEFAULT_PICTURE))));
     }
     
     @Test
@@ -200,7 +214,9 @@ public class PatientResourceIT {
             .andExpect(jsonPath("$.id").value(patient.getId().intValue()))
             .andExpect(jsonPath("$.civility").value(DEFAULT_CIVILITY.toString()))
             .andExpect(jsonPath("$.surname").value(DEFAULT_SURNAME))
-            .andExpect(jsonPath("$.firstname").value(DEFAULT_FIRSTNAME));
+            .andExpect(jsonPath("$.firstname").value(DEFAULT_FIRSTNAME))
+            .andExpect(jsonPath("$.pictureContentType").value(DEFAULT_PICTURE_CONTENT_TYPE))
+            .andExpect(jsonPath("$.picture").value(Base64Utils.encodeToString(DEFAULT_PICTURE)));
     }
 
     @Test
@@ -228,7 +244,9 @@ public class PatientResourceIT {
         updatedPatient
             .civility(UPDATED_CIVILITY)
             .surname(UPDATED_SURNAME)
-            .firstname(UPDATED_FIRSTNAME);
+            .firstname(UPDATED_FIRSTNAME)
+            .picture(UPDATED_PICTURE)
+            .pictureContentType(UPDATED_PICTURE_CONTENT_TYPE);
 
         restPatientMockMvc.perform(put("/api/patients")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -242,6 +260,8 @@ public class PatientResourceIT {
         assertThat(testPatient.getCivility()).isEqualTo(UPDATED_CIVILITY);
         assertThat(testPatient.getSurname()).isEqualTo(UPDATED_SURNAME);
         assertThat(testPatient.getFirstname()).isEqualTo(UPDATED_FIRSTNAME);
+        assertThat(testPatient.getPicture()).isEqualTo(UPDATED_PICTURE);
+        assertThat(testPatient.getPictureContentType()).isEqualTo(UPDATED_PICTURE_CONTENT_TYPE);
 
         // Validate the Patient in Elasticsearch
         verify(mockPatientSearchRepository, times(1)).save(testPatient);
@@ -303,6 +323,8 @@ public class PatientResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(patient.getId().intValue())))
             .andExpect(jsonPath("$.[*].civility").value(hasItem(DEFAULT_CIVILITY.toString())))
             .andExpect(jsonPath("$.[*].surname").value(hasItem(DEFAULT_SURNAME)))
-            .andExpect(jsonPath("$.[*].firstname").value(hasItem(DEFAULT_FIRSTNAME)));
+            .andExpect(jsonPath("$.[*].firstname").value(hasItem(DEFAULT_FIRSTNAME)))
+            .andExpect(jsonPath("$.[*].pictureContentType").value(hasItem(DEFAULT_PICTURE_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].picture").value(hasItem(Base64Utils.encodeToString(DEFAULT_PICTURE))));
     }
 }

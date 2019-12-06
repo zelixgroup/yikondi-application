@@ -18,6 +18,7 @@
         "title": "Health Centre"
       },
       "name": "Name",
+      "logo": "Logo",
       "address": "Address",
       "category": "Category"
     }

@@ -18,6 +18,7 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Base64Utils;
 import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
@@ -40,6 +41,11 @@ public class HealthCentreResourceIT {
 
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
+
+    private static final byte[] DEFAULT_LOGO = TestUtil.createByteArray(1, "0");
+    private static final byte[] UPDATED_LOGO = TestUtil.createByteArray(1, "1");
+    private static final String DEFAULT_LOGO_CONTENT_TYPE = "image/jpg";
+    private static final String UPDATED_LOGO_CONTENT_TYPE = "image/png";
 
     @Autowired
     private HealthCentreRepository healthCentreRepository;
@@ -94,7 +100,9 @@ public class HealthCentreResourceIT {
      */
     public static HealthCentre createEntity(EntityManager em) {
         HealthCentre healthCentre = new HealthCentre()
-            .name(DEFAULT_NAME);
+            .name(DEFAULT_NAME)
+            .logo(DEFAULT_LOGO)
+            .logoContentType(DEFAULT_LOGO_CONTENT_TYPE);
         return healthCentre;
     }
     /**
@@ -105,7 +113,9 @@ public class HealthCentreResourceIT {
      */
     public static HealthCentre createUpdatedEntity(EntityManager em) {
         HealthCentre healthCentre = new HealthCentre()
-            .name(UPDATED_NAME);
+            .name(UPDATED_NAME)
+            .logo(UPDATED_LOGO)
+            .logoContentType(UPDATED_LOGO_CONTENT_TYPE);
         return healthCentre;
     }
 
@@ -130,6 +140,8 @@ public class HealthCentreResourceIT {
         assertThat(healthCentreList).hasSize(databaseSizeBeforeCreate + 1);
         HealthCentre testHealthCentre = healthCentreList.get(healthCentreList.size() - 1);
         assertThat(testHealthCentre.getName()).isEqualTo(DEFAULT_NAME);
+        assertThat(testHealthCentre.getLogo()).isEqualTo(DEFAULT_LOGO);
+        assertThat(testHealthCentre.getLogoContentType()).isEqualTo(DEFAULT_LOGO_CONTENT_TYPE);
 
         // Validate the HealthCentre in Elasticsearch
         verify(mockHealthCentreSearchRepository, times(1)).save(testHealthCentre);
@@ -169,7 +181,9 @@ public class HealthCentreResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(healthCentre.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)));
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
+            .andExpect(jsonPath("$.[*].logoContentType").value(hasItem(DEFAULT_LOGO_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].logo").value(hasItem(Base64Utils.encodeToString(DEFAULT_LOGO))));
     }
     
     @Test
@@ -183,7 +197,9 @@ public class HealthCentreResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(healthCentre.getId().intValue()))
-            .andExpect(jsonPath("$.name").value(DEFAULT_NAME));
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
+            .andExpect(jsonPath("$.logoContentType").value(DEFAULT_LOGO_CONTENT_TYPE))
+            .andExpect(jsonPath("$.logo").value(Base64Utils.encodeToString(DEFAULT_LOGO)));
     }
 
     @Test
@@ -209,7 +225,9 @@ public class HealthCentreResourceIT {
         // Disconnect from session so that the updates on updatedHealthCentre are not directly saved in db
         em.detach(updatedHealthCentre);
         updatedHealthCentre
-            .name(UPDATED_NAME);
+            .name(UPDATED_NAME)
+            .logo(UPDATED_LOGO)
+            .logoContentType(UPDATED_LOGO_CONTENT_TYPE);
 
         restHealthCentreMockMvc.perform(put("/api/health-centres")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -221,6 +239,8 @@ public class HealthCentreResourceIT {
         assertThat(healthCentreList).hasSize(databaseSizeBeforeUpdate);
         HealthCentre testHealthCentre = healthCentreList.get(healthCentreList.size() - 1);
         assertThat(testHealthCentre.getName()).isEqualTo(UPDATED_NAME);
+        assertThat(testHealthCentre.getLogo()).isEqualTo(UPDATED_LOGO);
+        assertThat(testHealthCentre.getLogoContentType()).isEqualTo(UPDATED_LOGO_CONTENT_TYPE);
 
         // Validate the HealthCentre in Elasticsearch
         verify(mockHealthCentreSearchRepository, times(1)).save(testHealthCentre);
@@ -280,6 +300,8 @@ public class HealthCentreResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(healthCentre.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)));
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
+            .andExpect(jsonPath("$.[*].logoContentType").value(hasItem(DEFAULT_LOGO_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].logo").value(hasItem(Base64Utils.encodeToString(DEFAULT_LOGO))));
     }
 }

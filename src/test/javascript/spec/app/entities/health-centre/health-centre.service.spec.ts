@@ -20,7 +20,7 @@ describe('Service Tests', () => {
       service = injector.get(HealthCentreService);
       httpMock = injector.get(HttpTestingController);
 
-      elemDefault = new HealthCentre(0, 'AAAAAAA');
+      elemDefault = new HealthCentre(0, 'AAAAAAA', 'image/png', 'AAAAAAA');
     });
 
     describe('Service methods', () => {
@@ -56,7 +56,8 @@ describe('Service Tests', () => {
       it('should update a HealthCentre', () => {
         const returnedFromService = Object.assign(
           {
-            name: 'BBBBBB'
+            name: 'BBBBBB',
+            logo: 'BBBBBB'
           },
           elemDefault
         );
@@ -74,7 +75,8 @@ describe('Service Tests', () => {
       it('should return a list of HealthCentre', () => {
         const returnedFromService = Object.assign(
           {
-            name: 'BBBBBB'
+            name: 'BBBBBB',
+            logo: 'BBBBBB'
           },
           elemDefault
         );

@@ -20,6 +20,7 @@
       "civility": "Civility",
       "surname": "Surname",
       "firstname": "Firstname",
+      "picture": "Picture",
       "address": "Address",
       "correspondingUser": "Corresponding User"
     }

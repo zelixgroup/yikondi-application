@@ -20,7 +20,7 @@ describe('Service Tests', () => {
       service = injector.get(PharmacyService);
       httpMock = injector.get(HttpTestingController);
 
-      elemDefault = new Pharmacy(0, 'AAAAAAA');
+      elemDefault = new Pharmacy(0, 'AAAAAAA', 'image/png', 'AAAAAAA');
     });
 
     describe('Service methods', () => {
@@ -56,7 +56,8 @@ describe('Service Tests', () => {
       it('should update a Pharmacy', () => {
         const returnedFromService = Object.assign(
           {
-            name: 'BBBBBB'
+            name: 'BBBBBB',
+            logo: 'BBBBBB'
           },
           elemDefault
         );
@@ -74,7 +75,8 @@ describe('Service Tests', () => {
       it('should return a list of Pharmacy', () => {
         const returnedFromService = Object.assign(
           {
-            name: 'BBBBBB'
+            name: 'BBBBBB',
+            logo: 'BBBBBB'
           },
           elemDefault
         );

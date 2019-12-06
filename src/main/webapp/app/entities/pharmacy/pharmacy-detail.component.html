@@ -9,6 +9,15 @@
                 <dd>
                     <span>{{pharmacy.name}}</span>
                 </dd>
+                <dt><span jhiTranslate="yikondiApp.pharmacy.logo">Logo</span></dt>
+                <dd>
+                    <div *ngIf="pharmacy.logo">
+                        <a (click)="openFile(pharmacy.logoContentType, pharmacy.logo)">
+                            <img [src]="'data:' + pharmacy.logoContentType + ';base64,' + pharmacy.logo" style="max-width: 100%;" alt="pharmacy image"/>
+                        </a>
+                        {{pharmacy.logoContentType}}, {{byteSize(pharmacy.logo)}}
+                    </div>
+                </dd>
                 <dt><span jhiTranslate="yikondiApp.pharmacy.address">Address</span></dt>
                 <dd>
                     <div *ngIf="pharmacy.address">

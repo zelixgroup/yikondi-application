@@ -37,6 +37,7 @@
             <th scope="col" ><span jhiTranslate="yikondiApp.patient.civility">Civility</span></th>
             <th scope="col" ><span jhiTranslate="yikondiApp.patient.surname">Surname</span></th>
             <th scope="col" ><span jhiTranslate="yikondiApp.patient.firstname">Firstname</span></th>
+            <th scope="col" ><span jhiTranslate="yikondiApp.patient.picture">Picture</span></th>
             <th scope="col" ><span jhiTranslate="yikondiApp.patient.address">Address</span></th>
             <th scope="col" ><span jhiTranslate="yikondiApp.patient.correspondingUser">Corresponding User</span></th>
             <th scope="col"></th>
@@ -48,6 +49,12 @@
                 <td jhiTranslate="{{'yikondiApp.Civility.' + patient.civility}}">{{patient.civility}}</td>
                 <td>{{patient.surname}}</td>
                 <td>{{patient.firstname}}</td>
+                <td>
+                    <a *ngIf="patient.picture" (click)="openFile(patient.pictureContentType, patient.picture)">
+                        <img [src]="'data:' + patient.pictureContentType + ';base64,' + patient.picture" style="max-height: 30px;" alt="patient image"/>
+                    </a>
+                    <span *ngIf="patient.picture">{{patient.pictureContentType}}, {{byteSize(patient.picture)}}</span>
+                </td>
                 <td>
                     <div *ngIf="patient.address">
                         <a [routerLink]="['/address', patient.address?.id, 'view' ]" >{{patient.address?.id}}</a>

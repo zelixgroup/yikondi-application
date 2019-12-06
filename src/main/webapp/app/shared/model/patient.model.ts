@@ -7,6 +7,8 @@ export interface IPatient {
   civility?: Civility;
   surname?: string;
   firstname?: string;
+  pictureContentType?: string;
+  picture?: any;
   address?: IAddress;
   correspondingUser?: IUser;
 }
@@ -17,6 +19,8 @@ export class Patient implements IPatient {
     public civility?: Civility,
     public surname?: string,
     public firstname?: string,
+    public pictureContentType?: string,
+    public picture?: any,
     public address?: IAddress,
     public correspondingUser?: IUser
   ) {}
