@@ -27,9 +27,6 @@
             <column name="address_id" type="bigint">
                 <constraints unique="true" nullable="true" uniqueConstraintName="ux_doctor_address_id" />
             </column>
-            <column name="user_id" type="bigint">
-                <constraints unique="true" nullable="true" uniqueConstraintName="ux_doctor_user_id" />
-            </column>
             <column name="patient_id" type="bigint">
                 <constraints unique="true" nullable="true" uniqueConstraintName="ux_doctor_patient_id" />
             </column>

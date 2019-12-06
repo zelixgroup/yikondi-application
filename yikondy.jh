@@ -61,7 +61,6 @@ entity Doctor {
 }
 relationship OneToOne {
 	Doctor{address} to Address
-    Doctor{user} to User
 }
 relationship ManyToOne {
 	Doctor{speciality} to Speciality
