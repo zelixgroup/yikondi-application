@@ -1,0 +1,24 @@
+{
+  "yikondiApp": {
+    "pharmacyAllNightPlanning": {
+      "home": {
+        "title": "PharmacyAllNightPlannings",
+        "createLabel": "Créer un nouveau Pharmacy All Night Planning",
+        "createOrEditLabel": "Créer ou éditer un Pharmacy All Night Planning",
+        "search": "Recherche pour Pharmacy All Night Planning",
+        "notFound": "Aucun Pharmacy All Night Planning trouvé"
+      },
+      "created": "Un nouveau Pharmacy All Night Planning a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Pharmacy All Night Planning avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Pharmacy All Night Planning avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Pharmacy All Night Planning {{ id }} ?"
+      },
+      "detail": {
+        "title": "Pharmacy All Night Planning"
+      },
+      "plannedDate": "Planned Date",
+      "pharmacy": "Pharmacy"
+    }
+  }
+}

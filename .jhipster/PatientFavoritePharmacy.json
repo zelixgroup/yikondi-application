@@ -1,0 +1,35 @@
+{
+    "name": "PatientFavoritePharmacy",
+    "fields": [
+        {
+            "fieldName": "activationDate",
+            "fieldType": "ZonedDateTime"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "patient",
+            "otherEntityRelationshipName": "patientFavoritePharmacy",
+            "relationshipName": "patient",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "pharmacy",
+            "otherEntityRelationshipName": "patientFavoritePharmacy",
+            "relationshipName": "pharmacy",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20191206035859",
+    "entityTableName": "patient_favorite_pharmacy",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

@@ -1,0 +1,25 @@
+{
+  "yikondiApp": {
+    "patientFavoritePharmacy": {
+      "home": {
+        "title": "PatientFavoritePharmacies",
+        "createLabel": "Créer un nouveau Patient Favorite Pharmacy",
+        "createOrEditLabel": "Créer ou éditer un Patient Favorite Pharmacy",
+        "search": "Recherche pour Patient Favorite Pharmacy",
+        "notFound": "Aucun Patient Favorite Pharmacy trouvé"
+      },
+      "created": "Un nouveau Patient Favorite Pharmacy a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Patient Favorite Pharmacy avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Patient Favorite Pharmacy avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Patient Favorite Pharmacy {{ id }} ?"
+      },
+      "detail": {
+        "title": "Patient Favorite Pharmacy"
+      },
+      "activationDate": "Activation Date",
+      "patient": "Patient",
+      "pharmacy": "Pharmacy"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "yikondiApp": {
+    "patientAppointement": {
+      "home": {
+        "title": "PatientAppointements",
+        "createLabel": "Créer un nouveau Patient Appointement",
+        "createOrEditLabel": "Créer ou éditer un Patient Appointement",
+        "search": "Recherche pour Patient Appointement",
+        "notFound": "Aucun Patient Appointement trouvé"
+      },
+      "created": "Un nouveau Patient Appointement a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Patient Appointement avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Patient Appointement avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Patient Appointement {{ id }} ?"
+      },
+      "detail": {
+        "title": "Patient Appointement"
+      },
+      "appointementDateTime": "Appointement Date Time",
+      "appointementMakingDateTime": "Appointement Making Date Time",
+      "patient": "Patient",
+      "healthCentreDoctor": "Health Centre Doctor"
+    }
+  }
+}

@@ -1,0 +1,39 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="patientFavoriteDoctor">
+            <h2><span jhiTranslate="yikondiApp.patientFavoriteDoctor.detail.title">Patient Favorite Doctor</span> {{patientFavoriteDoctor.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="yikondiApp.patientFavoriteDoctor.activationDate">Activation Date</span></dt>
+                <dd>
+                    <span>{{patientFavoriteDoctor.activationDate}}</span>
+                </dd>
+                <dt><span jhiTranslate="yikondiApp.patientFavoriteDoctor.patient">Patient</span></dt>
+                <dd>
+                    <div *ngIf="patientFavoriteDoctor.patient">
+                        <a [routerLink]="['/patient', patientFavoriteDoctor.patient?.id, 'view']">{{patientFavoriteDoctor.patient?.id}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="yikondiApp.patientFavoriteDoctor.doctor">Doctor</span></dt>
+                <dd>
+                    <div *ngIf="patientFavoriteDoctor.doctor">
+                        <a [routerLink]="['/doctor', patientFavoriteDoctor.doctor?.id, 'view']">{{patientFavoriteDoctor.doctor?.id}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/patient-favorite-doctor', patientFavoriteDoctor.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

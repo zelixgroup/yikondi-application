@@ -7,6 +7,23 @@
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
         "main": "Entities",
+        "holiday": "Holiday",
+        "country": "Country",
+        "city": "City",
+        "address": "Address",
+        "healthCentreCategory": "Health Centre Category",
+        "healthCentre": "Health Centre",
+        "pharmacy": "Pharmacy",
+        "pharmacyAllNightPlanning": "Pharmacy All Night Planning",
+        "speciality": "Speciality",
+        "doctor": "Doctor",
+        "patient": "Patient",
+        "healthCentreDoctor": "Health Centre Doctor",
+        "doctorSchedule": "Doctor Schedule",
+        "doctorWorkingSlot": "Doctor Working Slot",
+        "patientAppointement": "Patient Appointement",
+        "patientFavoritePharmacy": "Patient Favorite Pharmacy",
+        "patientFavoriteDoctor": "Patient Favorite Doctor",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

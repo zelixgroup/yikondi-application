@@ -1,0 +1,25 @@
+{
+  "yikondiApp": {
+    "doctorSchedule": {
+      "home": {
+        "title": "DoctorSchedules",
+        "createLabel": "Créer un nouveau Doctor Schedule",
+        "createOrEditLabel": "Créer ou éditer un Doctor Schedule",
+        "search": "Recherche pour Doctor Schedule",
+        "notFound": "Aucun Doctor Schedule trouvé"
+      },
+      "created": "Un nouveau Doctor Schedule a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Doctor Schedule avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Doctor Schedule avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Doctor Schedule {{ id }} ?"
+      },
+      "detail": {
+        "title": "Doctor Schedule"
+      },
+      "scheduleStartDate": "Schedule Start Date",
+      "scheduleEndDate": "Schedule End Date",
+      "healthCentreDoctor": "Health Centre Doctor"
+    }
+  }
+}

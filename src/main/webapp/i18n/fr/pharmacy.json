@@ -1,0 +1,24 @@
+{
+  "yikondiApp": {
+    "pharmacy": {
+      "home": {
+        "title": "Pharmacies",
+        "createLabel": "Créer un nouveau Pharmacy",
+        "createOrEditLabel": "Créer ou éditer un Pharmacy",
+        "search": "Recherche pour Pharmacy",
+        "notFound": "Aucun Pharmacy trouvé"
+      },
+      "created": "Un nouveau Pharmacy a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Pharmacy avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Pharmacy avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Pharmacy {{ id }} ?"
+      },
+      "detail": {
+        "title": "Pharmacy"
+      },
+      "name": "Name",
+      "address": "Address"
+    }
+  }
+}

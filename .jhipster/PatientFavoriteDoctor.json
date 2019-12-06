@@ -1,0 +1,35 @@
+{
+    "name": "PatientFavoriteDoctor",
+    "fields": [
+        {
+            "fieldName": "activationDate",
+            "fieldType": "ZonedDateTime"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "patient",
+            "otherEntityRelationshipName": "patientFavoriteDoctor",
+            "relationshipName": "patient",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "doctor",
+            "otherEntityRelationshipName": "patientFavoriteDoctor",
+            "relationshipName": "doctor",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20191206035900",
+    "entityTableName": "patient_favorite_doctor",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

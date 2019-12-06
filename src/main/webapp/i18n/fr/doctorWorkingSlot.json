@@ -1,0 +1,27 @@
+{
+  "yikondiApp": {
+    "doctorWorkingSlot": {
+      "home": {
+        "title": "DoctorWorkingSlots",
+        "createLabel": "Créer un nouveau Doctor Working Slot",
+        "createOrEditLabel": "Créer ou éditer un Doctor Working Slot",
+        "search": "Recherche pour Doctor Working Slot",
+        "notFound": "Aucun Doctor Working Slot trouvé"
+      },
+      "created": "Un nouveau Doctor Working Slot a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Doctor Working Slot avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Doctor Working Slot avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Doctor Working Slot {{ id }} ?"
+      },
+      "detail": {
+        "title": "Doctor Working Slot"
+      },
+      "dayOfTheWeek": "Day Of The Week",
+      "startTime": "Start Time",
+      "endTime": "End Time",
+      "description": "Description",
+      "doctorSchedule": "Doctor Schedule"
+    }
+  }
+}

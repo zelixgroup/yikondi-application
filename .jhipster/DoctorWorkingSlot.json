@@ -1,0 +1,41 @@
+{
+    "name": "DoctorWorkingSlot",
+    "fields": [
+        {
+            "fieldName": "dayOfTheWeek",
+            "fieldType": "DayOfTheWeek",
+            "fieldValues": "MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY,SATURDAY,SUNDAY"
+        },
+        {
+            "fieldName": "startTime",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "endTime",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "doctorSchedule",
+            "otherEntityRelationshipName": "doctorWorkingSlot",
+            "relationshipName": "doctorSchedule",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20191206035857",
+    "entityTableName": "doctor_working_slot",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

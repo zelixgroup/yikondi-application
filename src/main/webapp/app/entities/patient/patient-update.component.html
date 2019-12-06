@@ -1,0 +1,49 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-patient-heading" jhiTranslate="yikondiApp.patient.home.createOrEditLabel">Create or edit a Patient</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!editForm.get('id').value">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id"
+                        readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="yikondiApp.patient.civility" for="field_civility">Civility</label>
+                    <select class="form-control" name="civility" formControlName="civility" id="field_civility">
+                        <option value="MISTER">{{'yikondiApp.Civility.MISTER' | translate}}</option>
+                        <option value="MISS">{{'yikondiApp.Civility.MISS' | translate}}</option>
+                        <option value="MADAM">{{'yikondiApp.Civility.MADAM' | translate}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="yikondiApp.patient.surname" for="field_surname">Surname</label>
+                    <input type="text" class="form-control" name="surname" id="field_surname"
+                           formControlName="surname"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="yikondiApp.patient.firstname" for="field_firstname">Firstname</label>
+                    <input type="text" class="form-control" name="firstname" id="field_firstname"
+                           formControlName="firstname"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="yikondiApp.patient.address" for="field_address">Address</label>
+                    <select class="form-control" id="field_address" name="address" formControlName="address">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="addressOption.id === editForm.get('address').value?.id ? editForm.get('address').value : addressOption" *ngFor="let addressOption of addresses; trackBy: trackAddressById">{{addressOption.id}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

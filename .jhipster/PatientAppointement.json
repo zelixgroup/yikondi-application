@@ -1,0 +1,39 @@
+{
+    "name": "PatientAppointement",
+    "fields": [
+        {
+            "fieldName": "appointementDateTime",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "appointementMakingDateTime",
+            "fieldType": "ZonedDateTime"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "patient",
+            "otherEntityRelationshipName": "patientAppointement",
+            "relationshipName": "patient",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "healthCentreDoctor",
+            "otherEntityRelationshipName": "patientAppointement",
+            "relationshipName": "healthCentreDoctor",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20191206035858",
+    "entityTableName": "patient_appointement",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

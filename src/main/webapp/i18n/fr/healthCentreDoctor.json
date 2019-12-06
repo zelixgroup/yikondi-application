@@ -1,0 +1,27 @@
+{
+  "yikondiApp": {
+    "healthCentreDoctor": {
+      "home": {
+        "title": "HealthCentreDoctors",
+        "createLabel": "Créer un nouveau Health Centre Doctor",
+        "createOrEditLabel": "Créer ou éditer un Health Centre Doctor",
+        "search": "Recherche pour Health Centre Doctor",
+        "notFound": "Aucun Health Centre Doctor trouvé"
+      },
+      "created": "Un nouveau Health Centre Doctor a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Health Centre Doctor avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Health Centre Doctor avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Health Centre Doctor {{ id }} ?"
+      },
+      "detail": {
+        "title": "Health Centre Doctor"
+      },
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "consultingFees": "Consulting Fees",
+      "healthCentre": "Health Centre",
+      "doctor": "Doctor"
+    }
+  }
+}
