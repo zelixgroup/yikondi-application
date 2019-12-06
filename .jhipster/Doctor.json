@@ -26,6 +26,14 @@
         },
         {
             "relationshipType": "one-to-one",
+            "otherEntityName": "user",
+            "otherEntityRelationshipName": "doctor",
+            "relationshipName": "user",
+            "otherEntityField": "id",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "one-to-one",
             "otherEntityName": "patient",
             "otherEntityRelationshipName": "doctor",
             "relationshipName": "patient",

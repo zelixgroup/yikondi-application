@@ -10,6 +10,8 @@ import { IDoctor, Doctor } from 'app/shared/model/doctor.model';
 import { DoctorService } from './doctor.service';
 import { IAddress } from 'app/shared/model/address.model';
 import { AddressService } from 'app/entities/address/address.service';
+import { IUser } from 'app/core/user/user.model';
+import { UserService } from 'app/core/user/user.service';
 import { IPatient } from 'app/shared/model/patient.model';
 import { PatientService } from 'app/entities/patient/patient.service';
 import { ISpeciality } from 'app/shared/model/speciality.model';
@@ -24,6 +26,8 @@ export class DoctorUpdateComponent implements OnInit {
 
   addresses: IAddress[];
 
+  users: IUser[];
+
   patients: IPatient[];
 
   specialities: ISpeciality[];
@@ -34,6 +38,7 @@ export class DoctorUpdateComponent implements OnInit {
     surname: [],
     firstname: [],
     address: [],
+    user: [],
     patient: [],
     speciality: []
   });
@@ -42,6 +47,7 @@ export class DoctorUpdateComponent implements OnInit {
     protected jhiAlertService: JhiAlertService,
     protected doctorService: DoctorService,
     protected addressService: AddressService,
+    protected userService: UserService,
     protected patientService: PatientService,
     protected specialityService: SpecialityService,
     protected activatedRoute: ActivatedRoute,
@@ -68,6 +74,9 @@ export class DoctorUpdateComponent implements OnInit {
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );
+    this.userService
+      .query()
+      .subscribe((res: HttpResponse<IUser[]>) => (this.users = res.body), (res: HttpErrorResponse) => this.onError(res.message));
     this.patientService.query({ filter: 'doctor-is-null' }).subscribe(
       (res: HttpResponse<IPatient[]>) => {
         if (!this.editForm.get('patient').value || !this.editForm.get('patient').value.id) {
@@ -98,6 +107,7 @@ export class DoctorUpdateComponent implements OnInit {
       surname: doctor.surname,
       firstname: doctor.firstname,
       address: doctor.address,
+      user: doctor.user,
       patient: doctor.patient,
       speciality: doctor.speciality
     });
@@ -125,6 +135,7 @@ export class DoctorUpdateComponent implements OnInit {
       surname: this.editForm.get(['surname']).value,
       firstname: this.editForm.get(['firstname']).value,
       address: this.editForm.get(['address']).value,
+      user: this.editForm.get(['user']).value,
       patient: this.editForm.get(['patient']).value,
       speciality: this.editForm.get(['speciality']).value
     };
@@ -147,6 +158,10 @@ export class DoctorUpdateComponent implements OnInit {
   }
 
   trackAddressById(index: number, item: IAddress) {
+    return item.id;
+  }
+
+  trackUserById(index: number, item: IUser) {
     return item.id;
   }
 

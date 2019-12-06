@@ -1,4 +1,5 @@
 import { IAddress } from 'app/shared/model/address.model';
+import { IUser } from 'app/core/user/user.model';
 import { Civility } from 'app/shared/model/enumerations/civility.model';
 
 export interface IPatient {
@@ -7,6 +8,7 @@ export interface IPatient {
   surname?: string;
   firstname?: string;
   address?: IAddress;
+  user?: IUser;
 }
 
 export class Patient implements IPatient {
@@ -15,6 +17,7 @@ export class Patient implements IPatient {
     public civility?: Civility,
     public surname?: string,
     public firstname?: string,
-    public address?: IAddress
+    public address?: IAddress,
+    public user?: IUser
   ) {}
 }

@@ -23,6 +23,10 @@
                         <a [routerLink]="['/address', patient.address?.id, 'view']">{{patient.address?.id}}</a>
                     </div>
                 </dd>
+                <dt><span jhiTranslate="yikondiApp.patient.user">User</span></dt>
+                <dd>
+                    {{patient.user?.id}}
+                </dd>
             </dl>
 
             <button type="submit"

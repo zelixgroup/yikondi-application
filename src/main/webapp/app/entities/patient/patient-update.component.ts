@@ -10,6 +10,8 @@ import { IPatient, Patient } from 'app/shared/model/patient.model';
 import { PatientService } from './patient.service';
 import { IAddress } from 'app/shared/model/address.model';
 import { AddressService } from 'app/entities/address/address.service';
+import { IUser } from 'app/core/user/user.model';
+import { UserService } from 'app/core/user/user.service';
 
 @Component({
   selector: 'jhi-patient-update',
@@ -20,18 +22,22 @@ export class PatientUpdateComponent implements OnInit {
 
   addresses: IAddress[];
 
+  users: IUser[];
+
   editForm = this.fb.group({
     id: [],
     civility: [],
     surname: [],
     firstname: [],
-    address: []
+    address: [],
+    user: []
   });
 
   constructor(
     protected jhiAlertService: JhiAlertService,
     protected patientService: PatientService,
     protected addressService: AddressService,
+    protected userService: UserService,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
   ) {}
@@ -56,6 +62,9 @@ export class PatientUpdateComponent implements OnInit {
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );
+    this.userService
+      .query()
+      .subscribe((res: HttpResponse<IUser[]>) => (this.users = res.body), (res: HttpErrorResponse) => this.onError(res.message));
   }
 
   updateForm(patient: IPatient) {
@@ -64,7 +73,8 @@ export class PatientUpdateComponent implements OnInit {
       civility: patient.civility,
       surname: patient.surname,
       firstname: patient.firstname,
-      address: patient.address
+      address: patient.address,
+      user: patient.user
     });
   }
 
@@ -89,7 +99,8 @@ export class PatientUpdateComponent implements OnInit {
       civility: this.editForm.get(['civility']).value,
       surname: this.editForm.get(['surname']).value,
       firstname: this.editForm.get(['firstname']).value,
-      address: this.editForm.get(['address']).value
+      address: this.editForm.get(['address']).value,
+      user: this.editForm.get(['user']).value
     };
   }
 
@@ -110,6 +121,10 @@ export class PatientUpdateComponent implements OnInit {
   }
 
   trackAddressById(index: number, item: IAddress) {
+    return item.id;
+  }
+
+  trackUserById(index: number, item: IUser) {
     return item.id;
   }
 }
