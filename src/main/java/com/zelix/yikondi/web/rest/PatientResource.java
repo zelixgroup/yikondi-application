@@ -1,8 +1,7 @@
 package com.zelix.yikondi.web.rest;
 
 import com.zelix.yikondi.domain.Patient;
-import com.zelix.yikondi.repository.PatientRepository;
-import com.zelix.yikondi.repository.search.PatientSearchRepository;
+import com.zelix.yikondi.service.PatientService;
 import com.zelix.yikondi.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -11,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional; 
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -19,7 +17,6 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import static org.elasticsearch.index.query.QueryBuilders.*;
@@ -29,7 +26,6 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
  */
 @RestController
 @RequestMapping("/api")
-@Transactional
 public class PatientResource {
 
     private final Logger log = LoggerFactory.getLogger(PatientResource.class);
@@ -39,13 +35,10 @@ public class PatientResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final PatientRepository patientRepository;
+    private final PatientService patientService;
 
-    private final PatientSearchRepository patientSearchRepository;
-
-    public PatientResource(PatientRepository patientRepository, PatientSearchRepository patientSearchRepository) {
-        this.patientRepository = patientRepository;
-        this.patientSearchRepository = patientSearchRepository;
+    public PatientResource(PatientService patientService) {
+        this.patientService = patientService;
     }
 
     /**
@@ -61,8 +54,7 @@ public class PatientResource {
         if (patient.getId() != null) {
             throw new BadRequestAlertException("A new patient cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Patient result = patientRepository.save(patient);
-        patientSearchRepository.save(result);
+        Patient result = patientService.save(patient);
         return ResponseEntity.created(new URI("/api/patients/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -83,8 +75,7 @@ public class PatientResource {
         if (patient.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        Patient result = patientRepository.save(patient);
-        patientSearchRepository.save(result);
+        Patient result = patientService.save(patient);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, patient.getId().toString()))
             .body(result);
@@ -99,7 +90,7 @@ public class PatientResource {
     @GetMapping("/patients")
     public List<Patient> getAllPatients() {
         log.debug("REST request to get all Patients");
-        return patientRepository.findAll();
+        return patientService.findAll();
     }
 
     /**
@@ -111,7 +102,7 @@ public class PatientResource {
     @GetMapping("/patients/{id}")
     public ResponseEntity<Patient> getPatient(@PathVariable Long id) {
         log.debug("REST request to get Patient : {}", id);
-        Optional<Patient> patient = patientRepository.findById(id);
+        Optional<Patient> patient = patientService.findOne(id);
         return ResponseUtil.wrapOrNotFound(patient);
     }
 
@@ -124,8 +115,7 @@ public class PatientResource {
     @DeleteMapping("/patients/{id}")
     public ResponseEntity<Void> deletePatient(@PathVariable Long id) {
         log.debug("REST request to delete Patient : {}", id);
-        patientRepository.deleteById(id);
-        patientSearchRepository.deleteById(id);
+        patientService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 
@@ -139,8 +129,6 @@ public class PatientResource {
     @GetMapping("/_search/patients")
     public List<Patient> searchPatients(@RequestParam String query) {
         log.debug("REST request to search Patients for query {}", query);
-        return StreamSupport
-            .stream(patientSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .collect(Collectors.toList());
+        return patientService.search(query);
     }
 }

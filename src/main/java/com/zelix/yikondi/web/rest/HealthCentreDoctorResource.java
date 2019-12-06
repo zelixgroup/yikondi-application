@@ -1,8 +1,7 @@
 package com.zelix.yikondi.web.rest;
 
 import com.zelix.yikondi.domain.HealthCentreDoctor;
-import com.zelix.yikondi.repository.HealthCentreDoctorRepository;
-import com.zelix.yikondi.repository.search.HealthCentreDoctorSearchRepository;
+import com.zelix.yikondi.service.HealthCentreDoctorService;
 import com.zelix.yikondi.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -11,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional; 
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -19,7 +17,6 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import static org.elasticsearch.index.query.QueryBuilders.*;
@@ -29,7 +26,6 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
  */
 @RestController
 @RequestMapping("/api")
-@Transactional
 public class HealthCentreDoctorResource {
 
     private final Logger log = LoggerFactory.getLogger(HealthCentreDoctorResource.class);
@@ -39,13 +35,10 @@ public class HealthCentreDoctorResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final HealthCentreDoctorRepository healthCentreDoctorRepository;
+    private final HealthCentreDoctorService healthCentreDoctorService;
 
-    private final HealthCentreDoctorSearchRepository healthCentreDoctorSearchRepository;
-
-    public HealthCentreDoctorResource(HealthCentreDoctorRepository healthCentreDoctorRepository, HealthCentreDoctorSearchRepository healthCentreDoctorSearchRepository) {
-        this.healthCentreDoctorRepository = healthCentreDoctorRepository;
-        this.healthCentreDoctorSearchRepository = healthCentreDoctorSearchRepository;
+    public HealthCentreDoctorResource(HealthCentreDoctorService healthCentreDoctorService) {
+        this.healthCentreDoctorService = healthCentreDoctorService;
     }
 
     /**
@@ -61,8 +54,7 @@ public class HealthCentreDoctorResource {
         if (healthCentreDoctor.getId() != null) {
             throw new BadRequestAlertException("A new healthCentreDoctor cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        HealthCentreDoctor result = healthCentreDoctorRepository.save(healthCentreDoctor);
-        healthCentreDoctorSearchRepository.save(result);
+        HealthCentreDoctor result = healthCentreDoctorService.save(healthCentreDoctor);
         return ResponseEntity.created(new URI("/api/health-centre-doctors/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -83,8 +75,7 @@ public class HealthCentreDoctorResource {
         if (healthCentreDoctor.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        HealthCentreDoctor result = healthCentreDoctorRepository.save(healthCentreDoctor);
-        healthCentreDoctorSearchRepository.save(result);
+        HealthCentreDoctor result = healthCentreDoctorService.save(healthCentreDoctor);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, healthCentreDoctor.getId().toString()))
             .body(result);
@@ -99,7 +90,7 @@ public class HealthCentreDoctorResource {
     @GetMapping("/health-centre-doctors")
     public List<HealthCentreDoctor> getAllHealthCentreDoctors() {
         log.debug("REST request to get all HealthCentreDoctors");
-        return healthCentreDoctorRepository.findAll();
+        return healthCentreDoctorService.findAll();
     }
 
     /**
@@ -111,7 +102,7 @@ public class HealthCentreDoctorResource {
     @GetMapping("/health-centre-doctors/{id}")
     public ResponseEntity<HealthCentreDoctor> getHealthCentreDoctor(@PathVariable Long id) {
         log.debug("REST request to get HealthCentreDoctor : {}", id);
-        Optional<HealthCentreDoctor> healthCentreDoctor = healthCentreDoctorRepository.findById(id);
+        Optional<HealthCentreDoctor> healthCentreDoctor = healthCentreDoctorService.findOne(id);
         return ResponseUtil.wrapOrNotFound(healthCentreDoctor);
     }
 
@@ -124,8 +115,7 @@ public class HealthCentreDoctorResource {
     @DeleteMapping("/health-centre-doctors/{id}")
     public ResponseEntity<Void> deleteHealthCentreDoctor(@PathVariable Long id) {
         log.debug("REST request to delete HealthCentreDoctor : {}", id);
-        healthCentreDoctorRepository.deleteById(id);
-        healthCentreDoctorSearchRepository.deleteById(id);
+        healthCentreDoctorService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 
@@ -139,8 +129,6 @@ public class HealthCentreDoctorResource {
     @GetMapping("/_search/health-centre-doctors")
     public List<HealthCentreDoctor> searchHealthCentreDoctors(@RequestParam String query) {
         log.debug("REST request to search HealthCentreDoctors for query {}", query);
-        return StreamSupport
-            .stream(healthCentreDoctorSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .collect(Collectors.toList());
+        return healthCentreDoctorService.search(query);
     }
 }

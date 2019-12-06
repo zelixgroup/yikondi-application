@@ -1,8 +1,7 @@
 package com.zelix.yikondi.web.rest;
 
 import com.zelix.yikondi.domain.Doctor;
-import com.zelix.yikondi.repository.DoctorRepository;
-import com.zelix.yikondi.repository.search.DoctorSearchRepository;
+import com.zelix.yikondi.service.DoctorService;
 import com.zelix.yikondi.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -11,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional; 
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -19,7 +17,6 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import static org.elasticsearch.index.query.QueryBuilders.*;
@@ -29,7 +26,6 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
  */
 @RestController
 @RequestMapping("/api")
-@Transactional
 public class DoctorResource {
 
     private final Logger log = LoggerFactory.getLogger(DoctorResource.class);
@@ -39,13 +35,10 @@ public class DoctorResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final DoctorRepository doctorRepository;
+    private final DoctorService doctorService;
 
-    private final DoctorSearchRepository doctorSearchRepository;
-
-    public DoctorResource(DoctorRepository doctorRepository, DoctorSearchRepository doctorSearchRepository) {
-        this.doctorRepository = doctorRepository;
-        this.doctorSearchRepository = doctorSearchRepository;
+    public DoctorResource(DoctorService doctorService) {
+        this.doctorService = doctorService;
     }
 
     /**
@@ -61,8 +54,7 @@ public class DoctorResource {
         if (doctor.getId() != null) {
             throw new BadRequestAlertException("A new doctor cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Doctor result = doctorRepository.save(doctor);
-        doctorSearchRepository.save(result);
+        Doctor result = doctorService.save(doctor);
         return ResponseEntity.created(new URI("/api/doctors/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -83,8 +75,7 @@ public class DoctorResource {
         if (doctor.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        Doctor result = doctorRepository.save(doctor);
-        doctorSearchRepository.save(result);
+        Doctor result = doctorService.save(doctor);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, doctor.getId().toString()))
             .body(result);
@@ -99,7 +90,7 @@ public class DoctorResource {
     @GetMapping("/doctors")
     public List<Doctor> getAllDoctors() {
         log.debug("REST request to get all Doctors");
-        return doctorRepository.findAll();
+        return doctorService.findAll();
     }
 
     /**
@@ -111,7 +102,7 @@ public class DoctorResource {
     @GetMapping("/doctors/{id}")
     public ResponseEntity<Doctor> getDoctor(@PathVariable Long id) {
         log.debug("REST request to get Doctor : {}", id);
-        Optional<Doctor> doctor = doctorRepository.findById(id);
+        Optional<Doctor> doctor = doctorService.findOne(id);
         return ResponseUtil.wrapOrNotFound(doctor);
     }
 
@@ -124,8 +115,7 @@ public class DoctorResource {
     @DeleteMapping("/doctors/{id}")
     public ResponseEntity<Void> deleteDoctor(@PathVariable Long id) {
         log.debug("REST request to delete Doctor : {}", id);
-        doctorRepository.deleteById(id);
-        doctorSearchRepository.deleteById(id);
+        doctorService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 
@@ -139,8 +129,6 @@ public class DoctorResource {
     @GetMapping("/_search/doctors")
     public List<Doctor> searchDoctors(@RequestParam String query) {
         log.debug("REST request to search Doctors for query {}", query);
-        return StreamSupport
-            .stream(doctorSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .collect(Collectors.toList());
+        return doctorService.search(query);
     }
 }

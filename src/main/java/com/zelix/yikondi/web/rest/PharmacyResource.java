@@ -1,8 +1,7 @@
 package com.zelix.yikondi.web.rest;
 
 import com.zelix.yikondi.domain.Pharmacy;
-import com.zelix.yikondi.repository.PharmacyRepository;
-import com.zelix.yikondi.repository.search.PharmacySearchRepository;
+import com.zelix.yikondi.service.PharmacyService;
 import com.zelix.yikondi.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -11,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional; 
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -19,7 +17,6 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import static org.elasticsearch.index.query.QueryBuilders.*;
@@ -29,7 +26,6 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
  */
 @RestController
 @RequestMapping("/api")
-@Transactional
 public class PharmacyResource {
 
     private final Logger log = LoggerFactory.getLogger(PharmacyResource.class);
@@ -39,13 +35,10 @@ public class PharmacyResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final PharmacyRepository pharmacyRepository;
+    private final PharmacyService pharmacyService;
 
-    private final PharmacySearchRepository pharmacySearchRepository;
-
-    public PharmacyResource(PharmacyRepository pharmacyRepository, PharmacySearchRepository pharmacySearchRepository) {
-        this.pharmacyRepository = pharmacyRepository;
-        this.pharmacySearchRepository = pharmacySearchRepository;
+    public PharmacyResource(PharmacyService pharmacyService) {
+        this.pharmacyService = pharmacyService;
     }
 
     /**
@@ -61,8 +54,7 @@ public class PharmacyResource {
         if (pharmacy.getId() != null) {
             throw new BadRequestAlertException("A new pharmacy cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Pharmacy result = pharmacyRepository.save(pharmacy);
-        pharmacySearchRepository.save(result);
+        Pharmacy result = pharmacyService.save(pharmacy);
         return ResponseEntity.created(new URI("/api/pharmacies/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -83,8 +75,7 @@ public class PharmacyResource {
         if (pharmacy.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        Pharmacy result = pharmacyRepository.save(pharmacy);
-        pharmacySearchRepository.save(result);
+        Pharmacy result = pharmacyService.save(pharmacy);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, pharmacy.getId().toString()))
             .body(result);
@@ -99,7 +90,7 @@ public class PharmacyResource {
     @GetMapping("/pharmacies")
     public List<Pharmacy> getAllPharmacies() {
         log.debug("REST request to get all Pharmacies");
-        return pharmacyRepository.findAll();
+        return pharmacyService.findAll();
     }
 
     /**
@@ -111,7 +102,7 @@ public class PharmacyResource {
     @GetMapping("/pharmacies/{id}")
     public ResponseEntity<Pharmacy> getPharmacy(@PathVariable Long id) {
         log.debug("REST request to get Pharmacy : {}", id);
-        Optional<Pharmacy> pharmacy = pharmacyRepository.findById(id);
+        Optional<Pharmacy> pharmacy = pharmacyService.findOne(id);
         return ResponseUtil.wrapOrNotFound(pharmacy);
     }
 
@@ -124,8 +115,7 @@ public class PharmacyResource {
     @DeleteMapping("/pharmacies/{id}")
     public ResponseEntity<Void> deletePharmacy(@PathVariable Long id) {
         log.debug("REST request to delete Pharmacy : {}", id);
-        pharmacyRepository.deleteById(id);
-        pharmacySearchRepository.deleteById(id);
+        pharmacyService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 
@@ -139,8 +129,6 @@ public class PharmacyResource {
     @GetMapping("/_search/pharmacies")
     public List<Pharmacy> searchPharmacies(@RequestParam String query) {
         log.debug("REST request to search Pharmacies for query {}", query);
-        return StreamSupport
-            .stream(pharmacySearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .collect(Collectors.toList());
+        return pharmacyService.search(query);
     }
 }

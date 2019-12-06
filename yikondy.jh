@@ -132,3 +132,5 @@ relationship ManyToOne {
 	PatientFavoriteDoctor{patient} to Patient
     PatientFavoriteDoctor{doctor} to Doctor
 }
+
+service all with serviceImpl

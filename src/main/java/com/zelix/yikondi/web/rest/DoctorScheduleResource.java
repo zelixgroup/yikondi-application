@@ -1,8 +1,7 @@
 package com.zelix.yikondi.web.rest;
 
 import com.zelix.yikondi.domain.DoctorSchedule;
-import com.zelix.yikondi.repository.DoctorScheduleRepository;
-import com.zelix.yikondi.repository.search.DoctorScheduleSearchRepository;
+import com.zelix.yikondi.service.DoctorScheduleService;
 import com.zelix.yikondi.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -11,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional; 
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -19,7 +17,6 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import static org.elasticsearch.index.query.QueryBuilders.*;
@@ -29,7 +26,6 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
  */
 @RestController
 @RequestMapping("/api")
-@Transactional
 public class DoctorScheduleResource {
 
     private final Logger log = LoggerFactory.getLogger(DoctorScheduleResource.class);
@@ -39,13 +35,10 @@ public class DoctorScheduleResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final DoctorScheduleRepository doctorScheduleRepository;
+    private final DoctorScheduleService doctorScheduleService;
 
-    private final DoctorScheduleSearchRepository doctorScheduleSearchRepository;
-
-    public DoctorScheduleResource(DoctorScheduleRepository doctorScheduleRepository, DoctorScheduleSearchRepository doctorScheduleSearchRepository) {
-        this.doctorScheduleRepository = doctorScheduleRepository;
-        this.doctorScheduleSearchRepository = doctorScheduleSearchRepository;
+    public DoctorScheduleResource(DoctorScheduleService doctorScheduleService) {
+        this.doctorScheduleService = doctorScheduleService;
     }
 
     /**
@@ -61,8 +54,7 @@ public class DoctorScheduleResource {
         if (doctorSchedule.getId() != null) {
             throw new BadRequestAlertException("A new doctorSchedule cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        DoctorSchedule result = doctorScheduleRepository.save(doctorSchedule);
-        doctorScheduleSearchRepository.save(result);
+        DoctorSchedule result = doctorScheduleService.save(doctorSchedule);
         return ResponseEntity.created(new URI("/api/doctor-schedules/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -83,8 +75,7 @@ public class DoctorScheduleResource {
         if (doctorSchedule.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        DoctorSchedule result = doctorScheduleRepository.save(doctorSchedule);
-        doctorScheduleSearchRepository.save(result);
+        DoctorSchedule result = doctorScheduleService.save(doctorSchedule);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, doctorSchedule.getId().toString()))
             .body(result);
@@ -99,7 +90,7 @@ public class DoctorScheduleResource {
     @GetMapping("/doctor-schedules")
     public List<DoctorSchedule> getAllDoctorSchedules() {
         log.debug("REST request to get all DoctorSchedules");
-        return doctorScheduleRepository.findAll();
+        return doctorScheduleService.findAll();
     }
 
     /**
@@ -111,7 +102,7 @@ public class DoctorScheduleResource {
     @GetMapping("/doctor-schedules/{id}")
     public ResponseEntity<DoctorSchedule> getDoctorSchedule(@PathVariable Long id) {
         log.debug("REST request to get DoctorSchedule : {}", id);
-        Optional<DoctorSchedule> doctorSchedule = doctorScheduleRepository.findById(id);
+        Optional<DoctorSchedule> doctorSchedule = doctorScheduleService.findOne(id);
         return ResponseUtil.wrapOrNotFound(doctorSchedule);
     }
 
@@ -124,8 +115,7 @@ public class DoctorScheduleResource {
     @DeleteMapping("/doctor-schedules/{id}")
     public ResponseEntity<Void> deleteDoctorSchedule(@PathVariable Long id) {
         log.debug("REST request to delete DoctorSchedule : {}", id);
-        doctorScheduleRepository.deleteById(id);
-        doctorScheduleSearchRepository.deleteById(id);
+        doctorScheduleService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 
@@ -139,8 +129,6 @@ public class DoctorScheduleResource {
     @GetMapping("/_search/doctor-schedules")
     public List<DoctorSchedule> searchDoctorSchedules(@RequestParam String query) {
         log.debug("REST request to search DoctorSchedules for query {}", query);
-        return StreamSupport
-            .stream(doctorScheduleSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .collect(Collectors.toList());
+        return doctorScheduleService.search(query);
     }
 }

@@ -4,6 +4,7 @@ import com.zelix.yikondi.YikondiApp;
 import com.zelix.yikondi.domain.PharmacyAllNightPlanning;
 import com.zelix.yikondi.repository.PharmacyAllNightPlanningRepository;
 import com.zelix.yikondi.repository.search.PharmacyAllNightPlanningSearchRepository;
+import com.zelix.yikondi.service.PharmacyAllNightPlanningService;
 import com.zelix.yikondi.web.rest.errors.ExceptionTranslator;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -45,6 +46,9 @@ public class PharmacyAllNightPlanningResourceIT {
     @Autowired
     private PharmacyAllNightPlanningRepository pharmacyAllNightPlanningRepository;
 
+    @Autowired
+    private PharmacyAllNightPlanningService pharmacyAllNightPlanningService;
+
     /**
      * This repository is mocked in the com.zelix.yikondi.repository.search test package.
      *
@@ -75,7 +79,7 @@ public class PharmacyAllNightPlanningResourceIT {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final PharmacyAllNightPlanningResource pharmacyAllNightPlanningResource = new PharmacyAllNightPlanningResource(pharmacyAllNightPlanningRepository, mockPharmacyAllNightPlanningSearchRepository);
+        final PharmacyAllNightPlanningResource pharmacyAllNightPlanningResource = new PharmacyAllNightPlanningResource(pharmacyAllNightPlanningService);
         this.restPharmacyAllNightPlanningMockMvc = MockMvcBuilders.standaloneSetup(pharmacyAllNightPlanningResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -196,7 +200,9 @@ public class PharmacyAllNightPlanningResourceIT {
     @Transactional
     public void updatePharmacyAllNightPlanning() throws Exception {
         // Initialize the database
-        pharmacyAllNightPlanningRepository.saveAndFlush(pharmacyAllNightPlanning);
+        pharmacyAllNightPlanningService.save(pharmacyAllNightPlanning);
+        // As the test used the service layer, reset the Elasticsearch mock repository
+        reset(mockPharmacyAllNightPlanningSearchRepository);
 
         int databaseSizeBeforeUpdate = pharmacyAllNightPlanningRepository.findAll().size();
 
@@ -247,7 +253,7 @@ public class PharmacyAllNightPlanningResourceIT {
     @Transactional
     public void deletePharmacyAllNightPlanning() throws Exception {
         // Initialize the database
-        pharmacyAllNightPlanningRepository.saveAndFlush(pharmacyAllNightPlanning);
+        pharmacyAllNightPlanningService.save(pharmacyAllNightPlanning);
 
         int databaseSizeBeforeDelete = pharmacyAllNightPlanningRepository.findAll().size();
 
@@ -268,7 +274,7 @@ public class PharmacyAllNightPlanningResourceIT {
     @Transactional
     public void searchPharmacyAllNightPlanning() throws Exception {
         // Initialize the database
-        pharmacyAllNightPlanningRepository.saveAndFlush(pharmacyAllNightPlanning);
+        pharmacyAllNightPlanningService.save(pharmacyAllNightPlanning);
         when(mockPharmacyAllNightPlanningSearchRepository.search(queryStringQuery("id:" + pharmacyAllNightPlanning.getId())))
             .thenReturn(Collections.singletonList(pharmacyAllNightPlanning));
         // Search the pharmacyAllNightPlanning

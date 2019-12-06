@@ -1,8 +1,7 @@
 package com.zelix.yikondi.web.rest;
 
 import com.zelix.yikondi.domain.Country;
-import com.zelix.yikondi.repository.CountryRepository;
-import com.zelix.yikondi.repository.search.CountrySearchRepository;
+import com.zelix.yikondi.service.CountryService;
 import com.zelix.yikondi.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -11,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional; 
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -19,7 +17,6 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import static org.elasticsearch.index.query.QueryBuilders.*;
@@ -29,7 +26,6 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
  */
 @RestController
 @RequestMapping("/api")
-@Transactional
 public class CountryResource {
 
     private final Logger log = LoggerFactory.getLogger(CountryResource.class);
@@ -39,13 +35,10 @@ public class CountryResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final CountryRepository countryRepository;
+    private final CountryService countryService;
 
-    private final CountrySearchRepository countrySearchRepository;
-
-    public CountryResource(CountryRepository countryRepository, CountrySearchRepository countrySearchRepository) {
-        this.countryRepository = countryRepository;
-        this.countrySearchRepository = countrySearchRepository;
+    public CountryResource(CountryService countryService) {
+        this.countryService = countryService;
     }
 
     /**
@@ -61,8 +54,7 @@ public class CountryResource {
         if (country.getId() != null) {
             throw new BadRequestAlertException("A new country cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Country result = countryRepository.save(country);
-        countrySearchRepository.save(result);
+        Country result = countryService.save(country);
         return ResponseEntity.created(new URI("/api/countries/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -83,8 +75,7 @@ public class CountryResource {
         if (country.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        Country result = countryRepository.save(country);
-        countrySearchRepository.save(result);
+        Country result = countryService.save(country);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, country.getId().toString()))
             .body(result);
@@ -99,7 +90,7 @@ public class CountryResource {
     @GetMapping("/countries")
     public List<Country> getAllCountries() {
         log.debug("REST request to get all Countries");
-        return countryRepository.findAll();
+        return countryService.findAll();
     }
 
     /**
@@ -111,7 +102,7 @@ public class CountryResource {
     @GetMapping("/countries/{id}")
     public ResponseEntity<Country> getCountry(@PathVariable Long id) {
         log.debug("REST request to get Country : {}", id);
-        Optional<Country> country = countryRepository.findById(id);
+        Optional<Country> country = countryService.findOne(id);
         return ResponseUtil.wrapOrNotFound(country);
     }
 
@@ -124,8 +115,7 @@ public class CountryResource {
     @DeleteMapping("/countries/{id}")
     public ResponseEntity<Void> deleteCountry(@PathVariable Long id) {
         log.debug("REST request to delete Country : {}", id);
-        countryRepository.deleteById(id);
-        countrySearchRepository.deleteById(id);
+        countryService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 
@@ -139,8 +129,6 @@ public class CountryResource {
     @GetMapping("/_search/countries")
     public List<Country> searchCountries(@RequestParam String query) {
         log.debug("REST request to search Countries for query {}", query);
-        return StreamSupport
-            .stream(countrySearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .collect(Collectors.toList());
+        return countryService.search(query);
     }
 }

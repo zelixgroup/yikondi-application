@@ -4,6 +4,7 @@ import com.zelix.yikondi.YikondiApp;
 import com.zelix.yikondi.domain.HealthCentreCategory;
 import com.zelix.yikondi.repository.HealthCentreCategoryRepository;
 import com.zelix.yikondi.repository.search.HealthCentreCategorySearchRepository;
+import com.zelix.yikondi.service.HealthCentreCategoryService;
 import com.zelix.yikondi.web.rest.errors.ExceptionTranslator;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -43,6 +44,9 @@ public class HealthCentreCategoryResourceIT {
     @Autowired
     private HealthCentreCategoryRepository healthCentreCategoryRepository;
 
+    @Autowired
+    private HealthCentreCategoryService healthCentreCategoryService;
+
     /**
      * This repository is mocked in the com.zelix.yikondi.repository.search test package.
      *
@@ -73,7 +77,7 @@ public class HealthCentreCategoryResourceIT {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final HealthCentreCategoryResource healthCentreCategoryResource = new HealthCentreCategoryResource(healthCentreCategoryRepository, mockHealthCentreCategorySearchRepository);
+        final HealthCentreCategoryResource healthCentreCategoryResource = new HealthCentreCategoryResource(healthCentreCategoryService);
         this.restHealthCentreCategoryMockMvc = MockMvcBuilders.standaloneSetup(healthCentreCategoryResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -194,7 +198,9 @@ public class HealthCentreCategoryResourceIT {
     @Transactional
     public void updateHealthCentreCategory() throws Exception {
         // Initialize the database
-        healthCentreCategoryRepository.saveAndFlush(healthCentreCategory);
+        healthCentreCategoryService.save(healthCentreCategory);
+        // As the test used the service layer, reset the Elasticsearch mock repository
+        reset(mockHealthCentreCategorySearchRepository);
 
         int databaseSizeBeforeUpdate = healthCentreCategoryRepository.findAll().size();
 
@@ -245,7 +251,7 @@ public class HealthCentreCategoryResourceIT {
     @Transactional
     public void deleteHealthCentreCategory() throws Exception {
         // Initialize the database
-        healthCentreCategoryRepository.saveAndFlush(healthCentreCategory);
+        healthCentreCategoryService.save(healthCentreCategory);
 
         int databaseSizeBeforeDelete = healthCentreCategoryRepository.findAll().size();
 
@@ -266,7 +272,7 @@ public class HealthCentreCategoryResourceIT {
     @Transactional
     public void searchHealthCentreCategory() throws Exception {
         // Initialize the database
-        healthCentreCategoryRepository.saveAndFlush(healthCentreCategory);
+        healthCentreCategoryService.save(healthCentreCategory);
         when(mockHealthCentreCategorySearchRepository.search(queryStringQuery("id:" + healthCentreCategory.getId())))
             .thenReturn(Collections.singletonList(healthCentreCategory));
         // Search the healthCentreCategory

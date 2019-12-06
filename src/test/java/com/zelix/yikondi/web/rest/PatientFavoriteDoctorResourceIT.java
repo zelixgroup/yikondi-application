@@ -4,6 +4,7 @@ import com.zelix.yikondi.YikondiApp;
 import com.zelix.yikondi.domain.PatientFavoriteDoctor;
 import com.zelix.yikondi.repository.PatientFavoriteDoctorRepository;
 import com.zelix.yikondi.repository.search.PatientFavoriteDoctorSearchRepository;
+import com.zelix.yikondi.service.PatientFavoriteDoctorService;
 import com.zelix.yikondi.web.rest.errors.ExceptionTranslator;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -48,6 +49,9 @@ public class PatientFavoriteDoctorResourceIT {
     @Autowired
     private PatientFavoriteDoctorRepository patientFavoriteDoctorRepository;
 
+    @Autowired
+    private PatientFavoriteDoctorService patientFavoriteDoctorService;
+
     /**
      * This repository is mocked in the com.zelix.yikondi.repository.search test package.
      *
@@ -78,7 +82,7 @@ public class PatientFavoriteDoctorResourceIT {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final PatientFavoriteDoctorResource patientFavoriteDoctorResource = new PatientFavoriteDoctorResource(patientFavoriteDoctorRepository, mockPatientFavoriteDoctorSearchRepository);
+        final PatientFavoriteDoctorResource patientFavoriteDoctorResource = new PatientFavoriteDoctorResource(patientFavoriteDoctorService);
         this.restPatientFavoriteDoctorMockMvc = MockMvcBuilders.standaloneSetup(patientFavoriteDoctorResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -199,7 +203,9 @@ public class PatientFavoriteDoctorResourceIT {
     @Transactional
     public void updatePatientFavoriteDoctor() throws Exception {
         // Initialize the database
-        patientFavoriteDoctorRepository.saveAndFlush(patientFavoriteDoctor);
+        patientFavoriteDoctorService.save(patientFavoriteDoctor);
+        // As the test used the service layer, reset the Elasticsearch mock repository
+        reset(mockPatientFavoriteDoctorSearchRepository);
 
         int databaseSizeBeforeUpdate = patientFavoriteDoctorRepository.findAll().size();
 
@@ -250,7 +256,7 @@ public class PatientFavoriteDoctorResourceIT {
     @Transactional
     public void deletePatientFavoriteDoctor() throws Exception {
         // Initialize the database
-        patientFavoriteDoctorRepository.saveAndFlush(patientFavoriteDoctor);
+        patientFavoriteDoctorService.save(patientFavoriteDoctor);
 
         int databaseSizeBeforeDelete = patientFavoriteDoctorRepository.findAll().size();
 
@@ -271,7 +277,7 @@ public class PatientFavoriteDoctorResourceIT {
     @Transactional
     public void searchPatientFavoriteDoctor() throws Exception {
         // Initialize the database
-        patientFavoriteDoctorRepository.saveAndFlush(patientFavoriteDoctor);
+        patientFavoriteDoctorService.save(patientFavoriteDoctor);
         when(mockPatientFavoriteDoctorSearchRepository.search(queryStringQuery("id:" + patientFavoriteDoctor.getId())))
             .thenReturn(Collections.singletonList(patientFavoriteDoctor));
         // Search the patientFavoriteDoctor

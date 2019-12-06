@@ -4,6 +4,7 @@ import com.zelix.yikondi.YikondiApp;
 import com.zelix.yikondi.domain.HealthCentre;
 import com.zelix.yikondi.repository.HealthCentreRepository;
 import com.zelix.yikondi.repository.search.HealthCentreSearchRepository;
+import com.zelix.yikondi.service.HealthCentreService;
 import com.zelix.yikondi.web.rest.errors.ExceptionTranslator;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -43,6 +44,9 @@ public class HealthCentreResourceIT {
     @Autowired
     private HealthCentreRepository healthCentreRepository;
 
+    @Autowired
+    private HealthCentreService healthCentreService;
+
     /**
      * This repository is mocked in the com.zelix.yikondi.repository.search test package.
      *
@@ -73,7 +77,7 @@ public class HealthCentreResourceIT {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final HealthCentreResource healthCentreResource = new HealthCentreResource(healthCentreRepository, mockHealthCentreSearchRepository);
+        final HealthCentreResource healthCentreResource = new HealthCentreResource(healthCentreService);
         this.restHealthCentreMockMvc = MockMvcBuilders.standaloneSetup(healthCentreResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -194,7 +198,9 @@ public class HealthCentreResourceIT {
     @Transactional
     public void updateHealthCentre() throws Exception {
         // Initialize the database
-        healthCentreRepository.saveAndFlush(healthCentre);
+        healthCentreService.save(healthCentre);
+        // As the test used the service layer, reset the Elasticsearch mock repository
+        reset(mockHealthCentreSearchRepository);
 
         int databaseSizeBeforeUpdate = healthCentreRepository.findAll().size();
 
@@ -245,7 +251,7 @@ public class HealthCentreResourceIT {
     @Transactional
     public void deleteHealthCentre() throws Exception {
         // Initialize the database
-        healthCentreRepository.saveAndFlush(healthCentre);
+        healthCentreService.save(healthCentre);
 
         int databaseSizeBeforeDelete = healthCentreRepository.findAll().size();
 
@@ -266,7 +272,7 @@ public class HealthCentreResourceIT {
     @Transactional
     public void searchHealthCentre() throws Exception {
         // Initialize the database
-        healthCentreRepository.saveAndFlush(healthCentre);
+        healthCentreService.save(healthCentre);
         when(mockHealthCentreSearchRepository.search(queryStringQuery("id:" + healthCentre.getId())))
             .thenReturn(Collections.singletonList(healthCentre));
         // Search the healthCentre

@@ -4,6 +4,7 @@ import com.zelix.yikondi.YikondiApp;
 import com.zelix.yikondi.domain.Country;
 import com.zelix.yikondi.repository.CountryRepository;
 import com.zelix.yikondi.repository.search.CountrySearchRepository;
+import com.zelix.yikondi.service.CountryService;
 import com.zelix.yikondi.web.rest.errors.ExceptionTranslator;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -49,6 +50,9 @@ public class CountryResourceIT {
     @Autowired
     private CountryRepository countryRepository;
 
+    @Autowired
+    private CountryService countryService;
+
     /**
      * This repository is mocked in the com.zelix.yikondi.repository.search test package.
      *
@@ -79,7 +83,7 @@ public class CountryResourceIT {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final CountryResource countryResource = new CountryResource(countryRepository, mockCountrySearchRepository);
+        final CountryResource countryResource = new CountryResource(countryService);
         this.restCountryMockMvc = MockMvcBuilders.standaloneSetup(countryResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -210,7 +214,9 @@ public class CountryResourceIT {
     @Transactional
     public void updateCountry() throws Exception {
         // Initialize the database
-        countryRepository.saveAndFlush(country);
+        countryService.save(country);
+        // As the test used the service layer, reset the Elasticsearch mock repository
+        reset(mockCountrySearchRepository);
 
         int databaseSizeBeforeUpdate = countryRepository.findAll().size();
 
@@ -265,7 +271,7 @@ public class CountryResourceIT {
     @Transactional
     public void deleteCountry() throws Exception {
         // Initialize the database
-        countryRepository.saveAndFlush(country);
+        countryService.save(country);
 
         int databaseSizeBeforeDelete = countryRepository.findAll().size();
 
@@ -286,7 +292,7 @@ public class CountryResourceIT {
     @Transactional
     public void searchCountry() throws Exception {
         // Initialize the database
-        countryRepository.saveAndFlush(country);
+        countryService.save(country);
         when(mockCountrySearchRepository.search(queryStringQuery("id:" + country.getId())))
             .thenReturn(Collections.singletonList(country));
         // Search the country

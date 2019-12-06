@@ -4,6 +4,7 @@ import com.zelix.yikondi.YikondiApp;
 import com.zelix.yikondi.domain.DoctorWorkingSlot;
 import com.zelix.yikondi.repository.DoctorWorkingSlotRepository;
 import com.zelix.yikondi.repository.search.DoctorWorkingSlotSearchRepository;
+import com.zelix.yikondi.service.DoctorWorkingSlotService;
 import com.zelix.yikondi.web.rest.errors.ExceptionTranslator;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -53,6 +54,9 @@ public class DoctorWorkingSlotResourceIT {
     @Autowired
     private DoctorWorkingSlotRepository doctorWorkingSlotRepository;
 
+    @Autowired
+    private DoctorWorkingSlotService doctorWorkingSlotService;
+
     /**
      * This repository is mocked in the com.zelix.yikondi.repository.search test package.
      *
@@ -83,7 +87,7 @@ public class DoctorWorkingSlotResourceIT {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final DoctorWorkingSlotResource doctorWorkingSlotResource = new DoctorWorkingSlotResource(doctorWorkingSlotRepository, mockDoctorWorkingSlotSearchRepository);
+        final DoctorWorkingSlotResource doctorWorkingSlotResource = new DoctorWorkingSlotResource(doctorWorkingSlotService);
         this.restDoctorWorkingSlotMockMvc = MockMvcBuilders.standaloneSetup(doctorWorkingSlotResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -219,7 +223,9 @@ public class DoctorWorkingSlotResourceIT {
     @Transactional
     public void updateDoctorWorkingSlot() throws Exception {
         // Initialize the database
-        doctorWorkingSlotRepository.saveAndFlush(doctorWorkingSlot);
+        doctorWorkingSlotService.save(doctorWorkingSlot);
+        // As the test used the service layer, reset the Elasticsearch mock repository
+        reset(mockDoctorWorkingSlotSearchRepository);
 
         int databaseSizeBeforeUpdate = doctorWorkingSlotRepository.findAll().size();
 
@@ -276,7 +282,7 @@ public class DoctorWorkingSlotResourceIT {
     @Transactional
     public void deleteDoctorWorkingSlot() throws Exception {
         // Initialize the database
-        doctorWorkingSlotRepository.saveAndFlush(doctorWorkingSlot);
+        doctorWorkingSlotService.save(doctorWorkingSlot);
 
         int databaseSizeBeforeDelete = doctorWorkingSlotRepository.findAll().size();
 
@@ -297,7 +303,7 @@ public class DoctorWorkingSlotResourceIT {
     @Transactional
     public void searchDoctorWorkingSlot() throws Exception {
         // Initialize the database
-        doctorWorkingSlotRepository.saveAndFlush(doctorWorkingSlot);
+        doctorWorkingSlotService.save(doctorWorkingSlot);
         when(mockDoctorWorkingSlotSearchRepository.search(queryStringQuery("id:" + doctorWorkingSlot.getId())))
             .thenReturn(Collections.singletonList(doctorWorkingSlot));
         // Search the doctorWorkingSlot

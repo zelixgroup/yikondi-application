@@ -4,6 +4,7 @@ import com.zelix.yikondi.YikondiApp;
 import com.zelix.yikondi.domain.Address;
 import com.zelix.yikondi.repository.AddressRepository;
 import com.zelix.yikondi.repository.search.AddressSearchRepository;
+import com.zelix.yikondi.service.AddressService;
 import com.zelix.yikondi.web.rest.errors.ExceptionTranslator;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -52,6 +53,9 @@ public class AddressResourceIT {
     @Autowired
     private AddressRepository addressRepository;
 
+    @Autowired
+    private AddressService addressService;
+
     /**
      * This repository is mocked in the com.zelix.yikondi.repository.search test package.
      *
@@ -82,7 +86,7 @@ public class AddressResourceIT {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final AddressResource addressResource = new AddressResource(addressRepository, mockAddressSearchRepository);
+        final AddressResource addressResource = new AddressResource(addressService);
         this.restAddressMockMvc = MockMvcBuilders.standaloneSetup(addressResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -218,7 +222,9 @@ public class AddressResourceIT {
     @Transactional
     public void updateAddress() throws Exception {
         // Initialize the database
-        addressRepository.saveAndFlush(address);
+        addressService.save(address);
+        // As the test used the service layer, reset the Elasticsearch mock repository
+        reset(mockAddressSearchRepository);
 
         int databaseSizeBeforeUpdate = addressRepository.findAll().size();
 
@@ -275,7 +281,7 @@ public class AddressResourceIT {
     @Transactional
     public void deleteAddress() throws Exception {
         // Initialize the database
-        addressRepository.saveAndFlush(address);
+        addressService.save(address);
 
         int databaseSizeBeforeDelete = addressRepository.findAll().size();
 
@@ -296,7 +302,7 @@ public class AddressResourceIT {
     @Transactional
     public void searchAddress() throws Exception {
         // Initialize the database
-        addressRepository.saveAndFlush(address);
+        addressService.save(address);
         when(mockAddressSearchRepository.search(queryStringQuery("id:" + address.getId())))
             .thenReturn(Collections.singletonList(address));
         // Search the address
