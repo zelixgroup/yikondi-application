@@ -1,0 +1,133 @@
+entity Holiday{
+	label String
+    correspondingDate LocalDate
+}
+entity Country {
+	isoCode String
+    name String
+    phoneReferenceNumber String
+}
+entity City {
+    name String
+}
+relationship ManyToOne {
+	City{country} to Country
+}
+entity Address {
+	location String
+    geolocation String
+    primaryPhoneNumber String
+    secondaryPhoneNumber String
+}
+relationship ManyToOne {
+	Address{city} to City
+}
+entity HealthCentreCategory {
+	name String
+}
+entity HealthCentre {
+	name String
+}
+relationship OneToOne {
+	HealthCentre{address} to Address
+}
+relationship ManyToOne {
+	HealthCentre{category} to HealthCentreCategory
+}
+entity Pharmacy {
+	name String
+}
+relationship OneToOne {
+	Pharmacy{address} to Address
+}
+entity PharmacyAllNightPlanning {
+    plannedDate LocalDate
+}
+relationship ManyToOne {
+	PharmacyAllNightPlanning{pharmacy} to Pharmacy
+}
+enum Title{
+	DOCTOR,
+	PROFESSOR
+}
+entity Speciality {
+	name String
+    description String
+}
+entity Doctor {
+	title Title
+    surname String
+    firstname String    
+}
+relationship OneToOne {
+	Doctor{address} to Address
+}
+relationship ManyToOne {
+	Doctor{speciality} to Speciality
+}
+relationship OneToOne {
+	Doctor{patient} to Patient
+}
+enum Civility {
+	MISTER,
+	MISS,
+    MADAM
+}
+entity Patient {
+	civility Civility
+    surname String
+    firstname String
+}
+relationship OneToOne {
+	Patient{address} to Address
+}
+entity HealthCentreDoctor {
+    startDate LocalDate
+    endDate LocalDate
+    consultingFees BigDecimal
+}
+relationship ManyToOne {
+	HealthCentreDoctor{healthCentre} to HealthCentre
+    HealthCentreDoctor{doctor} to Doctor
+}
+enum DayOfTheWeek {
+	MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY
+}
+entity DoctorSchedule {
+    scheduleStartDate ZonedDateTime
+    scheduleEndDate ZonedDateTime
+}
+relationship ManyToOne {
+	DoctorSchedule{healthCentreDoctor} to HealthCentreDoctor
+}
+entity DoctorWorkingSlot {
+	dayOfTheWeek DayOfTheWeek
+    startTime String
+    endTime String
+    description String
+}
+relationship ManyToOne {
+	DoctorWorkingSlot{doctorSchedule} to DoctorSchedule
+}
+entity PatientAppointement {
+    appointementDateTime ZonedDateTime
+    appointementMakingDateTime ZonedDateTime
+}
+relationship ManyToOne {
+	PatientAppointement{patient} to Patient
+    PatientAppointement{healthCentreDoctor} to HealthCentreDoctor
+}
+entity PatientFavoritePharmacy {
+	activationDate ZonedDateTime
+}
+relationship ManyToOne {
+	PatientFavoritePharmacy{patient} to Patient
+    PatientFavoritePharmacy{pharmacy} to Pharmacy
+}
+entity PatientFavoriteDoctor {
+	activationDate ZonedDateTime
+}
+relationship ManyToOne {
+	PatientFavoriteDoctor{patient} to Patient
+    PatientFavoriteDoctor{doctor} to Doctor
+}
