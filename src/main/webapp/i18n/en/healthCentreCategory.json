@@ -1,0 +1,23 @@
+{
+  "yikondiApp": {
+    "healthCentreCategory": {
+      "home": {
+        "title": "Health Centre Categories",
+        "createLabel": "Create a new Health Centre Category",
+        "createOrEditLabel": "Create or edit a Health Centre Category",
+        "search": "Search for Health Centre Category",
+        "notFound": "No Health Centre Categories found"
+      },
+      "created": "A new Health Centre Category is created with identifier {{ param }}",
+      "updated": "A Health Centre Category is updated with identifier {{ param }}",
+      "deleted": "A Health Centre Category is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Health Centre Category {{ id }}?"
+      },
+      "detail": {
+        "title": "Health Centre Category"
+      },
+      "name": "Name"
+    }
+  }
+}

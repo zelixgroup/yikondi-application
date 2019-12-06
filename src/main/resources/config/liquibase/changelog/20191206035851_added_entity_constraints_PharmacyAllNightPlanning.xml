@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <!--
+        Added the constraints for entity PharmacyAllNightPlanning.
+    -->
+    <changeSet id="20191206035851-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="pharmacy_id"
+                                 baseTableName="pharmacy_all_night_planning"
+                                 constraintName="fk_pharmacy_all_night_planning_pharmacy_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="pharmacy"/>
+
+    </changeSet>
+</databaseChangeLog>

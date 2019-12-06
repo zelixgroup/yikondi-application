@@ -1,0 +1,92 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="yikondiApp.doctor.home.title">Doctors</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-doctor" [routerLink]="['/doctor/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span class="hidden-sm-down"  jhiTranslate="yikondiApp.doctor.home.createLabel">
+            Create a new Doctor
+            </span>
+        </button>
+    </h2>
+    <jhi-alert-error></jhi-alert-error>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+        <div class="col-sm-12">
+            <form name="searchForm" class="form-inline">
+                <div class="input-group w-100 mt-3">
+                    <input type="text" class="form-control" [(ngModel)]="currentSearch" id="currentSearch" name="currentSearch" placeholder="{{ 'yikondiApp.doctor.home.search' | translate }}">
+                    <button class="input-group-append btn btn-info" (click)="search(currentSearch)">
+                        <fa-icon [icon]="'search'"></fa-icon>
+                    </button>
+                    <button class="input-group-append btn btn-danger" (click)="clear()" *ngIf="currentSearch">
+                        <fa-icon [icon]="'trash-alt'"></fa-icon>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br/>
+    <div class="alert alert-warning" *ngIf="doctors?.length === 0">
+        <span jhiTranslate="yikondiApp.doctor.home.notFound">No doctors found</span>
+    </div>
+    <div class="table-responsive" *ngIf="doctors?.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+            <tr>
+            <th scope="col" ><span jhiTranslate="global.field.id">ID</span></th>
+            <th scope="col" ><span jhiTranslate="yikondiApp.doctor.title">Title</span></th>
+            <th scope="col" ><span jhiTranslate="yikondiApp.doctor.surname">Surname</span></th>
+            <th scope="col" ><span jhiTranslate="yikondiApp.doctor.firstname">Firstname</span></th>
+            <th scope="col" ><span jhiTranslate="yikondiApp.doctor.address">Address</span></th>
+            <th scope="col" ><span jhiTranslate="yikondiApp.doctor.patient">Patient</span></th>
+            <th scope="col" ><span jhiTranslate="yikondiApp.doctor.speciality">Speciality</span></th>
+            <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let doctor of doctors ;trackBy: trackId">
+                <td><a [routerLink]="['/doctor', doctor.id, 'view' ]">{{doctor.id}}</a></td>
+                <td jhiTranslate="{{'yikondiApp.Title.' + doctor.title}}">{{doctor.title}}</td>
+                <td>{{doctor.surname}}</td>
+                <td>{{doctor.firstname}}</td>
+                <td>
+                    <div *ngIf="doctor.address">
+                        <a [routerLink]="['/address', doctor.address?.id, 'view' ]" >{{doctor.address?.id}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="doctor.patient">
+                        <a [routerLink]="['/patient', doctor.patient?.id, 'view' ]" >{{doctor.patient?.id}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="doctor.speciality">
+                        <a [routerLink]="['/speciality', doctor.speciality?.id, 'view' ]" >{{doctor.speciality?.id}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group">
+                        <button type="submit"
+                                [routerLink]="['/doctor', doctor.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/doctor', doctor.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit" (click)="delete(doctor)"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

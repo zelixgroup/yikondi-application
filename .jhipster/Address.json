@@ -1,0 +1,40 @@
+{
+    "name": "Address",
+    "fields": [
+        {
+            "fieldName": "location",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "geolocation",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "primaryPhoneNumber",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "secondaryPhoneNumber",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "city",
+            "otherEntityRelationshipName": "address",
+            "relationshipName": "city",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20191206035847",
+    "entityTableName": "address",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

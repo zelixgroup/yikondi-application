@@ -1,0 +1,23 @@
+{
+  "yikondiApp": {
+    "healthCentreCategory": {
+      "home": {
+        "title": "HealthCentreCategories",
+        "createLabel": "Créer un nouveau Health Centre Category",
+        "createOrEditLabel": "Créer ou éditer un Health Centre Category",
+        "search": "Recherche pour Health Centre Category",
+        "notFound": "Aucun Health Centre Category trouvé"
+      },
+      "created": "Un nouveau Health Centre Category a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Health Centre Category avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Health Centre Category avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Health Centre Category {{ id }} ?"
+      },
+      "detail": {
+        "title": "Health Centre Category"
+      },
+      "name": "Name"
+    }
+  }
+}

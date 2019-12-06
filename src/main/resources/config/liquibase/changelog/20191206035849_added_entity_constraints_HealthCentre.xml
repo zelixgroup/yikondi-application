@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <!--
+        Added the constraints for entity HealthCentre.
+    -->
+    <changeSet id="20191206035849-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="address_id"
+                                 baseTableName="health_centre"
+                                 constraintName="fk_health_centre_address_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="address"/>
+
+        <addForeignKeyConstraint baseColumnNames="category_id"
+                                 baseTableName="health_centre"
+                                 constraintName="fk_health_centre_category_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="health_centre_category"/>
+
+    </changeSet>
+</databaseChangeLog>

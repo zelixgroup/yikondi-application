@@ -1,0 +1,24 @@
+{
+  "yikondiApp": {
+    "speciality": {
+      "home": {
+        "title": "Specialities",
+        "createLabel": "Créer un nouveau Speciality",
+        "createOrEditLabel": "Créer ou éditer un Speciality",
+        "search": "Recherche pour Speciality",
+        "notFound": "Aucun Speciality trouvé"
+      },
+      "created": "Un nouveau Speciality a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Speciality avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Speciality avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Speciality {{ id }} ?"
+      },
+      "detail": {
+        "title": "Speciality"
+      },
+      "name": "Name",
+      "description": "Description"
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+    "name": "DoctorSchedule",
+    "fields": [
+        {
+            "fieldName": "scheduleStartDate",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "scheduleEndDate",
+            "fieldType": "ZonedDateTime"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "healthCentreDoctor",
+            "otherEntityRelationshipName": "doctorSchedule",
+            "relationshipName": "healthCentreDoctor",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20191206035856",
+    "entityTableName": "doctor_schedule",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

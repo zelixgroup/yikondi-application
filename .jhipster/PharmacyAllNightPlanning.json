@@ -1,0 +1,28 @@
+{
+    "name": "PharmacyAllNightPlanning",
+    "fields": [
+        {
+            "fieldName": "plannedDate",
+            "fieldType": "LocalDate"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "pharmacy",
+            "otherEntityRelationshipName": "pharmacyAllNightPlanning",
+            "relationshipName": "pharmacy",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20191206035851",
+    "entityTableName": "pharmacy_all_night_planning",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

@@ -1,0 +1,25 @@
+{
+  "yikondiApp": {
+    "doctorSchedule": {
+      "home": {
+        "title": "Doctor Schedules",
+        "createLabel": "Create a new Doctor Schedule",
+        "createOrEditLabel": "Create or edit a Doctor Schedule",
+        "search": "Search for Doctor Schedule",
+        "notFound": "No Doctor Schedules found"
+      },
+      "created": "A new Doctor Schedule is created with identifier {{ param }}",
+      "updated": "A Doctor Schedule is updated with identifier {{ param }}",
+      "deleted": "A Doctor Schedule is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Doctor Schedule {{ id }}?"
+      },
+      "detail": {
+        "title": "Doctor Schedule"
+      },
+      "scheduleStartDate": "Schedule Start Date",
+      "scheduleEndDate": "Schedule End Date",
+      "healthCentreDoctor": "Health Centre Doctor"
+    }
+  }
+}

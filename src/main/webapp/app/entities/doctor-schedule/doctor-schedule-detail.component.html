@@ -1,0 +1,37 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="doctorSchedule">
+            <h2><span jhiTranslate="yikondiApp.doctorSchedule.detail.title">Doctor Schedule</span> {{doctorSchedule.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="yikondiApp.doctorSchedule.scheduleStartDate">Schedule Start Date</span></dt>
+                <dd>
+                    <span>{{doctorSchedule.scheduleStartDate}}</span>
+                </dd>
+                <dt><span jhiTranslate="yikondiApp.doctorSchedule.scheduleEndDate">Schedule End Date</span></dt>
+                <dd>
+                    <span>{{doctorSchedule.scheduleEndDate}}</span>
+                </dd>
+                <dt><span jhiTranslate="yikondiApp.doctorSchedule.healthCentreDoctor">Health Centre Doctor</span></dt>
+                <dd>
+                    <div *ngIf="doctorSchedule.healthCentreDoctor">
+                        <a [routerLink]="['/health-centre-doctor', doctorSchedule.healthCentreDoctor?.id, 'view']">{{doctorSchedule.healthCentreDoctor?.id}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/doctor-schedule', doctorSchedule.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,25 @@
+{
+  "yikondiApp": {
+    "patientFavoriteDoctor": {
+      "home": {
+        "title": "Patient Favorite Doctors",
+        "createLabel": "Create a new Patient Favorite Doctor",
+        "createOrEditLabel": "Create or edit a Patient Favorite Doctor",
+        "search": "Search for Patient Favorite Doctor",
+        "notFound": "No Patient Favorite Doctors found"
+      },
+      "created": "A new Patient Favorite Doctor is created with identifier {{ param }}",
+      "updated": "A Patient Favorite Doctor is updated with identifier {{ param }}",
+      "deleted": "A Patient Favorite Doctor is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Patient Favorite Doctor {{ id }}?"
+      },
+      "detail": {
+        "title": "Patient Favorite Doctor"
+      },
+      "activationDate": "Activation Date",
+      "patient": "Patient",
+      "doctor": "Doctor"
+    }
+  }
+}
