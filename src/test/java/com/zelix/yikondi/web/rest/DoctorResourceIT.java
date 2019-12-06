@@ -4,6 +4,7 @@ import com.zelix.yikondi.YikondiApp;
 import com.zelix.yikondi.domain.Doctor;
 import com.zelix.yikondi.repository.DoctorRepository;
 import com.zelix.yikondi.repository.search.DoctorSearchRepository;
+import com.zelix.yikondi.service.DoctorService;
 import com.zelix.yikondi.web.rest.errors.ExceptionTranslator;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -50,6 +51,9 @@ public class DoctorResourceIT {
     @Autowired
     private DoctorRepository doctorRepository;
 
+    @Autowired
+    private DoctorService doctorService;
+
     /**
      * This repository is mocked in the com.zelix.yikondi.repository.search test package.
      *
@@ -80,7 +84,7 @@ public class DoctorResourceIT {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final DoctorResource doctorResource = new DoctorResource(doctorRepository, mockDoctorSearchRepository);
+        final DoctorResource doctorResource = new DoctorResource(doctorService);
         this.restDoctorMockMvc = MockMvcBuilders.standaloneSetup(doctorResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -211,7 +215,9 @@ public class DoctorResourceIT {
     @Transactional
     public void updateDoctor() throws Exception {
         // Initialize the database
-        doctorRepository.saveAndFlush(doctor);
+        doctorService.save(doctor);
+        // As the test used the service layer, reset the Elasticsearch mock repository
+        reset(mockDoctorSearchRepository);
 
         int databaseSizeBeforeUpdate = doctorRepository.findAll().size();
 
@@ -266,7 +272,7 @@ public class DoctorResourceIT {
     @Transactional
     public void deleteDoctor() throws Exception {
         // Initialize the database
-        doctorRepository.saveAndFlush(doctor);
+        doctorService.save(doctor);
 
         int databaseSizeBeforeDelete = doctorRepository.findAll().size();
 
@@ -287,7 +293,7 @@ public class DoctorResourceIT {
     @Transactional
     public void searchDoctor() throws Exception {
         // Initialize the database
-        doctorRepository.saveAndFlush(doctor);
+        doctorService.save(doctor);
         when(mockDoctorSearchRepository.search(queryStringQuery("id:" + doctor.getId())))
             .thenReturn(Collections.singletonList(doctor));
         // Search the doctor

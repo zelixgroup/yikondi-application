@@ -4,6 +4,7 @@ import com.zelix.yikondi.YikondiApp;
 import com.zelix.yikondi.domain.DoctorSchedule;
 import com.zelix.yikondi.repository.DoctorScheduleRepository;
 import com.zelix.yikondi.repository.search.DoctorScheduleSearchRepository;
+import com.zelix.yikondi.service.DoctorScheduleService;
 import com.zelix.yikondi.web.rest.errors.ExceptionTranslator;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -51,6 +52,9 @@ public class DoctorScheduleResourceIT {
     @Autowired
     private DoctorScheduleRepository doctorScheduleRepository;
 
+    @Autowired
+    private DoctorScheduleService doctorScheduleService;
+
     /**
      * This repository is mocked in the com.zelix.yikondi.repository.search test package.
      *
@@ -81,7 +85,7 @@ public class DoctorScheduleResourceIT {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final DoctorScheduleResource doctorScheduleResource = new DoctorScheduleResource(doctorScheduleRepository, mockDoctorScheduleSearchRepository);
+        final DoctorScheduleResource doctorScheduleResource = new DoctorScheduleResource(doctorScheduleService);
         this.restDoctorScheduleMockMvc = MockMvcBuilders.standaloneSetup(doctorScheduleResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -207,7 +211,9 @@ public class DoctorScheduleResourceIT {
     @Transactional
     public void updateDoctorSchedule() throws Exception {
         // Initialize the database
-        doctorScheduleRepository.saveAndFlush(doctorSchedule);
+        doctorScheduleService.save(doctorSchedule);
+        // As the test used the service layer, reset the Elasticsearch mock repository
+        reset(mockDoctorScheduleSearchRepository);
 
         int databaseSizeBeforeUpdate = doctorScheduleRepository.findAll().size();
 
@@ -260,7 +266,7 @@ public class DoctorScheduleResourceIT {
     @Transactional
     public void deleteDoctorSchedule() throws Exception {
         // Initialize the database
-        doctorScheduleRepository.saveAndFlush(doctorSchedule);
+        doctorScheduleService.save(doctorSchedule);
 
         int databaseSizeBeforeDelete = doctorScheduleRepository.findAll().size();
 
@@ -281,7 +287,7 @@ public class DoctorScheduleResourceIT {
     @Transactional
     public void searchDoctorSchedule() throws Exception {
         // Initialize the database
-        doctorScheduleRepository.saveAndFlush(doctorSchedule);
+        doctorScheduleService.save(doctorSchedule);
         when(mockDoctorScheduleSearchRepository.search(queryStringQuery("id:" + doctorSchedule.getId())))
             .thenReturn(Collections.singletonList(doctorSchedule));
         // Search the doctorSchedule

@@ -1,8 +1,7 @@
 package com.zelix.yikondi.web.rest;
 
 import com.zelix.yikondi.domain.DoctorWorkingSlot;
-import com.zelix.yikondi.repository.DoctorWorkingSlotRepository;
-import com.zelix.yikondi.repository.search.DoctorWorkingSlotSearchRepository;
+import com.zelix.yikondi.service.DoctorWorkingSlotService;
 import com.zelix.yikondi.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -11,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional; 
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -19,7 +17,6 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import static org.elasticsearch.index.query.QueryBuilders.*;
@@ -29,7 +26,6 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
  */
 @RestController
 @RequestMapping("/api")
-@Transactional
 public class DoctorWorkingSlotResource {
 
     private final Logger log = LoggerFactory.getLogger(DoctorWorkingSlotResource.class);
@@ -39,13 +35,10 @@ public class DoctorWorkingSlotResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final DoctorWorkingSlotRepository doctorWorkingSlotRepository;
+    private final DoctorWorkingSlotService doctorWorkingSlotService;
 
-    private final DoctorWorkingSlotSearchRepository doctorWorkingSlotSearchRepository;
-
-    public DoctorWorkingSlotResource(DoctorWorkingSlotRepository doctorWorkingSlotRepository, DoctorWorkingSlotSearchRepository doctorWorkingSlotSearchRepository) {
-        this.doctorWorkingSlotRepository = doctorWorkingSlotRepository;
-        this.doctorWorkingSlotSearchRepository = doctorWorkingSlotSearchRepository;
+    public DoctorWorkingSlotResource(DoctorWorkingSlotService doctorWorkingSlotService) {
+        this.doctorWorkingSlotService = doctorWorkingSlotService;
     }
 
     /**
@@ -61,8 +54,7 @@ public class DoctorWorkingSlotResource {
         if (doctorWorkingSlot.getId() != null) {
             throw new BadRequestAlertException("A new doctorWorkingSlot cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        DoctorWorkingSlot result = doctorWorkingSlotRepository.save(doctorWorkingSlot);
-        doctorWorkingSlotSearchRepository.save(result);
+        DoctorWorkingSlot result = doctorWorkingSlotService.save(doctorWorkingSlot);
         return ResponseEntity.created(new URI("/api/doctor-working-slots/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -83,8 +75,7 @@ public class DoctorWorkingSlotResource {
         if (doctorWorkingSlot.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        DoctorWorkingSlot result = doctorWorkingSlotRepository.save(doctorWorkingSlot);
-        doctorWorkingSlotSearchRepository.save(result);
+        DoctorWorkingSlot result = doctorWorkingSlotService.save(doctorWorkingSlot);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, doctorWorkingSlot.getId().toString()))
             .body(result);
@@ -99,7 +90,7 @@ public class DoctorWorkingSlotResource {
     @GetMapping("/doctor-working-slots")
     public List<DoctorWorkingSlot> getAllDoctorWorkingSlots() {
         log.debug("REST request to get all DoctorWorkingSlots");
-        return doctorWorkingSlotRepository.findAll();
+        return doctorWorkingSlotService.findAll();
     }
 
     /**
@@ -111,7 +102,7 @@ public class DoctorWorkingSlotResource {
     @GetMapping("/doctor-working-slots/{id}")
     public ResponseEntity<DoctorWorkingSlot> getDoctorWorkingSlot(@PathVariable Long id) {
         log.debug("REST request to get DoctorWorkingSlot : {}", id);
-        Optional<DoctorWorkingSlot> doctorWorkingSlot = doctorWorkingSlotRepository.findById(id);
+        Optional<DoctorWorkingSlot> doctorWorkingSlot = doctorWorkingSlotService.findOne(id);
         return ResponseUtil.wrapOrNotFound(doctorWorkingSlot);
     }
 
@@ -124,8 +115,7 @@ public class DoctorWorkingSlotResource {
     @DeleteMapping("/doctor-working-slots/{id}")
     public ResponseEntity<Void> deleteDoctorWorkingSlot(@PathVariable Long id) {
         log.debug("REST request to delete DoctorWorkingSlot : {}", id);
-        doctorWorkingSlotRepository.deleteById(id);
-        doctorWorkingSlotSearchRepository.deleteById(id);
+        doctorWorkingSlotService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 
@@ -139,8 +129,6 @@ public class DoctorWorkingSlotResource {
     @GetMapping("/_search/doctor-working-slots")
     public List<DoctorWorkingSlot> searchDoctorWorkingSlots(@RequestParam String query) {
         log.debug("REST request to search DoctorWorkingSlots for query {}", query);
-        return StreamSupport
-            .stream(doctorWorkingSlotSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .collect(Collectors.toList());
+        return doctorWorkingSlotService.search(query);
     }
 }

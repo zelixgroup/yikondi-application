@@ -1,8 +1,7 @@
 package com.zelix.yikondi.web.rest;
 
 import com.zelix.yikondi.domain.Speciality;
-import com.zelix.yikondi.repository.SpecialityRepository;
-import com.zelix.yikondi.repository.search.SpecialitySearchRepository;
+import com.zelix.yikondi.service.SpecialityService;
 import com.zelix.yikondi.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -11,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional; 
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -19,7 +17,6 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import static org.elasticsearch.index.query.QueryBuilders.*;
@@ -29,7 +26,6 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
  */
 @RestController
 @RequestMapping("/api")
-@Transactional
 public class SpecialityResource {
 
     private final Logger log = LoggerFactory.getLogger(SpecialityResource.class);
@@ -39,13 +35,10 @@ public class SpecialityResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final SpecialityRepository specialityRepository;
+    private final SpecialityService specialityService;
 
-    private final SpecialitySearchRepository specialitySearchRepository;
-
-    public SpecialityResource(SpecialityRepository specialityRepository, SpecialitySearchRepository specialitySearchRepository) {
-        this.specialityRepository = specialityRepository;
-        this.specialitySearchRepository = specialitySearchRepository;
+    public SpecialityResource(SpecialityService specialityService) {
+        this.specialityService = specialityService;
     }
 
     /**
@@ -61,8 +54,7 @@ public class SpecialityResource {
         if (speciality.getId() != null) {
             throw new BadRequestAlertException("A new speciality cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Speciality result = specialityRepository.save(speciality);
-        specialitySearchRepository.save(result);
+        Speciality result = specialityService.save(speciality);
         return ResponseEntity.created(new URI("/api/specialities/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -83,8 +75,7 @@ public class SpecialityResource {
         if (speciality.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        Speciality result = specialityRepository.save(speciality);
-        specialitySearchRepository.save(result);
+        Speciality result = specialityService.save(speciality);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, speciality.getId().toString()))
             .body(result);
@@ -99,7 +90,7 @@ public class SpecialityResource {
     @GetMapping("/specialities")
     public List<Speciality> getAllSpecialities() {
         log.debug("REST request to get all Specialities");
-        return specialityRepository.findAll();
+        return specialityService.findAll();
     }
 
     /**
@@ -111,7 +102,7 @@ public class SpecialityResource {
     @GetMapping("/specialities/{id}")
     public ResponseEntity<Speciality> getSpeciality(@PathVariable Long id) {
         log.debug("REST request to get Speciality : {}", id);
-        Optional<Speciality> speciality = specialityRepository.findById(id);
+        Optional<Speciality> speciality = specialityService.findOne(id);
         return ResponseUtil.wrapOrNotFound(speciality);
     }
 
@@ -124,8 +115,7 @@ public class SpecialityResource {
     @DeleteMapping("/specialities/{id}")
     public ResponseEntity<Void> deleteSpeciality(@PathVariable Long id) {
         log.debug("REST request to delete Speciality : {}", id);
-        specialityRepository.deleteById(id);
-        specialitySearchRepository.deleteById(id);
+        specialityService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 
@@ -139,8 +129,6 @@ public class SpecialityResource {
     @GetMapping("/_search/specialities")
     public List<Speciality> searchSpecialities(@RequestParam String query) {
         log.debug("REST request to search Specialities for query {}", query);
-        return StreamSupport
-            .stream(specialitySearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .collect(Collectors.toList());
+        return specialityService.search(query);
     }
 }

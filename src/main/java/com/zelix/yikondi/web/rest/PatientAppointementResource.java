@@ -1,8 +1,7 @@
 package com.zelix.yikondi.web.rest;
 
 import com.zelix.yikondi.domain.PatientAppointement;
-import com.zelix.yikondi.repository.PatientAppointementRepository;
-import com.zelix.yikondi.repository.search.PatientAppointementSearchRepository;
+import com.zelix.yikondi.service.PatientAppointementService;
 import com.zelix.yikondi.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -11,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional; 
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -19,7 +17,6 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import static org.elasticsearch.index.query.QueryBuilders.*;
@@ -29,7 +26,6 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
  */
 @RestController
 @RequestMapping("/api")
-@Transactional
 public class PatientAppointementResource {
 
     private final Logger log = LoggerFactory.getLogger(PatientAppointementResource.class);
@@ -39,13 +35,10 @@ public class PatientAppointementResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final PatientAppointementRepository patientAppointementRepository;
+    private final PatientAppointementService patientAppointementService;
 
-    private final PatientAppointementSearchRepository patientAppointementSearchRepository;
-
-    public PatientAppointementResource(PatientAppointementRepository patientAppointementRepository, PatientAppointementSearchRepository patientAppointementSearchRepository) {
-        this.patientAppointementRepository = patientAppointementRepository;
-        this.patientAppointementSearchRepository = patientAppointementSearchRepository;
+    public PatientAppointementResource(PatientAppointementService patientAppointementService) {
+        this.patientAppointementService = patientAppointementService;
     }
 
     /**
@@ -61,8 +54,7 @@ public class PatientAppointementResource {
         if (patientAppointement.getId() != null) {
             throw new BadRequestAlertException("A new patientAppointement cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        PatientAppointement result = patientAppointementRepository.save(patientAppointement);
-        patientAppointementSearchRepository.save(result);
+        PatientAppointement result = patientAppointementService.save(patientAppointement);
         return ResponseEntity.created(new URI("/api/patient-appointements/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -83,8 +75,7 @@ public class PatientAppointementResource {
         if (patientAppointement.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        PatientAppointement result = patientAppointementRepository.save(patientAppointement);
-        patientAppointementSearchRepository.save(result);
+        PatientAppointement result = patientAppointementService.save(patientAppointement);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, patientAppointement.getId().toString()))
             .body(result);
@@ -99,7 +90,7 @@ public class PatientAppointementResource {
     @GetMapping("/patient-appointements")
     public List<PatientAppointement> getAllPatientAppointements() {
         log.debug("REST request to get all PatientAppointements");
-        return patientAppointementRepository.findAll();
+        return patientAppointementService.findAll();
     }
 
     /**
@@ -111,7 +102,7 @@ public class PatientAppointementResource {
     @GetMapping("/patient-appointements/{id}")
     public ResponseEntity<PatientAppointement> getPatientAppointement(@PathVariable Long id) {
         log.debug("REST request to get PatientAppointement : {}", id);
-        Optional<PatientAppointement> patientAppointement = patientAppointementRepository.findById(id);
+        Optional<PatientAppointement> patientAppointement = patientAppointementService.findOne(id);
         return ResponseUtil.wrapOrNotFound(patientAppointement);
     }
 
@@ -124,8 +115,7 @@ public class PatientAppointementResource {
     @DeleteMapping("/patient-appointements/{id}")
     public ResponseEntity<Void> deletePatientAppointement(@PathVariable Long id) {
         log.debug("REST request to delete PatientAppointement : {}", id);
-        patientAppointementRepository.deleteById(id);
-        patientAppointementSearchRepository.deleteById(id);
+        patientAppointementService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 
@@ -139,8 +129,6 @@ public class PatientAppointementResource {
     @GetMapping("/_search/patient-appointements")
     public List<PatientAppointement> searchPatientAppointements(@RequestParam String query) {
         log.debug("REST request to search PatientAppointements for query {}", query);
-        return StreamSupport
-            .stream(patientAppointementSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .collect(Collectors.toList());
+        return patientAppointementService.search(query);
     }
 }

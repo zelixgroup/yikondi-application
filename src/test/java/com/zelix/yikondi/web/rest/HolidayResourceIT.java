@@ -4,6 +4,7 @@ import com.zelix.yikondi.YikondiApp;
 import com.zelix.yikondi.domain.Holiday;
 import com.zelix.yikondi.repository.HolidayRepository;
 import com.zelix.yikondi.repository.search.HolidaySearchRepository;
+import com.zelix.yikondi.service.HolidayService;
 import com.zelix.yikondi.web.rest.errors.ExceptionTranslator;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -48,6 +49,9 @@ public class HolidayResourceIT {
     @Autowired
     private HolidayRepository holidayRepository;
 
+    @Autowired
+    private HolidayService holidayService;
+
     /**
      * This repository is mocked in the com.zelix.yikondi.repository.search test package.
      *
@@ -78,7 +82,7 @@ public class HolidayResourceIT {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final HolidayResource holidayResource = new HolidayResource(holidayRepository, mockHolidaySearchRepository);
+        final HolidayResource holidayResource = new HolidayResource(holidayService);
         this.restHolidayMockMvc = MockMvcBuilders.standaloneSetup(holidayResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -204,7 +208,9 @@ public class HolidayResourceIT {
     @Transactional
     public void updateHoliday() throws Exception {
         // Initialize the database
-        holidayRepository.saveAndFlush(holiday);
+        holidayService.save(holiday);
+        // As the test used the service layer, reset the Elasticsearch mock repository
+        reset(mockHolidaySearchRepository);
 
         int databaseSizeBeforeUpdate = holidayRepository.findAll().size();
 
@@ -257,7 +263,7 @@ public class HolidayResourceIT {
     @Transactional
     public void deleteHoliday() throws Exception {
         // Initialize the database
-        holidayRepository.saveAndFlush(holiday);
+        holidayService.save(holiday);
 
         int databaseSizeBeforeDelete = holidayRepository.findAll().size();
 
@@ -278,7 +284,7 @@ public class HolidayResourceIT {
     @Transactional
     public void searchHoliday() throws Exception {
         // Initialize the database
-        holidayRepository.saveAndFlush(holiday);
+        holidayService.save(holiday);
         when(mockHolidaySearchRepository.search(queryStringQuery("id:" + holiday.getId())))
             .thenReturn(Collections.singletonList(holiday));
         // Search the holiday

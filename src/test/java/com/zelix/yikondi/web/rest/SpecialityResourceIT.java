@@ -4,6 +4,7 @@ import com.zelix.yikondi.YikondiApp;
 import com.zelix.yikondi.domain.Speciality;
 import com.zelix.yikondi.repository.SpecialityRepository;
 import com.zelix.yikondi.repository.search.SpecialitySearchRepository;
+import com.zelix.yikondi.service.SpecialityService;
 import com.zelix.yikondi.web.rest.errors.ExceptionTranslator;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -46,6 +47,9 @@ public class SpecialityResourceIT {
     @Autowired
     private SpecialityRepository specialityRepository;
 
+    @Autowired
+    private SpecialityService specialityService;
+
     /**
      * This repository is mocked in the com.zelix.yikondi.repository.search test package.
      *
@@ -76,7 +80,7 @@ public class SpecialityResourceIT {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final SpecialityResource specialityResource = new SpecialityResource(specialityRepository, mockSpecialitySearchRepository);
+        final SpecialityResource specialityResource = new SpecialityResource(specialityService);
         this.restSpecialityMockMvc = MockMvcBuilders.standaloneSetup(specialityResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -202,7 +206,9 @@ public class SpecialityResourceIT {
     @Transactional
     public void updateSpeciality() throws Exception {
         // Initialize the database
-        specialityRepository.saveAndFlush(speciality);
+        specialityService.save(speciality);
+        // As the test used the service layer, reset the Elasticsearch mock repository
+        reset(mockSpecialitySearchRepository);
 
         int databaseSizeBeforeUpdate = specialityRepository.findAll().size();
 
@@ -255,7 +261,7 @@ public class SpecialityResourceIT {
     @Transactional
     public void deleteSpeciality() throws Exception {
         // Initialize the database
-        specialityRepository.saveAndFlush(speciality);
+        specialityService.save(speciality);
 
         int databaseSizeBeforeDelete = specialityRepository.findAll().size();
 
@@ -276,7 +282,7 @@ public class SpecialityResourceIT {
     @Transactional
     public void searchSpeciality() throws Exception {
         // Initialize the database
-        specialityRepository.saveAndFlush(speciality);
+        specialityService.save(speciality);
         when(mockSpecialitySearchRepository.search(queryStringQuery("id:" + speciality.getId())))
             .thenReturn(Collections.singletonList(speciality));
         // Search the speciality

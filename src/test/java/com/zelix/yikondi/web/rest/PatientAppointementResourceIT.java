@@ -4,6 +4,7 @@ import com.zelix.yikondi.YikondiApp;
 import com.zelix.yikondi.domain.PatientAppointement;
 import com.zelix.yikondi.repository.PatientAppointementRepository;
 import com.zelix.yikondi.repository.search.PatientAppointementSearchRepository;
+import com.zelix.yikondi.service.PatientAppointementService;
 import com.zelix.yikondi.web.rest.errors.ExceptionTranslator;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -51,6 +52,9 @@ public class PatientAppointementResourceIT {
     @Autowired
     private PatientAppointementRepository patientAppointementRepository;
 
+    @Autowired
+    private PatientAppointementService patientAppointementService;
+
     /**
      * This repository is mocked in the com.zelix.yikondi.repository.search test package.
      *
@@ -81,7 +85,7 @@ public class PatientAppointementResourceIT {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final PatientAppointementResource patientAppointementResource = new PatientAppointementResource(patientAppointementRepository, mockPatientAppointementSearchRepository);
+        final PatientAppointementResource patientAppointementResource = new PatientAppointementResource(patientAppointementService);
         this.restPatientAppointementMockMvc = MockMvcBuilders.standaloneSetup(patientAppointementResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -207,7 +211,9 @@ public class PatientAppointementResourceIT {
     @Transactional
     public void updatePatientAppointement() throws Exception {
         // Initialize the database
-        patientAppointementRepository.saveAndFlush(patientAppointement);
+        patientAppointementService.save(patientAppointement);
+        // As the test used the service layer, reset the Elasticsearch mock repository
+        reset(mockPatientAppointementSearchRepository);
 
         int databaseSizeBeforeUpdate = patientAppointementRepository.findAll().size();
 
@@ -260,7 +266,7 @@ public class PatientAppointementResourceIT {
     @Transactional
     public void deletePatientAppointement() throws Exception {
         // Initialize the database
-        patientAppointementRepository.saveAndFlush(patientAppointement);
+        patientAppointementService.save(patientAppointement);
 
         int databaseSizeBeforeDelete = patientAppointementRepository.findAll().size();
 
@@ -281,7 +287,7 @@ public class PatientAppointementResourceIT {
     @Transactional
     public void searchPatientAppointement() throws Exception {
         // Initialize the database
-        patientAppointementRepository.saveAndFlush(patientAppointement);
+        patientAppointementService.save(patientAppointement);
         when(mockPatientAppointementSearchRepository.search(queryStringQuery("id:" + patientAppointement.getId())))
             .thenReturn(Collections.singletonList(patientAppointement));
         // Search the patientAppointement

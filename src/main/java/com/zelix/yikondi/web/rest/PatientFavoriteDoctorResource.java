@@ -1,8 +1,7 @@
 package com.zelix.yikondi.web.rest;
 
 import com.zelix.yikondi.domain.PatientFavoriteDoctor;
-import com.zelix.yikondi.repository.PatientFavoriteDoctorRepository;
-import com.zelix.yikondi.repository.search.PatientFavoriteDoctorSearchRepository;
+import com.zelix.yikondi.service.PatientFavoriteDoctorService;
 import com.zelix.yikondi.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -11,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional; 
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -19,7 +17,6 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import static org.elasticsearch.index.query.QueryBuilders.*;
@@ -29,7 +26,6 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
  */
 @RestController
 @RequestMapping("/api")
-@Transactional
 public class PatientFavoriteDoctorResource {
 
     private final Logger log = LoggerFactory.getLogger(PatientFavoriteDoctorResource.class);
@@ -39,13 +35,10 @@ public class PatientFavoriteDoctorResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final PatientFavoriteDoctorRepository patientFavoriteDoctorRepository;
+    private final PatientFavoriteDoctorService patientFavoriteDoctorService;
 
-    private final PatientFavoriteDoctorSearchRepository patientFavoriteDoctorSearchRepository;
-
-    public PatientFavoriteDoctorResource(PatientFavoriteDoctorRepository patientFavoriteDoctorRepository, PatientFavoriteDoctorSearchRepository patientFavoriteDoctorSearchRepository) {
-        this.patientFavoriteDoctorRepository = patientFavoriteDoctorRepository;
-        this.patientFavoriteDoctorSearchRepository = patientFavoriteDoctorSearchRepository;
+    public PatientFavoriteDoctorResource(PatientFavoriteDoctorService patientFavoriteDoctorService) {
+        this.patientFavoriteDoctorService = patientFavoriteDoctorService;
     }
 
     /**
@@ -61,8 +54,7 @@ public class PatientFavoriteDoctorResource {
         if (patientFavoriteDoctor.getId() != null) {
             throw new BadRequestAlertException("A new patientFavoriteDoctor cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        PatientFavoriteDoctor result = patientFavoriteDoctorRepository.save(patientFavoriteDoctor);
-        patientFavoriteDoctorSearchRepository.save(result);
+        PatientFavoriteDoctor result = patientFavoriteDoctorService.save(patientFavoriteDoctor);
         return ResponseEntity.created(new URI("/api/patient-favorite-doctors/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -83,8 +75,7 @@ public class PatientFavoriteDoctorResource {
         if (patientFavoriteDoctor.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        PatientFavoriteDoctor result = patientFavoriteDoctorRepository.save(patientFavoriteDoctor);
-        patientFavoriteDoctorSearchRepository.save(result);
+        PatientFavoriteDoctor result = patientFavoriteDoctorService.save(patientFavoriteDoctor);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, patientFavoriteDoctor.getId().toString()))
             .body(result);
@@ -99,7 +90,7 @@ public class PatientFavoriteDoctorResource {
     @GetMapping("/patient-favorite-doctors")
     public List<PatientFavoriteDoctor> getAllPatientFavoriteDoctors() {
         log.debug("REST request to get all PatientFavoriteDoctors");
-        return patientFavoriteDoctorRepository.findAll();
+        return patientFavoriteDoctorService.findAll();
     }
 
     /**
@@ -111,7 +102,7 @@ public class PatientFavoriteDoctorResource {
     @GetMapping("/patient-favorite-doctors/{id}")
     public ResponseEntity<PatientFavoriteDoctor> getPatientFavoriteDoctor(@PathVariable Long id) {
         log.debug("REST request to get PatientFavoriteDoctor : {}", id);
-        Optional<PatientFavoriteDoctor> patientFavoriteDoctor = patientFavoriteDoctorRepository.findById(id);
+        Optional<PatientFavoriteDoctor> patientFavoriteDoctor = patientFavoriteDoctorService.findOne(id);
         return ResponseUtil.wrapOrNotFound(patientFavoriteDoctor);
     }
 
@@ -124,8 +115,7 @@ public class PatientFavoriteDoctorResource {
     @DeleteMapping("/patient-favorite-doctors/{id}")
     public ResponseEntity<Void> deletePatientFavoriteDoctor(@PathVariable Long id) {
         log.debug("REST request to delete PatientFavoriteDoctor : {}", id);
-        patientFavoriteDoctorRepository.deleteById(id);
-        patientFavoriteDoctorSearchRepository.deleteById(id);
+        patientFavoriteDoctorService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 
@@ -139,8 +129,6 @@ public class PatientFavoriteDoctorResource {
     @GetMapping("/_search/patient-favorite-doctors")
     public List<PatientFavoriteDoctor> searchPatientFavoriteDoctors(@RequestParam String query) {
         log.debug("REST request to search PatientFavoriteDoctors for query {}", query);
-        return StreamSupport
-            .stream(patientFavoriteDoctorSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .collect(Collectors.toList());
+        return patientFavoriteDoctorService.search(query);
     }
 }

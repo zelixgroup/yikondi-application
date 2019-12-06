@@ -4,6 +4,7 @@ import com.zelix.yikondi.YikondiApp;
 import com.zelix.yikondi.domain.City;
 import com.zelix.yikondi.repository.CityRepository;
 import com.zelix.yikondi.repository.search.CitySearchRepository;
+import com.zelix.yikondi.service.CityService;
 import com.zelix.yikondi.web.rest.errors.ExceptionTranslator;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -43,6 +44,9 @@ public class CityResourceIT {
     @Autowired
     private CityRepository cityRepository;
 
+    @Autowired
+    private CityService cityService;
+
     /**
      * This repository is mocked in the com.zelix.yikondi.repository.search test package.
      *
@@ -73,7 +77,7 @@ public class CityResourceIT {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final CityResource cityResource = new CityResource(cityRepository, mockCitySearchRepository);
+        final CityResource cityResource = new CityResource(cityService);
         this.restCityMockMvc = MockMvcBuilders.standaloneSetup(cityResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -194,7 +198,9 @@ public class CityResourceIT {
     @Transactional
     public void updateCity() throws Exception {
         // Initialize the database
-        cityRepository.saveAndFlush(city);
+        cityService.save(city);
+        // As the test used the service layer, reset the Elasticsearch mock repository
+        reset(mockCitySearchRepository);
 
         int databaseSizeBeforeUpdate = cityRepository.findAll().size();
 
@@ -245,7 +251,7 @@ public class CityResourceIT {
     @Transactional
     public void deleteCity() throws Exception {
         // Initialize the database
-        cityRepository.saveAndFlush(city);
+        cityService.save(city);
 
         int databaseSizeBeforeDelete = cityRepository.findAll().size();
 
@@ -266,7 +272,7 @@ public class CityResourceIT {
     @Transactional
     public void searchCity() throws Exception {
         // Initialize the database
-        cityRepository.saveAndFlush(city);
+        cityService.save(city);
         when(mockCitySearchRepository.search(queryStringQuery("id:" + city.getId())))
             .thenReturn(Collections.singletonList(city));
         // Search the city

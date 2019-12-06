@@ -1,8 +1,7 @@
 package com.zelix.yikondi.web.rest;
 
 import com.zelix.yikondi.domain.HealthCentreCategory;
-import com.zelix.yikondi.repository.HealthCentreCategoryRepository;
-import com.zelix.yikondi.repository.search.HealthCentreCategorySearchRepository;
+import com.zelix.yikondi.service.HealthCentreCategoryService;
 import com.zelix.yikondi.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -11,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional; 
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -19,7 +17,6 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import static org.elasticsearch.index.query.QueryBuilders.*;
@@ -29,7 +26,6 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
  */
 @RestController
 @RequestMapping("/api")
-@Transactional
 public class HealthCentreCategoryResource {
 
     private final Logger log = LoggerFactory.getLogger(HealthCentreCategoryResource.class);
@@ -39,13 +35,10 @@ public class HealthCentreCategoryResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final HealthCentreCategoryRepository healthCentreCategoryRepository;
+    private final HealthCentreCategoryService healthCentreCategoryService;
 
-    private final HealthCentreCategorySearchRepository healthCentreCategorySearchRepository;
-
-    public HealthCentreCategoryResource(HealthCentreCategoryRepository healthCentreCategoryRepository, HealthCentreCategorySearchRepository healthCentreCategorySearchRepository) {
-        this.healthCentreCategoryRepository = healthCentreCategoryRepository;
-        this.healthCentreCategorySearchRepository = healthCentreCategorySearchRepository;
+    public HealthCentreCategoryResource(HealthCentreCategoryService healthCentreCategoryService) {
+        this.healthCentreCategoryService = healthCentreCategoryService;
     }
 
     /**
@@ -61,8 +54,7 @@ public class HealthCentreCategoryResource {
         if (healthCentreCategory.getId() != null) {
             throw new BadRequestAlertException("A new healthCentreCategory cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        HealthCentreCategory result = healthCentreCategoryRepository.save(healthCentreCategory);
-        healthCentreCategorySearchRepository.save(result);
+        HealthCentreCategory result = healthCentreCategoryService.save(healthCentreCategory);
         return ResponseEntity.created(new URI("/api/health-centre-categories/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -83,8 +75,7 @@ public class HealthCentreCategoryResource {
         if (healthCentreCategory.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        HealthCentreCategory result = healthCentreCategoryRepository.save(healthCentreCategory);
-        healthCentreCategorySearchRepository.save(result);
+        HealthCentreCategory result = healthCentreCategoryService.save(healthCentreCategory);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, healthCentreCategory.getId().toString()))
             .body(result);
@@ -99,7 +90,7 @@ public class HealthCentreCategoryResource {
     @GetMapping("/health-centre-categories")
     public List<HealthCentreCategory> getAllHealthCentreCategories() {
         log.debug("REST request to get all HealthCentreCategories");
-        return healthCentreCategoryRepository.findAll();
+        return healthCentreCategoryService.findAll();
     }
 
     /**
@@ -111,7 +102,7 @@ public class HealthCentreCategoryResource {
     @GetMapping("/health-centre-categories/{id}")
     public ResponseEntity<HealthCentreCategory> getHealthCentreCategory(@PathVariable Long id) {
         log.debug("REST request to get HealthCentreCategory : {}", id);
-        Optional<HealthCentreCategory> healthCentreCategory = healthCentreCategoryRepository.findById(id);
+        Optional<HealthCentreCategory> healthCentreCategory = healthCentreCategoryService.findOne(id);
         return ResponseUtil.wrapOrNotFound(healthCentreCategory);
     }
 
@@ -124,8 +115,7 @@ public class HealthCentreCategoryResource {
     @DeleteMapping("/health-centre-categories/{id}")
     public ResponseEntity<Void> deleteHealthCentreCategory(@PathVariable Long id) {
         log.debug("REST request to delete HealthCentreCategory : {}", id);
-        healthCentreCategoryRepository.deleteById(id);
-        healthCentreCategorySearchRepository.deleteById(id);
+        healthCentreCategoryService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 
@@ -139,8 +129,6 @@ public class HealthCentreCategoryResource {
     @GetMapping("/_search/health-centre-categories")
     public List<HealthCentreCategory> searchHealthCentreCategories(@RequestParam String query) {
         log.debug("REST request to search HealthCentreCategories for query {}", query);
-        return StreamSupport
-            .stream(healthCentreCategorySearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .collect(Collectors.toList());
+        return healthCentreCategoryService.search(query);
     }
 }

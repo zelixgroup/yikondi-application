@@ -1,8 +1,7 @@
 package com.zelix.yikondi.web.rest;
 
 import com.zelix.yikondi.domain.PharmacyAllNightPlanning;
-import com.zelix.yikondi.repository.PharmacyAllNightPlanningRepository;
-import com.zelix.yikondi.repository.search.PharmacyAllNightPlanningSearchRepository;
+import com.zelix.yikondi.service.PharmacyAllNightPlanningService;
 import com.zelix.yikondi.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -11,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional; 
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -19,7 +17,6 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import static org.elasticsearch.index.query.QueryBuilders.*;
@@ -29,7 +26,6 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
  */
 @RestController
 @RequestMapping("/api")
-@Transactional
 public class PharmacyAllNightPlanningResource {
 
     private final Logger log = LoggerFactory.getLogger(PharmacyAllNightPlanningResource.class);
@@ -39,13 +35,10 @@ public class PharmacyAllNightPlanningResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final PharmacyAllNightPlanningRepository pharmacyAllNightPlanningRepository;
+    private final PharmacyAllNightPlanningService pharmacyAllNightPlanningService;
 
-    private final PharmacyAllNightPlanningSearchRepository pharmacyAllNightPlanningSearchRepository;
-
-    public PharmacyAllNightPlanningResource(PharmacyAllNightPlanningRepository pharmacyAllNightPlanningRepository, PharmacyAllNightPlanningSearchRepository pharmacyAllNightPlanningSearchRepository) {
-        this.pharmacyAllNightPlanningRepository = pharmacyAllNightPlanningRepository;
-        this.pharmacyAllNightPlanningSearchRepository = pharmacyAllNightPlanningSearchRepository;
+    public PharmacyAllNightPlanningResource(PharmacyAllNightPlanningService pharmacyAllNightPlanningService) {
+        this.pharmacyAllNightPlanningService = pharmacyAllNightPlanningService;
     }
 
     /**
@@ -61,8 +54,7 @@ public class PharmacyAllNightPlanningResource {
         if (pharmacyAllNightPlanning.getId() != null) {
             throw new BadRequestAlertException("A new pharmacyAllNightPlanning cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        PharmacyAllNightPlanning result = pharmacyAllNightPlanningRepository.save(pharmacyAllNightPlanning);
-        pharmacyAllNightPlanningSearchRepository.save(result);
+        PharmacyAllNightPlanning result = pharmacyAllNightPlanningService.save(pharmacyAllNightPlanning);
         return ResponseEntity.created(new URI("/api/pharmacy-all-night-plannings/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -83,8 +75,7 @@ public class PharmacyAllNightPlanningResource {
         if (pharmacyAllNightPlanning.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        PharmacyAllNightPlanning result = pharmacyAllNightPlanningRepository.save(pharmacyAllNightPlanning);
-        pharmacyAllNightPlanningSearchRepository.save(result);
+        PharmacyAllNightPlanning result = pharmacyAllNightPlanningService.save(pharmacyAllNightPlanning);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, pharmacyAllNightPlanning.getId().toString()))
             .body(result);
@@ -99,7 +90,7 @@ public class PharmacyAllNightPlanningResource {
     @GetMapping("/pharmacy-all-night-plannings")
     public List<PharmacyAllNightPlanning> getAllPharmacyAllNightPlannings() {
         log.debug("REST request to get all PharmacyAllNightPlannings");
-        return pharmacyAllNightPlanningRepository.findAll();
+        return pharmacyAllNightPlanningService.findAll();
     }
 
     /**
@@ -111,7 +102,7 @@ public class PharmacyAllNightPlanningResource {
     @GetMapping("/pharmacy-all-night-plannings/{id}")
     public ResponseEntity<PharmacyAllNightPlanning> getPharmacyAllNightPlanning(@PathVariable Long id) {
         log.debug("REST request to get PharmacyAllNightPlanning : {}", id);
-        Optional<PharmacyAllNightPlanning> pharmacyAllNightPlanning = pharmacyAllNightPlanningRepository.findById(id);
+        Optional<PharmacyAllNightPlanning> pharmacyAllNightPlanning = pharmacyAllNightPlanningService.findOne(id);
         return ResponseUtil.wrapOrNotFound(pharmacyAllNightPlanning);
     }
 
@@ -124,8 +115,7 @@ public class PharmacyAllNightPlanningResource {
     @DeleteMapping("/pharmacy-all-night-plannings/{id}")
     public ResponseEntity<Void> deletePharmacyAllNightPlanning(@PathVariable Long id) {
         log.debug("REST request to delete PharmacyAllNightPlanning : {}", id);
-        pharmacyAllNightPlanningRepository.deleteById(id);
-        pharmacyAllNightPlanningSearchRepository.deleteById(id);
+        pharmacyAllNightPlanningService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 
@@ -139,8 +129,6 @@ public class PharmacyAllNightPlanningResource {
     @GetMapping("/_search/pharmacy-all-night-plannings")
     public List<PharmacyAllNightPlanning> searchPharmacyAllNightPlannings(@RequestParam String query) {
         log.debug("REST request to search PharmacyAllNightPlannings for query {}", query);
-        return StreamSupport
-            .stream(pharmacyAllNightPlanningSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .collect(Collectors.toList());
+        return pharmacyAllNightPlanningService.search(query);
     }
 }

@@ -4,6 +4,7 @@ import com.zelix.yikondi.YikondiApp;
 import com.zelix.yikondi.domain.Pharmacy;
 import com.zelix.yikondi.repository.PharmacyRepository;
 import com.zelix.yikondi.repository.search.PharmacySearchRepository;
+import com.zelix.yikondi.service.PharmacyService;
 import com.zelix.yikondi.web.rest.errors.ExceptionTranslator;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -43,6 +44,9 @@ public class PharmacyResourceIT {
     @Autowired
     private PharmacyRepository pharmacyRepository;
 
+    @Autowired
+    private PharmacyService pharmacyService;
+
     /**
      * This repository is mocked in the com.zelix.yikondi.repository.search test package.
      *
@@ -73,7 +77,7 @@ public class PharmacyResourceIT {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final PharmacyResource pharmacyResource = new PharmacyResource(pharmacyRepository, mockPharmacySearchRepository);
+        final PharmacyResource pharmacyResource = new PharmacyResource(pharmacyService);
         this.restPharmacyMockMvc = MockMvcBuilders.standaloneSetup(pharmacyResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -194,7 +198,9 @@ public class PharmacyResourceIT {
     @Transactional
     public void updatePharmacy() throws Exception {
         // Initialize the database
-        pharmacyRepository.saveAndFlush(pharmacy);
+        pharmacyService.save(pharmacy);
+        // As the test used the service layer, reset the Elasticsearch mock repository
+        reset(mockPharmacySearchRepository);
 
         int databaseSizeBeforeUpdate = pharmacyRepository.findAll().size();
 
@@ -245,7 +251,7 @@ public class PharmacyResourceIT {
     @Transactional
     public void deletePharmacy() throws Exception {
         // Initialize the database
-        pharmacyRepository.saveAndFlush(pharmacy);
+        pharmacyService.save(pharmacy);
 
         int databaseSizeBeforeDelete = pharmacyRepository.findAll().size();
 
@@ -266,7 +272,7 @@ public class PharmacyResourceIT {
     @Transactional
     public void searchPharmacy() throws Exception {
         // Initialize the database
-        pharmacyRepository.saveAndFlush(pharmacy);
+        pharmacyService.save(pharmacy);
         when(mockPharmacySearchRepository.search(queryStringQuery("id:" + pharmacy.getId())))
             .thenReturn(Collections.singletonList(pharmacy));
         // Search the pharmacy

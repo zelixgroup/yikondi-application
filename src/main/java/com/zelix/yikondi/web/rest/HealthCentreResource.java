@@ -1,8 +1,7 @@
 package com.zelix.yikondi.web.rest;
 
 import com.zelix.yikondi.domain.HealthCentre;
-import com.zelix.yikondi.repository.HealthCentreRepository;
-import com.zelix.yikondi.repository.search.HealthCentreSearchRepository;
+import com.zelix.yikondi.service.HealthCentreService;
 import com.zelix.yikondi.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -11,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional; 
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -19,7 +17,6 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import static org.elasticsearch.index.query.QueryBuilders.*;
@@ -29,7 +26,6 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
  */
 @RestController
 @RequestMapping("/api")
-@Transactional
 public class HealthCentreResource {
 
     private final Logger log = LoggerFactory.getLogger(HealthCentreResource.class);
@@ -39,13 +35,10 @@ public class HealthCentreResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final HealthCentreRepository healthCentreRepository;
+    private final HealthCentreService healthCentreService;
 
-    private final HealthCentreSearchRepository healthCentreSearchRepository;
-
-    public HealthCentreResource(HealthCentreRepository healthCentreRepository, HealthCentreSearchRepository healthCentreSearchRepository) {
-        this.healthCentreRepository = healthCentreRepository;
-        this.healthCentreSearchRepository = healthCentreSearchRepository;
+    public HealthCentreResource(HealthCentreService healthCentreService) {
+        this.healthCentreService = healthCentreService;
     }
 
     /**
@@ -61,8 +54,7 @@ public class HealthCentreResource {
         if (healthCentre.getId() != null) {
             throw new BadRequestAlertException("A new healthCentre cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        HealthCentre result = healthCentreRepository.save(healthCentre);
-        healthCentreSearchRepository.save(result);
+        HealthCentre result = healthCentreService.save(healthCentre);
         return ResponseEntity.created(new URI("/api/health-centres/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -83,8 +75,7 @@ public class HealthCentreResource {
         if (healthCentre.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        HealthCentre result = healthCentreRepository.save(healthCentre);
-        healthCentreSearchRepository.save(result);
+        HealthCentre result = healthCentreService.save(healthCentre);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, healthCentre.getId().toString()))
             .body(result);
@@ -99,7 +90,7 @@ public class HealthCentreResource {
     @GetMapping("/health-centres")
     public List<HealthCentre> getAllHealthCentres() {
         log.debug("REST request to get all HealthCentres");
-        return healthCentreRepository.findAll();
+        return healthCentreService.findAll();
     }
 
     /**
@@ -111,7 +102,7 @@ public class HealthCentreResource {
     @GetMapping("/health-centres/{id}")
     public ResponseEntity<HealthCentre> getHealthCentre(@PathVariable Long id) {
         log.debug("REST request to get HealthCentre : {}", id);
-        Optional<HealthCentre> healthCentre = healthCentreRepository.findById(id);
+        Optional<HealthCentre> healthCentre = healthCentreService.findOne(id);
         return ResponseUtil.wrapOrNotFound(healthCentre);
     }
 
@@ -124,8 +115,7 @@ public class HealthCentreResource {
     @DeleteMapping("/health-centres/{id}")
     public ResponseEntity<Void> deleteHealthCentre(@PathVariable Long id) {
         log.debug("REST request to delete HealthCentre : {}", id);
-        healthCentreRepository.deleteById(id);
-        healthCentreSearchRepository.deleteById(id);
+        healthCentreService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 
@@ -139,8 +129,6 @@ public class HealthCentreResource {
     @GetMapping("/_search/health-centres")
     public List<HealthCentre> searchHealthCentres(@RequestParam String query) {
         log.debug("REST request to search HealthCentres for query {}", query);
-        return StreamSupport
-            .stream(healthCentreSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .collect(Collectors.toList());
+        return healthCentreService.search(query);
     }
 }

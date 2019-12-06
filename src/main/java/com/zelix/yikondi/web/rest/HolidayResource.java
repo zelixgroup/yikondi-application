@@ -1,8 +1,7 @@
 package com.zelix.yikondi.web.rest;
 
 import com.zelix.yikondi.domain.Holiday;
-import com.zelix.yikondi.repository.HolidayRepository;
-import com.zelix.yikondi.repository.search.HolidaySearchRepository;
+import com.zelix.yikondi.service.HolidayService;
 import com.zelix.yikondi.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -11,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional; 
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -19,7 +17,6 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import static org.elasticsearch.index.query.QueryBuilders.*;
@@ -29,7 +26,6 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
  */
 @RestController
 @RequestMapping("/api")
-@Transactional
 public class HolidayResource {
 
     private final Logger log = LoggerFactory.getLogger(HolidayResource.class);
@@ -39,13 +35,10 @@ public class HolidayResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final HolidayRepository holidayRepository;
+    private final HolidayService holidayService;
 
-    private final HolidaySearchRepository holidaySearchRepository;
-
-    public HolidayResource(HolidayRepository holidayRepository, HolidaySearchRepository holidaySearchRepository) {
-        this.holidayRepository = holidayRepository;
-        this.holidaySearchRepository = holidaySearchRepository;
+    public HolidayResource(HolidayService holidayService) {
+        this.holidayService = holidayService;
     }
 
     /**
@@ -61,8 +54,7 @@ public class HolidayResource {
         if (holiday.getId() != null) {
             throw new BadRequestAlertException("A new holiday cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Holiday result = holidayRepository.save(holiday);
-        holidaySearchRepository.save(result);
+        Holiday result = holidayService.save(holiday);
         return ResponseEntity.created(new URI("/api/holidays/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -83,8 +75,7 @@ public class HolidayResource {
         if (holiday.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        Holiday result = holidayRepository.save(holiday);
-        holidaySearchRepository.save(result);
+        Holiday result = holidayService.save(holiday);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, holiday.getId().toString()))
             .body(result);
@@ -99,7 +90,7 @@ public class HolidayResource {
     @GetMapping("/holidays")
     public List<Holiday> getAllHolidays() {
         log.debug("REST request to get all Holidays");
-        return holidayRepository.findAll();
+        return holidayService.findAll();
     }
 
     /**
@@ -111,7 +102,7 @@ public class HolidayResource {
     @GetMapping("/holidays/{id}")
     public ResponseEntity<Holiday> getHoliday(@PathVariable Long id) {
         log.debug("REST request to get Holiday : {}", id);
-        Optional<Holiday> holiday = holidayRepository.findById(id);
+        Optional<Holiday> holiday = holidayService.findOne(id);
         return ResponseUtil.wrapOrNotFound(holiday);
     }
 
@@ -124,8 +115,7 @@ public class HolidayResource {
     @DeleteMapping("/holidays/{id}")
     public ResponseEntity<Void> deleteHoliday(@PathVariable Long id) {
         log.debug("REST request to delete Holiday : {}", id);
-        holidayRepository.deleteById(id);
-        holidaySearchRepository.deleteById(id);
+        holidayService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 
@@ -139,8 +129,6 @@ public class HolidayResource {
     @GetMapping("/_search/holidays")
     public List<Holiday> searchHolidays(@RequestParam String query) {
         log.debug("REST request to search Holidays for query {}", query);
-        return StreamSupport
-            .stream(holidaySearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .collect(Collectors.toList());
+        return holidayService.search(query);
     }
 }

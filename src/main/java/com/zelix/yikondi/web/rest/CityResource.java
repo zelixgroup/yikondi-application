@@ -1,8 +1,7 @@
 package com.zelix.yikondi.web.rest;
 
 import com.zelix.yikondi.domain.City;
-import com.zelix.yikondi.repository.CityRepository;
-import com.zelix.yikondi.repository.search.CitySearchRepository;
+import com.zelix.yikondi.service.CityService;
 import com.zelix.yikondi.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -11,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional; 
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -19,7 +17,6 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import static org.elasticsearch.index.query.QueryBuilders.*;
@@ -29,7 +26,6 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
  */
 @RestController
 @RequestMapping("/api")
-@Transactional
 public class CityResource {
 
     private final Logger log = LoggerFactory.getLogger(CityResource.class);
@@ -39,13 +35,10 @@ public class CityResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final CityRepository cityRepository;
+    private final CityService cityService;
 
-    private final CitySearchRepository citySearchRepository;
-
-    public CityResource(CityRepository cityRepository, CitySearchRepository citySearchRepository) {
-        this.cityRepository = cityRepository;
-        this.citySearchRepository = citySearchRepository;
+    public CityResource(CityService cityService) {
+        this.cityService = cityService;
     }
 
     /**
@@ -61,8 +54,7 @@ public class CityResource {
         if (city.getId() != null) {
             throw new BadRequestAlertException("A new city cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        City result = cityRepository.save(city);
-        citySearchRepository.save(result);
+        City result = cityService.save(city);
         return ResponseEntity.created(new URI("/api/cities/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -83,8 +75,7 @@ public class CityResource {
         if (city.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        City result = cityRepository.save(city);
-        citySearchRepository.save(result);
+        City result = cityService.save(city);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, city.getId().toString()))
             .body(result);
@@ -99,7 +90,7 @@ public class CityResource {
     @GetMapping("/cities")
     public List<City> getAllCities() {
         log.debug("REST request to get all Cities");
-        return cityRepository.findAll();
+        return cityService.findAll();
     }
 
     /**
@@ -111,7 +102,7 @@ public class CityResource {
     @GetMapping("/cities/{id}")
     public ResponseEntity<City> getCity(@PathVariable Long id) {
         log.debug("REST request to get City : {}", id);
-        Optional<City> city = cityRepository.findById(id);
+        Optional<City> city = cityService.findOne(id);
         return ResponseUtil.wrapOrNotFound(city);
     }
 
@@ -124,8 +115,7 @@ public class CityResource {
     @DeleteMapping("/cities/{id}")
     public ResponseEntity<Void> deleteCity(@PathVariable Long id) {
         log.debug("REST request to delete City : {}", id);
-        cityRepository.deleteById(id);
-        citySearchRepository.deleteById(id);
+        cityService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 
@@ -139,8 +129,6 @@ public class CityResource {
     @GetMapping("/_search/cities")
     public List<City> searchCities(@RequestParam String query) {
         log.debug("REST request to search Cities for query {}", query);
-        return StreamSupport
-            .stream(citySearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .collect(Collectors.toList());
+        return cityService.search(query);
     }
 }

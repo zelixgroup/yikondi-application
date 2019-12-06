@@ -1,8 +1,7 @@
 package com.zelix.yikondi.web.rest;
 
 import com.zelix.yikondi.domain.PatientFavoritePharmacy;
-import com.zelix.yikondi.repository.PatientFavoritePharmacyRepository;
-import com.zelix.yikondi.repository.search.PatientFavoritePharmacySearchRepository;
+import com.zelix.yikondi.service.PatientFavoritePharmacyService;
 import com.zelix.yikondi.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -11,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional; 
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -19,7 +17,6 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import static org.elasticsearch.index.query.QueryBuilders.*;
@@ -29,7 +26,6 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
  */
 @RestController
 @RequestMapping("/api")
-@Transactional
 public class PatientFavoritePharmacyResource {
 
     private final Logger log = LoggerFactory.getLogger(PatientFavoritePharmacyResource.class);
@@ -39,13 +35,10 @@ public class PatientFavoritePharmacyResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final PatientFavoritePharmacyRepository patientFavoritePharmacyRepository;
+    private final PatientFavoritePharmacyService patientFavoritePharmacyService;
 
-    private final PatientFavoritePharmacySearchRepository patientFavoritePharmacySearchRepository;
-
-    public PatientFavoritePharmacyResource(PatientFavoritePharmacyRepository patientFavoritePharmacyRepository, PatientFavoritePharmacySearchRepository patientFavoritePharmacySearchRepository) {
-        this.patientFavoritePharmacyRepository = patientFavoritePharmacyRepository;
-        this.patientFavoritePharmacySearchRepository = patientFavoritePharmacySearchRepository;
+    public PatientFavoritePharmacyResource(PatientFavoritePharmacyService patientFavoritePharmacyService) {
+        this.patientFavoritePharmacyService = patientFavoritePharmacyService;
     }
 
     /**
@@ -61,8 +54,7 @@ public class PatientFavoritePharmacyResource {
         if (patientFavoritePharmacy.getId() != null) {
             throw new BadRequestAlertException("A new patientFavoritePharmacy cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        PatientFavoritePharmacy result = patientFavoritePharmacyRepository.save(patientFavoritePharmacy);
-        patientFavoritePharmacySearchRepository.save(result);
+        PatientFavoritePharmacy result = patientFavoritePharmacyService.save(patientFavoritePharmacy);
         return ResponseEntity.created(new URI("/api/patient-favorite-pharmacies/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -83,8 +75,7 @@ public class PatientFavoritePharmacyResource {
         if (patientFavoritePharmacy.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        PatientFavoritePharmacy result = patientFavoritePharmacyRepository.save(patientFavoritePharmacy);
-        patientFavoritePharmacySearchRepository.save(result);
+        PatientFavoritePharmacy result = patientFavoritePharmacyService.save(patientFavoritePharmacy);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, patientFavoritePharmacy.getId().toString()))
             .body(result);
@@ -99,7 +90,7 @@ public class PatientFavoritePharmacyResource {
     @GetMapping("/patient-favorite-pharmacies")
     public List<PatientFavoritePharmacy> getAllPatientFavoritePharmacies() {
         log.debug("REST request to get all PatientFavoritePharmacies");
-        return patientFavoritePharmacyRepository.findAll();
+        return patientFavoritePharmacyService.findAll();
     }
 
     /**
@@ -111,7 +102,7 @@ public class PatientFavoritePharmacyResource {
     @GetMapping("/patient-favorite-pharmacies/{id}")
     public ResponseEntity<PatientFavoritePharmacy> getPatientFavoritePharmacy(@PathVariable Long id) {
         log.debug("REST request to get PatientFavoritePharmacy : {}", id);
-        Optional<PatientFavoritePharmacy> patientFavoritePharmacy = patientFavoritePharmacyRepository.findById(id);
+        Optional<PatientFavoritePharmacy> patientFavoritePharmacy = patientFavoritePharmacyService.findOne(id);
         return ResponseUtil.wrapOrNotFound(patientFavoritePharmacy);
     }
 
@@ -124,8 +115,7 @@ public class PatientFavoritePharmacyResource {
     @DeleteMapping("/patient-favorite-pharmacies/{id}")
     public ResponseEntity<Void> deletePatientFavoritePharmacy(@PathVariable Long id) {
         log.debug("REST request to delete PatientFavoritePharmacy : {}", id);
-        patientFavoritePharmacyRepository.deleteById(id);
-        patientFavoritePharmacySearchRepository.deleteById(id);
+        patientFavoritePharmacyService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 
@@ -139,8 +129,6 @@ public class PatientFavoritePharmacyResource {
     @GetMapping("/_search/patient-favorite-pharmacies")
     public List<PatientFavoritePharmacy> searchPatientFavoritePharmacies(@RequestParam String query) {
         log.debug("REST request to search PatientFavoritePharmacies for query {}", query);
-        return StreamSupport
-            .stream(patientFavoritePharmacySearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .collect(Collectors.toList());
+        return patientFavoritePharmacyService.search(query);
     }
 }

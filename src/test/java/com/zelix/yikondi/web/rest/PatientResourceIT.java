@@ -4,6 +4,7 @@ import com.zelix.yikondi.YikondiApp;
 import com.zelix.yikondi.domain.Patient;
 import com.zelix.yikondi.repository.PatientRepository;
 import com.zelix.yikondi.repository.search.PatientSearchRepository;
+import com.zelix.yikondi.service.PatientService;
 import com.zelix.yikondi.web.rest.errors.ExceptionTranslator;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -50,6 +51,9 @@ public class PatientResourceIT {
     @Autowired
     private PatientRepository patientRepository;
 
+    @Autowired
+    private PatientService patientService;
+
     /**
      * This repository is mocked in the com.zelix.yikondi.repository.search test package.
      *
@@ -80,7 +84,7 @@ public class PatientResourceIT {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final PatientResource patientResource = new PatientResource(patientRepository, mockPatientSearchRepository);
+        final PatientResource patientResource = new PatientResource(patientService);
         this.restPatientMockMvc = MockMvcBuilders.standaloneSetup(patientResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -211,7 +215,9 @@ public class PatientResourceIT {
     @Transactional
     public void updatePatient() throws Exception {
         // Initialize the database
-        patientRepository.saveAndFlush(patient);
+        patientService.save(patient);
+        // As the test used the service layer, reset the Elasticsearch mock repository
+        reset(mockPatientSearchRepository);
 
         int databaseSizeBeforeUpdate = patientRepository.findAll().size();
 
@@ -266,7 +272,7 @@ public class PatientResourceIT {
     @Transactional
     public void deletePatient() throws Exception {
         // Initialize the database
-        patientRepository.saveAndFlush(patient);
+        patientService.save(patient);
 
         int databaseSizeBeforeDelete = patientRepository.findAll().size();
 
@@ -287,7 +293,7 @@ public class PatientResourceIT {
     @Transactional
     public void searchPatient() throws Exception {
         // Initialize the database
-        patientRepository.saveAndFlush(patient);
+        patientService.save(patient);
         when(mockPatientSearchRepository.search(queryStringQuery("id:" + patient.getId())))
             .thenReturn(Collections.singletonList(patient));
         // Search the patient
