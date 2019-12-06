@@ -20,7 +20,8 @@
       "civility": "Civility",
       "surname": "Surname",
       "firstname": "Firstname",
-      "address": "Address"
+      "address": "Address",
+      "user": "User"
     }
   }
 }

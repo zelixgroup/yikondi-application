@@ -38,6 +38,7 @@
             <th scope="col" ><span jhiTranslate="yikondiApp.patient.surname">Surname</span></th>
             <th scope="col" ><span jhiTranslate="yikondiApp.patient.firstname">Firstname</span></th>
             <th scope="col" ><span jhiTranslate="yikondiApp.patient.address">Address</span></th>
+            <th scope="col" ><span jhiTranslate="yikondiApp.patient.user">User</span></th>
             <th scope="col"></th>
             </tr>
             </thead>
@@ -51,6 +52,9 @@
                     <div *ngIf="patient.address">
                         <a [routerLink]="['/address', patient.address?.id, 'view' ]" >{{patient.address?.id}}</a>
                     </div>
+                </td>
+                <td>
+                    {{patient.user?.id}}
                 </td>
                 <td class="text-right">
                     <div class="btn-group">

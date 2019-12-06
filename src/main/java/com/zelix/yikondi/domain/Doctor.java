@@ -43,6 +43,10 @@ public class Doctor implements Serializable {
 
     @OneToOne
     @JoinColumn(unique = true)
+    private User user;
+
+    @OneToOne
+    @JoinColumn(unique = true)
     private Patient patient;
 
     @ManyToOne
@@ -108,6 +112,19 @@ public class Doctor implements Serializable {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public Doctor user(User user) {
+        this.user = user;
+        return this;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Patient getPatient() {

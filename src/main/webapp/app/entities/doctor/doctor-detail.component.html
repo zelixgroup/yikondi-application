@@ -23,6 +23,10 @@
                         <a [routerLink]="['/address', doctor.address?.id, 'view']">{{doctor.address?.id}}</a>
                     </div>
                 </dd>
+                <dt><span jhiTranslate="yikondiApp.doctor.user">User</span></dt>
+                <dd>
+                    {{doctor.user?.id}}
+                </dd>
                 <dt><span jhiTranslate="yikondiApp.doctor.patient">Patient</span></dt>
                 <dd>
                     <div *ngIf="doctor.patient">
