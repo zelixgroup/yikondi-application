@@ -55,12 +55,7 @@ entity Speciality {
     description String
 }
 entity Doctor {
-	title Title
-    surname String
-    firstname String    
-}
-relationship OneToOne {
-	Doctor{address} to Address
+	title Title   
 }
 relationship ManyToOne {
 	Doctor{speciality} to Speciality
@@ -80,7 +75,7 @@ entity Patient {
 }
 relationship OneToOne {
 	Patient{address} to Address
-    Patient{user} to User
+    Patient{correspondingUser} to User
 }
 entity HealthCentreDoctor {
     startDate LocalDate
