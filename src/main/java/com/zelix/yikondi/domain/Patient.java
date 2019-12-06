@@ -42,7 +42,7 @@ public class Patient implements Serializable {
 
     @OneToOne
     @JoinColumn(unique = true)
-    private User user;
+    private User correspondingUser;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -105,17 +105,17 @@ public class Patient implements Serializable {
         this.address = address;
     }
 
-    public User getUser() {
-        return user;
+    public User getCorrespondingUser() {
+        return correspondingUser;
     }
 
-    public Patient user(User user) {
-        this.user = user;
+    public Patient correspondingUser(User user) {
+        this.correspondingUser = user;
         return this;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setCorrespondingUser(User user) {
+        this.correspondingUser = user;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

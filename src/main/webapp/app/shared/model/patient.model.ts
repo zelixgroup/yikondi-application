@@ -8,7 +8,7 @@ export interface IPatient {
   surname?: string;
   firstname?: string;
   address?: IAddress;
-  user?: IUser;
+  correspondingUser?: IUser;
 }
 
 export class Patient implements IPatient {
@@ -18,6 +18,6 @@ export class Patient implements IPatient {
     public surname?: string,
     public firstname?: string,
     public address?: IAddress,
-    public user?: IUser
+    public correspondingUser?: IUser
   ) {}
 }
