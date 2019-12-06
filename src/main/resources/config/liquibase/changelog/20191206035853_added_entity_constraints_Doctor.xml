@@ -14,12 +14,6 @@
                                  referencedColumnNames="id"
                                  referencedTableName="address"/>
 
-        <addForeignKeyConstraint baseColumnNames="user_id"
-                                 baseTableName="doctor"
-                                 constraintName="fk_doctor_user_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="jhi_user"/>
-
         <addForeignKeyConstraint baseColumnNames="patient_id"
                                  baseTableName="doctor"
                                  constraintName="fk_doctor_patient_id"
