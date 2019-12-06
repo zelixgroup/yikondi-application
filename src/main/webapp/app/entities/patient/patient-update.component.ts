@@ -30,7 +30,7 @@ export class PatientUpdateComponent implements OnInit {
     surname: [],
     firstname: [],
     address: [],
-    user: []
+    correspondingUser: []
   });
 
   constructor(
@@ -74,7 +74,7 @@ export class PatientUpdateComponent implements OnInit {
       surname: patient.surname,
       firstname: patient.firstname,
       address: patient.address,
-      user: patient.user
+      correspondingUser: patient.correspondingUser
     });
   }
 
@@ -100,7 +100,7 @@ export class PatientUpdateComponent implements OnInit {
       surname: this.editForm.get(['surname']).value,
       firstname: this.editForm.get(['firstname']).value,
       address: this.editForm.get(['address']).value,
-      user: this.editForm.get(['user']).value
+      correspondingUser: this.editForm.get(['correspondingUser']).value
     };
   }
 

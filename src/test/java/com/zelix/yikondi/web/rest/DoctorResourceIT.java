@@ -42,12 +42,6 @@ public class DoctorResourceIT {
     private static final Title DEFAULT_TITLE = Title.DOCTOR;
     private static final Title UPDATED_TITLE = Title.PROFESSOR;
 
-    private static final String DEFAULT_SURNAME = "AAAAAAAAAA";
-    private static final String UPDATED_SURNAME = "BBBBBBBBBB";
-
-    private static final String DEFAULT_FIRSTNAME = "AAAAAAAAAA";
-    private static final String UPDATED_FIRSTNAME = "BBBBBBBBBB";
-
     @Autowired
     private DoctorRepository doctorRepository;
 
@@ -101,9 +95,7 @@ public class DoctorResourceIT {
      */
     public static Doctor createEntity(EntityManager em) {
         Doctor doctor = new Doctor()
-            .title(DEFAULT_TITLE)
-            .surname(DEFAULT_SURNAME)
-            .firstname(DEFAULT_FIRSTNAME);
+            .title(DEFAULT_TITLE);
         return doctor;
     }
     /**
@@ -114,9 +106,7 @@ public class DoctorResourceIT {
      */
     public static Doctor createUpdatedEntity(EntityManager em) {
         Doctor doctor = new Doctor()
-            .title(UPDATED_TITLE)
-            .surname(UPDATED_SURNAME)
-            .firstname(UPDATED_FIRSTNAME);
+            .title(UPDATED_TITLE);
         return doctor;
     }
 
@@ -141,8 +131,6 @@ public class DoctorResourceIT {
         assertThat(doctorList).hasSize(databaseSizeBeforeCreate + 1);
         Doctor testDoctor = doctorList.get(doctorList.size() - 1);
         assertThat(testDoctor.getTitle()).isEqualTo(DEFAULT_TITLE);
-        assertThat(testDoctor.getSurname()).isEqualTo(DEFAULT_SURNAME);
-        assertThat(testDoctor.getFirstname()).isEqualTo(DEFAULT_FIRSTNAME);
 
         // Validate the Doctor in Elasticsearch
         verify(mockDoctorSearchRepository, times(1)).save(testDoctor);
@@ -182,9 +170,7 @@ public class DoctorResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(doctor.getId().intValue())))
-            .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE.toString())))
-            .andExpect(jsonPath("$.[*].surname").value(hasItem(DEFAULT_SURNAME)))
-            .andExpect(jsonPath("$.[*].firstname").value(hasItem(DEFAULT_FIRSTNAME)));
+            .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE.toString())));
     }
     
     @Test
@@ -198,9 +184,7 @@ public class DoctorResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(doctor.getId().intValue()))
-            .andExpect(jsonPath("$.title").value(DEFAULT_TITLE.toString()))
-            .andExpect(jsonPath("$.surname").value(DEFAULT_SURNAME))
-            .andExpect(jsonPath("$.firstname").value(DEFAULT_FIRSTNAME));
+            .andExpect(jsonPath("$.title").value(DEFAULT_TITLE.toString()));
     }
 
     @Test
@@ -226,9 +210,7 @@ public class DoctorResourceIT {
         // Disconnect from session so that the updates on updatedDoctor are not directly saved in db
         em.detach(updatedDoctor);
         updatedDoctor
-            .title(UPDATED_TITLE)
-            .surname(UPDATED_SURNAME)
-            .firstname(UPDATED_FIRSTNAME);
+            .title(UPDATED_TITLE);
 
         restDoctorMockMvc.perform(put("/api/doctors")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -240,8 +222,6 @@ public class DoctorResourceIT {
         assertThat(doctorList).hasSize(databaseSizeBeforeUpdate);
         Doctor testDoctor = doctorList.get(doctorList.size() - 1);
         assertThat(testDoctor.getTitle()).isEqualTo(UPDATED_TITLE);
-        assertThat(testDoctor.getSurname()).isEqualTo(UPDATED_SURNAME);
-        assertThat(testDoctor.getFirstname()).isEqualTo(UPDATED_FIRSTNAME);
 
         // Validate the Doctor in Elasticsearch
         verify(mockDoctorSearchRepository, times(1)).save(testDoctor);
@@ -301,8 +281,6 @@ public class DoctorResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(doctor.getId().intValue())))
-            .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE.toString())))
-            .andExpect(jsonPath("$.[*].surname").value(hasItem(DEFAULT_SURNAME)))
-            .andExpect(jsonPath("$.[*].firstname").value(hasItem(DEFAULT_FIRSTNAME)));
+            .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE.toString())));
     }
 }

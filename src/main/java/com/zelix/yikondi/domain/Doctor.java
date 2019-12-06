@@ -31,16 +31,6 @@ public class Doctor implements Serializable {
     @Column(name = "title")
     private Title title;
 
-    @Column(name = "surname")
-    private String surname;
-
-    @Column(name = "firstname")
-    private String firstname;
-
-    @OneToOne
-    @JoinColumn(unique = true)
-    private Address address;
-
     @OneToOne
     @JoinColumn(unique = true)
     private Patient patient;
@@ -69,45 +59,6 @@ public class Doctor implements Serializable {
 
     public void setTitle(Title title) {
         this.title = title;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public Doctor surname(String surname) {
-        this.surname = surname;
-        return this;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public String getFirstname() {
-        return firstname;
-    }
-
-    public Doctor firstname(String firstname) {
-        this.firstname = firstname;
-        return this;
-    }
-
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public Doctor address(Address address) {
-        this.address = address;
-        return this;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
     }
 
     public Patient getPatient() {
@@ -158,8 +109,6 @@ public class Doctor implements Serializable {
         return "Doctor{" +
             "id=" + getId() +
             ", title='" + getTitle() + "'" +
-            ", surname='" + getSurname() + "'" +
-            ", firstname='" + getFirstname() + "'" +
             "}";
     }
 }

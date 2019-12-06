@@ -27,8 +27,8 @@
             <column name="address_id" type="bigint">
                 <constraints unique="true" nullable="true" uniqueConstraintName="ux_patient_address_id" />
             </column>
-            <column name="user_id" type="bigint">
-                <constraints unique="true" nullable="true" uniqueConstraintName="ux_patient_user_id" />
+            <column name="corresponding_user_id" type="bigint">
+                <constraints unique="true" nullable="true" uniqueConstraintName="ux_patient_corresponding_user_id" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>

@@ -28,7 +28,7 @@
             "relationshipType": "one-to-one",
             "otherEntityName": "user",
             "otherEntityRelationshipName": "patient",
-            "relationshipName": "user",
+            "relationshipName": "correspondingUser",
             "otherEntityField": "id",
             "ownerSide": true
         }

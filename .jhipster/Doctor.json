@@ -5,25 +5,9 @@
             "fieldName": "title",
             "fieldType": "Title",
             "fieldValues": "DOCTOR,PROFESSOR"
-        },
-        {
-            "fieldName": "surname",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "firstname",
-            "fieldType": "String"
         }
     ],
     "relationships": [
-        {
-            "relationshipType": "one-to-one",
-            "otherEntityName": "address",
-            "otherEntityRelationshipName": "doctor",
-            "relationshipName": "address",
-            "otherEntityField": "id",
-            "ownerSide": true
-        },
         {
             "relationshipType": "one-to-one",
             "otherEntityName": "patient",

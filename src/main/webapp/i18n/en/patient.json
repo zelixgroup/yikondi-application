@@ -21,7 +21,7 @@
       "surname": "Surname",
       "firstname": "Firstname",
       "address": "Address",
-      "user": "User"
+      "correspondingUser": "Corresponding User"
     }
   }
 }

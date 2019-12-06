@@ -18,9 +18,6 @@
         "title": "Doctor"
       },
       "title": "Title",
-      "surname": "Surname",
-      "firstname": "Firstname",
-      "address": "Address",
       "patient": "Patient",
       "speciality": "Speciality"
     }
