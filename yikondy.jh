@@ -61,6 +61,7 @@ entity Doctor {
 }
 relationship OneToOne {
 	Doctor{address} to Address
+    Doctor{user} to User
 }
 relationship ManyToOne {
 	Doctor{speciality} to Speciality
@@ -80,6 +81,7 @@ entity Patient {
 }
 relationship OneToOne {
 	Patient{address} to Address
+    Patient{user} to User
 }
 entity HealthCentreDoctor {
     startDate LocalDate
