@@ -2,6 +2,11 @@ entity Holiday{
 	label String
     correspondingDate LocalDate
 }
+entity EmergencyAmbulance{
+	name String
+    description LocalDate
+    phoneNumber String
+}
 entity Country {
 	isoCode String
     name String
@@ -18,6 +23,7 @@ entity Address {
     geolocation String
     primaryPhoneNumber String
     secondaryPhoneNumber String
+    emailAddress String
 }
 relationship ManyToOne {
 	Address{city} to City
@@ -43,7 +49,8 @@ relationship OneToOne {
 	Pharmacy{address} to Address
 }
 entity PharmacyAllNightPlanning {
-    plannedDate LocalDate
+    plannedStartDate LocalDate
+    plannedEndDate LocalDate
 }
 relationship ManyToOne {
 	PharmacyAllNightPlanning{pharmacy} to Pharmacy
@@ -75,6 +82,8 @@ entity Patient {
     surname String
     firstname String
     picture ImageBlob
+    dateOfBirth LocalDate
+    profession String
 }
 relationship OneToOne {
 	Patient{address} to Address
@@ -113,7 +122,8 @@ entity PatientAppointement {
     appointementMakingDateTime ZonedDateTime
 }
 relationship ManyToOne {
-	PatientAppointement{patient} to Patient
+	PatientAppointement{booker} to Patient
+    PatientAppointement{consultationPatient} to Patient
     PatientAppointement{healthCentreDoctor} to HealthCentreDoctor
 }
 entity PatientFavoritePharmacy {
@@ -130,5 +140,83 @@ relationship ManyToOne {
 	PatientFavoriteDoctor{patient} to Patient
     PatientFavoriteDoctor{doctor} to Doctor
 }
+enum LifeConstantUnit {
+    NONE,
+    METER,
+    KILOGRAM,
+    GRAM_PER_LITER
+}
+enum LifeConstantName {
+	HEIGHT,
+    WEIGHT,
+    BLOOD_GROUP,
+    BLOOD_SUGAR,    
+    ELECTROPHORESIS,    
+    CHRONIC_MYELOGENOUS_LEUKEMIA
+}
+entity LifeConstant {
+	lifeConstantName LifeConstantName
+    lifeConstantUnit LifeConstantUnit
+}
+entity PatientLifeConstant {
+	measurementDatetime ZonedDateTime
+    measuredValue String
+}
+relationship ManyToOne {
+	PatientLifeConstant{patient} to Patient
+    PatientLifeConstant{lifeConstant} to LifeConstant
+}
+enum InsuranceType {
+	MUTUAL,
+    COMMERCIAL
+}
+entity Insurance {
+ 	name String
+    insuranceType InsuranceType
+    logo ImageBlob
+}
+entity PatientInsuranceCoverage {
+	startDate LocalDate
+    endDate LocalDate
+    referenceNumber String
+}
+relationship ManyToOne {
+	PatientInsuranceCoverage{patient} to Patient
+    PatientInsuranceCoverage{insurance} to Insurance    
+}
 
+relationship OneToOne {
+	PatientInsuranceCoverage{address} to Address
+}
+entity Allergy {
+	name String
+    description String
+}
+entity PatientAllergy {
+	observationDate LocalDate
+    observations String
+}
+relationship ManyToOne {
+	PatientAllergy{patient} to Patient
+    PatientAllergy{allergy} to Allergy    
+}
+entity Pathology {
+	name String
+    description String
+}
+entity PatientPathology {
+	observationDate LocalDate
+    observations String
+}
+relationship ManyToOne {
+	PatientPathology{patient} to Patient
+    PatientPathology{pathology} to Pathology    
+}
+entity PatientEmergencyNumber {
+	emergencyNumber String
+    fullName String
+}
+relationship ManyToOne {
+	PatientEmergencyNumber{patient} to Patient   
+}
 service all with serviceImpl
