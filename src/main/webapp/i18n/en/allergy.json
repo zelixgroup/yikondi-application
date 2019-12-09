@@ -1,0 +1,24 @@
+{
+  "yikondiApp": {
+    "allergy": {
+      "home": {
+        "title": "Allergies",
+        "createLabel": "Create a new Allergy",
+        "createOrEditLabel": "Create or edit a Allergy",
+        "search": "Search for Allergy",
+        "notFound": "No Allergies found"
+      },
+      "created": "A new Allergy is created with identifier {{ param }}",
+      "updated": "A Allergy is updated with identifier {{ param }}",
+      "deleted": "A Allergy is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Allergy {{ id }}?"
+      },
+      "detail": {
+        "title": "Allergy"
+      },
+      "name": "Name",
+      "description": "Description"
+    }
+  }
+}

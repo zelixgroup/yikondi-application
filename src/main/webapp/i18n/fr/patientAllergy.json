@@ -1,0 +1,26 @@
+{
+  "yikondiApp": {
+    "patientAllergy": {
+      "home": {
+        "title": "PatientAllergies",
+        "createLabel": "Créer un nouveau Patient Allergy",
+        "createOrEditLabel": "Créer ou éditer un Patient Allergy",
+        "search": "Recherche pour Patient Allergy",
+        "notFound": "Aucun Patient Allergy trouvé"
+      },
+      "created": "Un nouveau Patient Allergy a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Patient Allergy avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Patient Allergy avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Patient Allergy {{ id }} ?"
+      },
+      "detail": {
+        "title": "Patient Allergy"
+      },
+      "observationDate": "Observation Date",
+      "observations": "Observations",
+      "patient": "Patient",
+      "allergy": "Allergy"
+    }
+  }
+}

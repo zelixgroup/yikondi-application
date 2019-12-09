@@ -60,9 +60,13 @@ export class PharmacyAllNightPlanningService {
 
   protected convertDateFromClient(pharmacyAllNightPlanning: IPharmacyAllNightPlanning): IPharmacyAllNightPlanning {
     const copy: IPharmacyAllNightPlanning = Object.assign({}, pharmacyAllNightPlanning, {
-      plannedDate:
-        pharmacyAllNightPlanning.plannedDate != null && pharmacyAllNightPlanning.plannedDate.isValid()
-          ? pharmacyAllNightPlanning.plannedDate.format(DATE_FORMAT)
+      plannedStartDate:
+        pharmacyAllNightPlanning.plannedStartDate != null && pharmacyAllNightPlanning.plannedStartDate.isValid()
+          ? pharmacyAllNightPlanning.plannedStartDate.format(DATE_FORMAT)
+          : null,
+      plannedEndDate:
+        pharmacyAllNightPlanning.plannedEndDate != null && pharmacyAllNightPlanning.plannedEndDate.isValid()
+          ? pharmacyAllNightPlanning.plannedEndDate.format(DATE_FORMAT)
           : null
     });
     return copy;
@@ -70,7 +74,8 @@ export class PharmacyAllNightPlanningService {
 
   protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
     if (res.body) {
-      res.body.plannedDate = res.body.plannedDate != null ? moment(res.body.plannedDate) : null;
+      res.body.plannedStartDate = res.body.plannedStartDate != null ? moment(res.body.plannedStartDate) : null;
+      res.body.plannedEndDate = res.body.plannedEndDate != null ? moment(res.body.plannedEndDate) : null;
     }
     return res;
   }
@@ -78,8 +83,10 @@ export class PharmacyAllNightPlanningService {
   protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
     if (res.body) {
       res.body.forEach((pharmacyAllNightPlanning: IPharmacyAllNightPlanning) => {
-        pharmacyAllNightPlanning.plannedDate =
-          pharmacyAllNightPlanning.plannedDate != null ? moment(pharmacyAllNightPlanning.plannedDate) : null;
+        pharmacyAllNightPlanning.plannedStartDate =
+          pharmacyAllNightPlanning.plannedStartDate != null ? moment(pharmacyAllNightPlanning.plannedStartDate) : null;
+        pharmacyAllNightPlanning.plannedEndDate =
+          pharmacyAllNightPlanning.plannedEndDate != null ? moment(pharmacyAllNightPlanning.plannedEndDate) : null;
       });
     }
     return res;

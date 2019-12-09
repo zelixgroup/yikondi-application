@@ -24,6 +24,16 @@
         "patientAppointement": "Patient Appointement",
         "patientFavoritePharmacy": "Patient Favorite Pharmacy",
         "patientFavoriteDoctor": "Patient Favorite Doctor",
+        "emergencyAmbulance": "Emergency Ambulance",
+        "lifeConstant": "Life Constant",
+        "patientLifeConstant": "Patient Life Constant",
+        "insurance": "Insurance",
+        "patientInsuranceCoverage": "Patient Insurance Coverage",
+        "allergy": "Allergy",
+        "patientAllergy": "Patient Allergy",
+        "pathology": "Pathology",
+        "patientPathology": "Patient Pathology",
+        "patientEmergencyNumber": "Patient Emergency Number",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

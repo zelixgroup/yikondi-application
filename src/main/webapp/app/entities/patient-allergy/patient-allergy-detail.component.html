@@ -1,0 +1,43 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="patientAllergy">
+            <h2><span jhiTranslate="yikondiApp.patientAllergy.detail.title">Patient Allergy</span> {{patientAllergy.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="yikondiApp.patientAllergy.observationDate">Observation Date</span></dt>
+                <dd>
+                    <span>{{patientAllergy.observationDate}}</span>
+                </dd>
+                <dt><span jhiTranslate="yikondiApp.patientAllergy.observations">Observations</span></dt>
+                <dd>
+                    <span>{{patientAllergy.observations}}</span>
+                </dd>
+                <dt><span jhiTranslate="yikondiApp.patientAllergy.patient">Patient</span></dt>
+                <dd>
+                    <div *ngIf="patientAllergy.patient">
+                        <a [routerLink]="['/patient', patientAllergy.patient?.id, 'view']">{{patientAllergy.patient?.id}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="yikondiApp.patientAllergy.allergy">Allergy</span></dt>
+                <dd>
+                    <div *ngIf="patientAllergy.allergy">
+                        <a [routerLink]="['/allergy', patientAllergy.allergy?.id, 'view']">{{patientAllergy.allergy?.id}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/patient-allergy', patientAllergy.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

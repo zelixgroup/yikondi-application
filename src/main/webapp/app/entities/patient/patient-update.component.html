@@ -44,6 +44,20 @@
                     <input type="hidden" class="form-control" name="pictureContentType" id="field_pictureContentType"
                            formControlName="pictureContentType" />
                 </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="yikondiApp.patient.dateOfBirth" for="field_dateOfBirth">Date Of Birth</label>
+                    <div class="input-group">
+                        <input id="field_dateOfBirth" type="text" class="form-control" name="dateOfBirth" ngbDatepicker  #dateOfBirthDp="ngbDatepicker" formControlName="dateOfBirth"/>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="dateOfBirthDp.toggle()"><fa-icon [icon]="'calendar-alt'"></fa-icon></button>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="yikondiApp.patient.profession" for="field_profession">Profession</label>
+                    <input type="text" class="form-control" name="profession" id="field_profession"
+                           formControlName="profession"/>
+                </div>
 
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="yikondiApp.patient.address" for="field_address">Address</label>

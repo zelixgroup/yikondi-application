@@ -1,6 +1,8 @@
 import { TestBed, getTestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { take, map } from 'rxjs/operators';
+import * as moment from 'moment';
+import { DATE_FORMAT } from 'app/shared/constants/input.constants';
 import { PatientService } from 'app/entities/patient/patient.service';
 import { IPatient, Patient } from 'app/shared/model/patient.model';
 import { Civility } from 'app/shared/model/enumerations/civility.model';
@@ -12,6 +14,7 @@ describe('Service Tests', () => {
     let httpMock: HttpTestingController;
     let elemDefault: IPatient;
     let expectedResult;
+    let currentDate: moment.Moment;
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [HttpClientTestingModule]
@@ -20,13 +23,19 @@ describe('Service Tests', () => {
       injector = getTestBed();
       service = injector.get(PatientService);
       httpMock = injector.get(HttpTestingController);
+      currentDate = moment();
 
-      elemDefault = new Patient(0, Civility.MISTER, 'AAAAAAA', 'AAAAAAA', 'image/png', 'AAAAAAA');
+      elemDefault = new Patient(0, Civility.MISTER, 'AAAAAAA', 'AAAAAAA', 'image/png', 'AAAAAAA', currentDate, 'AAAAAAA');
     });
 
     describe('Service methods', () => {
       it('should find an element', () => {
-        const returnedFromService = Object.assign({}, elemDefault);
+        const returnedFromService = Object.assign(
+          {
+            dateOfBirth: currentDate.format(DATE_FORMAT)
+          },
+          elemDefault
+        );
         service
           .find(123)
           .pipe(take(1))
@@ -40,11 +49,17 @@ describe('Service Tests', () => {
       it('should create a Patient', () => {
         const returnedFromService = Object.assign(
           {
-            id: 0
+            id: 0,
+            dateOfBirth: currentDate.format(DATE_FORMAT)
           },
           elemDefault
         );
-        const expected = Object.assign({}, returnedFromService);
+        const expected = Object.assign(
+          {
+            dateOfBirth: currentDate
+          },
+          returnedFromService
+        );
         service
           .create(new Patient(null))
           .pipe(take(1))
@@ -60,12 +75,19 @@ describe('Service Tests', () => {
             civility: 'BBBBBB',
             surname: 'BBBBBB',
             firstname: 'BBBBBB',
-            picture: 'BBBBBB'
+            picture: 'BBBBBB',
+            dateOfBirth: currentDate.format(DATE_FORMAT),
+            profession: 'BBBBBB'
           },
           elemDefault
         );
 
-        const expected = Object.assign({}, returnedFromService);
+        const expected = Object.assign(
+          {
+            dateOfBirth: currentDate
+          },
+          returnedFromService
+        );
         service
           .update(expected)
           .pipe(take(1))
@@ -81,11 +103,18 @@ describe('Service Tests', () => {
             civility: 'BBBBBB',
             surname: 'BBBBBB',
             firstname: 'BBBBBB',
-            picture: 'BBBBBB'
+            picture: 'BBBBBB',
+            dateOfBirth: currentDate.format(DATE_FORMAT),
+            profession: 'BBBBBB'
           },
           elemDefault
         );
-        const expected = Object.assign({}, returnedFromService);
+        const expected = Object.assign(
+          {
+            dateOfBirth: currentDate
+          },
+          returnedFromService
+        );
         service
           .query(expected)
           .pipe(

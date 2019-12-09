@@ -16,6 +16,10 @@
         {
             "fieldName": "secondaryPhoneNumber",
             "fieldType": "String"
+        },
+        {
+            "fieldName": "emailAddress",
+            "fieldType": "String"
         }
     ],
     "relationships": [

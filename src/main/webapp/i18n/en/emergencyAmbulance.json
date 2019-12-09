@@ -1,0 +1,25 @@
+{
+  "yikondiApp": {
+    "emergencyAmbulance": {
+      "home": {
+        "title": "Emergency Ambulances",
+        "createLabel": "Create a new Emergency Ambulance",
+        "createOrEditLabel": "Create or edit a Emergency Ambulance",
+        "search": "Search for Emergency Ambulance",
+        "notFound": "No Emergency Ambulances found"
+      },
+      "created": "A new Emergency Ambulance is created with identifier {{ param }}",
+      "updated": "A Emergency Ambulance is updated with identifier {{ param }}",
+      "deleted": "A Emergency Ambulance is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Emergency Ambulance {{ id }}?"
+      },
+      "detail": {
+        "title": "Emergency Ambulance"
+      },
+      "name": "Name",
+      "description": "Description",
+      "phoneNumber": "Phone Number"
+    }
+  }
+}

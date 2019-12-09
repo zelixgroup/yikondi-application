@@ -1,0 +1,44 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-life-constant-heading" jhiTranslate="yikondiApp.lifeConstant.home.createOrEditLabel">Create or edit a Life Constant</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!editForm.get('id').value">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id"
+                        readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="yikondiApp.lifeConstant.lifeConstantName" for="field_lifeConstantName">Life Constant Name</label>
+                    <select class="form-control" name="lifeConstantName" formControlName="lifeConstantName" id="field_lifeConstantName">
+                        <option value="HEIGHT">{{'yikondiApp.LifeConstantName.HEIGHT' | translate}}</option>
+                        <option value="WEIGHT">{{'yikondiApp.LifeConstantName.WEIGHT' | translate}}</option>
+                        <option value="BLOOD_GROUP">{{'yikondiApp.LifeConstantName.BLOOD_GROUP' | translate}}</option>
+                        <option value="BLOOD_SUGAR">{{'yikondiApp.LifeConstantName.BLOOD_SUGAR' | translate}}</option>
+                        <option value="ELECTROPHORESIS">{{'yikondiApp.LifeConstantName.ELECTROPHORESIS' | translate}}</option>
+                        <option value="CHRONIC_MYELOGENOUS_LEUKEMIA">{{'yikondiApp.LifeConstantName.CHRONIC_MYELOGENOUS_LEUKEMIA' | translate}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="yikondiApp.lifeConstant.lifeConstantUnit" for="field_lifeConstantUnit">Life Constant Unit</label>
+                    <select class="form-control" name="lifeConstantUnit" formControlName="lifeConstantUnit" id="field_lifeConstantUnit">
+                        <option value="NONE">{{'yikondiApp.LifeConstantUnit.NONE' | translate}}</option>
+                        <option value="METER">{{'yikondiApp.LifeConstantUnit.METER' | translate}}</option>
+                        <option value="KILOGRAM">{{'yikondiApp.LifeConstantUnit.KILOGRAM' | translate}}</option>
+                        <option value="GRAM_PER_LITER">{{'yikondiApp.LifeConstantUnit.GRAM_PER_LITER' | translate}}</option>
+                    </select>
+                </div>
+
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

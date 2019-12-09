@@ -1,0 +1,13 @@
+{
+  "yikondiApp": {
+    "LifeConstantName": {
+      "null": "",
+      "HEIGHT": "HEIGHT",
+      "WEIGHT": "WEIGHT",
+      "BLOOD_GROUP": "BLOOD_GROUP",
+      "BLOOD_SUGAR": "BLOOD_SUGAR",
+      "ELECTROPHORESIS": "ELECTROPHORESIS",
+      "CHRONIC_MYELOGENOUS_LEUKEMIA": "CHRONIC_MYELOGENOUS_LEUKEMIA"
+    }
+  }
+}

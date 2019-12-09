@@ -1,0 +1,39 @@
+{
+    "name": "PatientLifeConstant",
+    "fields": [
+        {
+            "fieldName": "measurementDatetime",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "measuredValue",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "patient",
+            "otherEntityRelationshipName": "patientLifeConstant",
+            "relationshipName": "patient",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "lifeConstant",
+            "otherEntityRelationshipName": "patientLifeConstant",
+            "relationshipName": "lifeConstant",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20191209153425",
+    "entityTableName": "patient_life_constant",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

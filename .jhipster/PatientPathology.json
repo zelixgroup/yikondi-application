@@ -1,0 +1,39 @@
+{
+    "name": "PatientPathology",
+    "fields": [
+        {
+            "fieldName": "observationDate",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "observations",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "patient",
+            "otherEntityRelationshipName": "patientPathology",
+            "relationshipName": "patient",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "pathology",
+            "otherEntityRelationshipName": "patientPathology",
+            "relationshipName": "pathology",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20191209153431",
+    "entityTableName": "patient_pathology",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

@@ -1,0 +1,26 @@
+{
+    "name": "LifeConstant",
+    "fields": [
+        {
+            "fieldName": "lifeConstantName",
+            "fieldType": "LifeConstantName",
+            "fieldValues": "HEIGHT,WEIGHT,BLOOD_GROUP,BLOOD_SUGAR,ELECTROPHORESIS,CHRONIC_MYELOGENOUS_LEUKEMIA"
+        },
+        {
+            "fieldName": "lifeConstantUnit",
+            "fieldType": "LifeConstantUnit",
+            "fieldValues": "NONE,METER,KILOGRAM,GRAM_PER_LITER"
+        }
+    ],
+    "relationships": [],
+    "changelogDate": "20191209153424",
+    "entityTableName": "life_constant",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

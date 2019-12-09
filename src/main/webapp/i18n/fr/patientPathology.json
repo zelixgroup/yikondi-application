@@ -1,0 +1,26 @@
+{
+  "yikondiApp": {
+    "patientPathology": {
+      "home": {
+        "title": "PatientPathologies",
+        "createLabel": "Créer un nouveau Patient Pathology",
+        "createOrEditLabel": "Créer ou éditer un Patient Pathology",
+        "search": "Recherche pour Patient Pathology",
+        "notFound": "Aucun Patient Pathology trouvé"
+      },
+      "created": "Un nouveau Patient Pathology a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Patient Pathology avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Patient Pathology avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Patient Pathology {{ id }} ?"
+      },
+      "detail": {
+        "title": "Patient Pathology"
+      },
+      "observationDate": "Observation Date",
+      "observations": "Observations",
+      "patient": "Patient",
+      "pathology": "Pathology"
+    }
+  }
+}

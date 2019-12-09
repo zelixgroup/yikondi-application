@@ -2,7 +2,11 @@
     "name": "PharmacyAllNightPlanning",
     "fields": [
         {
-            "fieldName": "plannedDate",
+            "fieldName": "plannedStartDate",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "plannedEndDate",
             "fieldType": "LocalDate"
         }
     ],

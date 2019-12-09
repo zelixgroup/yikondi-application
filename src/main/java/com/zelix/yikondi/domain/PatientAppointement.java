@@ -34,7 +34,11 @@ public class PatientAppointement implements Serializable {
 
     @ManyToOne
     @JsonIgnoreProperties("patientAppointements")
-    private Patient patient;
+    private Patient booker;
+
+    @ManyToOne
+    @JsonIgnoreProperties("patientAppointements")
+    private Patient consultationPatient;
 
     @ManyToOne
     @JsonIgnoreProperties("patientAppointements")
@@ -75,17 +79,30 @@ public class PatientAppointement implements Serializable {
         this.appointementMakingDateTime = appointementMakingDateTime;
     }
 
-    public Patient getPatient() {
-        return patient;
+    public Patient getBooker() {
+        return booker;
     }
 
-    public PatientAppointement patient(Patient patient) {
-        this.patient = patient;
+    public PatientAppointement booker(Patient patient) {
+        this.booker = patient;
         return this;
     }
 
-    public void setPatient(Patient patient) {
-        this.patient = patient;
+    public void setBooker(Patient patient) {
+        this.booker = patient;
+    }
+
+    public Patient getConsultationPatient() {
+        return consultationPatient;
+    }
+
+    public PatientAppointement consultationPatient(Patient patient) {
+        this.consultationPatient = patient;
+        return this;
+    }
+
+    public void setConsultationPatient(Patient patient) {
+        this.consultationPatient = patient;
     }
 
     public HealthCentreDoctor getHealthCentreDoctor() {

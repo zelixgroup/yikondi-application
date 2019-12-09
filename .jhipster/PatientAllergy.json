@@ -1,0 +1,39 @@
+{
+    "name": "PatientAllergy",
+    "fields": [
+        {
+            "fieldName": "observationDate",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "observations",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "patient",
+            "otherEntityRelationshipName": "patientAllergy",
+            "relationshipName": "patient",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "allergy",
+            "otherEntityRelationshipName": "patientAllergy",
+            "relationshipName": "allergy",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20191209153429",
+    "entityTableName": "patient_allergy",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

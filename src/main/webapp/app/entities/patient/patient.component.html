@@ -38,6 +38,8 @@
             <th scope="col" ><span jhiTranslate="yikondiApp.patient.surname">Surname</span></th>
             <th scope="col" ><span jhiTranslate="yikondiApp.patient.firstname">Firstname</span></th>
             <th scope="col" ><span jhiTranslate="yikondiApp.patient.picture">Picture</span></th>
+            <th scope="col" ><span jhiTranslate="yikondiApp.patient.dateOfBirth">Date Of Birth</span></th>
+            <th scope="col" ><span jhiTranslate="yikondiApp.patient.profession">Profession</span></th>
             <th scope="col" ><span jhiTranslate="yikondiApp.patient.address">Address</span></th>
             <th scope="col" ><span jhiTranslate="yikondiApp.patient.correspondingUser">Corresponding User</span></th>
             <th scope="col"></th>
@@ -55,6 +57,8 @@
                     </a>
                     <span *ngIf="patient.picture">{{patient.pictureContentType}}, {{byteSize(patient.picture)}}</span>
                 </td>
+                <td>{{patient.dateOfBirth | date:'mediumDate'}}</td>
+                <td>{{patient.profession}}</td>
                 <td>
                     <div *ngIf="patient.address">
                         <a [routerLink]="['/address', patient.address?.id, 'view' ]" >{{patient.address?.id}}</a>

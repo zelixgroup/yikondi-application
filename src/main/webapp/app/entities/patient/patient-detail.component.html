@@ -26,6 +26,14 @@
                         {{patient.pictureContentType}}, {{byteSize(patient.picture)}}
                     </div>
                 </dd>
+                <dt><span jhiTranslate="yikondiApp.patient.dateOfBirth">Date Of Birth</span></dt>
+                <dd>
+                    <span>{{patient.dateOfBirth}}</span>
+                </dd>
+                <dt><span jhiTranslate="yikondiApp.patient.profession">Profession</span></dt>
+                <dd>
+                    <span>{{patient.profession}}</span>
+                </dd>
                 <dt><span jhiTranslate="yikondiApp.patient.address">Address</span></dt>
                 <dd>
                     <div *ngIf="patient.address">

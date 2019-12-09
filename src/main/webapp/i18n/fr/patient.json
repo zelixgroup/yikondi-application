@@ -21,6 +21,8 @@
       "surname": "Surname",
       "firstname": "Firstname",
       "picture": "Picture",
+      "dateOfBirth": "Date Of Birth",
+      "profession": "Profession",
       "address": "Address",
       "correspondingUser": "Corresponding User"
     }
