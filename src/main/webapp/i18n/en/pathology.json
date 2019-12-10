@@ -1,0 +1,24 @@
+{
+  "yikondiApp": {
+    "pathology": {
+      "home": {
+        "title": "Pathologies",
+        "createLabel": "Create a new Pathology",
+        "createOrEditLabel": "Create or edit a Pathology",
+        "search": "Search for Pathology",
+        "notFound": "No Pathologies found"
+      },
+      "created": "A new Pathology is created with identifier {{ param }}",
+      "updated": "A Pathology is updated with identifier {{ param }}",
+      "deleted": "A Pathology is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Pathology {{ id }}?"
+      },
+      "detail": {
+        "title": "Pathology"
+      },
+      "name": "Name",
+      "description": "Description"
+    }
+  }
+}

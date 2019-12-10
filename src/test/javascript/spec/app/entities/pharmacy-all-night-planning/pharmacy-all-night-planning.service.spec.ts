@@ -24,14 +24,15 @@ describe('Service Tests', () => {
       httpMock = injector.get(HttpTestingController);
       currentDate = moment();
 
-      elemDefault = new PharmacyAllNightPlanning(0, currentDate);
+      elemDefault = new PharmacyAllNightPlanning(0, currentDate, currentDate);
     });
 
     describe('Service methods', () => {
       it('should find an element', () => {
         const returnedFromService = Object.assign(
           {
-            plannedDate: currentDate.format(DATE_FORMAT)
+            plannedStartDate: currentDate.format(DATE_FORMAT),
+            plannedEndDate: currentDate.format(DATE_FORMAT)
           },
           elemDefault
         );
@@ -49,13 +50,15 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             id: 0,
-            plannedDate: currentDate.format(DATE_FORMAT)
+            plannedStartDate: currentDate.format(DATE_FORMAT),
+            plannedEndDate: currentDate.format(DATE_FORMAT)
           },
           elemDefault
         );
         const expected = Object.assign(
           {
-            plannedDate: currentDate
+            plannedStartDate: currentDate,
+            plannedEndDate: currentDate
           },
           returnedFromService
         );
@@ -71,14 +74,16 @@ describe('Service Tests', () => {
       it('should update a PharmacyAllNightPlanning', () => {
         const returnedFromService = Object.assign(
           {
-            plannedDate: currentDate.format(DATE_FORMAT)
+            plannedStartDate: currentDate.format(DATE_FORMAT),
+            plannedEndDate: currentDate.format(DATE_FORMAT)
           },
           elemDefault
         );
 
         const expected = Object.assign(
           {
-            plannedDate: currentDate
+            plannedStartDate: currentDate,
+            plannedEndDate: currentDate
           },
           returnedFromService
         );
@@ -94,13 +99,15 @@ describe('Service Tests', () => {
       it('should return a list of PharmacyAllNightPlanning', () => {
         const returnedFromService = Object.assign(
           {
-            plannedDate: currentDate.format(DATE_FORMAT)
+            plannedStartDate: currentDate.format(DATE_FORMAT),
+            plannedEndDate: currentDate.format(DATE_FORMAT)
           },
           elemDefault
         );
         const expected = Object.assign(
           {
-            plannedDate: currentDate
+            plannedStartDate: currentDate,
+            plannedEndDate: currentDate
           },
           returnedFromService
         );

@@ -1,0 +1,28 @@
+{
+  "yikondiApp": {
+    "patientInsuranceCoverage": {
+      "home": {
+        "title": "PatientInsuranceCoverages",
+        "createLabel": "Créer un nouveau Patient Insurance Coverage",
+        "createOrEditLabel": "Créer ou éditer un Patient Insurance Coverage",
+        "search": "Recherche pour Patient Insurance Coverage",
+        "notFound": "Aucun Patient Insurance Coverage trouvé"
+      },
+      "created": "Un nouveau Patient Insurance Coverage a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Patient Insurance Coverage avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Patient Insurance Coverage avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Patient Insurance Coverage {{ id }} ?"
+      },
+      "detail": {
+        "title": "Patient Insurance Coverage"
+      },
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "referenceNumber": "Reference Number",
+      "address": "Address",
+      "patient": "Patient",
+      "insurance": "Insurance"
+    }
+  }
+}

@@ -1,0 +1,53 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="patientInsuranceCoverage">
+            <h2><span jhiTranslate="yikondiApp.patientInsuranceCoverage.detail.title">Patient Insurance Coverage</span> {{patientInsuranceCoverage.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="yikondiApp.patientInsuranceCoverage.startDate">Start Date</span></dt>
+                <dd>
+                    <span>{{patientInsuranceCoverage.startDate}}</span>
+                </dd>
+                <dt><span jhiTranslate="yikondiApp.patientInsuranceCoverage.endDate">End Date</span></dt>
+                <dd>
+                    <span>{{patientInsuranceCoverage.endDate}}</span>
+                </dd>
+                <dt><span jhiTranslate="yikondiApp.patientInsuranceCoverage.referenceNumber">Reference Number</span></dt>
+                <dd>
+                    <span>{{patientInsuranceCoverage.referenceNumber}}</span>
+                </dd>
+                <dt><span jhiTranslate="yikondiApp.patientInsuranceCoverage.address">Address</span></dt>
+                <dd>
+                    <div *ngIf="patientInsuranceCoverage.address">
+                        <a [routerLink]="['/address', patientInsuranceCoverage.address?.id, 'view']">{{patientInsuranceCoverage.address?.id}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="yikondiApp.patientInsuranceCoverage.patient">Patient</span></dt>
+                <dd>
+                    <div *ngIf="patientInsuranceCoverage.patient">
+                        <a [routerLink]="['/patient', patientInsuranceCoverage.patient?.id, 'view']">{{patientInsuranceCoverage.patient?.id}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="yikondiApp.patientInsuranceCoverage.insurance">Insurance</span></dt>
+                <dd>
+                    <div *ngIf="patientInsuranceCoverage.insurance">
+                        <a [routerLink]="['/insurance', patientInsuranceCoverage.insurance?.id, 'view']">{{patientInsuranceCoverage.insurance?.id}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/patient-insurance-coverage', patientInsuranceCoverage.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,37 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="patientEmergencyNumber">
+            <h2><span jhiTranslate="yikondiApp.patientEmergencyNumber.detail.title">Patient Emergency Number</span> {{patientEmergencyNumber.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="yikondiApp.patientEmergencyNumber.emergencyNumber">Emergency Number</span></dt>
+                <dd>
+                    <span>{{patientEmergencyNumber.emergencyNumber}}</span>
+                </dd>
+                <dt><span jhiTranslate="yikondiApp.patientEmergencyNumber.fullName">Full Name</span></dt>
+                <dd>
+                    <span>{{patientEmergencyNumber.fullName}}</span>
+                </dd>
+                <dt><span jhiTranslate="yikondiApp.patientEmergencyNumber.patient">Patient</span></dt>
+                <dd>
+                    <div *ngIf="patientEmergencyNumber.patient">
+                        <a [routerLink]="['/patient', patientEmergencyNumber.patient?.id, 'view']">{{patientEmergencyNumber.patient?.id}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/patient-emergency-number', patientEmergencyNumber.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

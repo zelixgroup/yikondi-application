@@ -17,7 +17,8 @@
       "detail": {
         "title": "Pharmacy All Night Planning"
       },
-      "plannedDate": "Planned Date",
+      "plannedStartDate": "Planned Start Date",
+      "plannedEndDate": "Planned End Date",
       "pharmacy": "Pharmacy"
     }
   }

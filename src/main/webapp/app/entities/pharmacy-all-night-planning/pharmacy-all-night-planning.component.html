@@ -34,7 +34,8 @@
             <thead>
             <tr>
             <th scope="col" ><span jhiTranslate="global.field.id">ID</span></th>
-            <th scope="col" ><span jhiTranslate="yikondiApp.pharmacyAllNightPlanning.plannedDate">Planned Date</span></th>
+            <th scope="col" ><span jhiTranslate="yikondiApp.pharmacyAllNightPlanning.plannedStartDate">Planned Start Date</span></th>
+            <th scope="col" ><span jhiTranslate="yikondiApp.pharmacyAllNightPlanning.plannedEndDate">Planned End Date</span></th>
             <th scope="col" ><span jhiTranslate="yikondiApp.pharmacyAllNightPlanning.pharmacy">Pharmacy</span></th>
             <th scope="col"></th>
             </tr>
@@ -42,7 +43,8 @@
             <tbody>
             <tr *ngFor="let pharmacyAllNightPlanning of pharmacyAllNightPlannings ;trackBy: trackId">
                 <td><a [routerLink]="['/pharmacy-all-night-planning', pharmacyAllNightPlanning.id, 'view' ]">{{pharmacyAllNightPlanning.id}}</a></td>
-                <td>{{pharmacyAllNightPlanning.plannedDate | date:'mediumDate'}}</td>
+                <td>{{pharmacyAllNightPlanning.plannedStartDate | date:'mediumDate'}}</td>
+                <td>{{pharmacyAllNightPlanning.plannedEndDate | date:'mediumDate'}}</td>
                 <td>
                     <div *ngIf="pharmacyAllNightPlanning.pharmacy">
                         <a [routerLink]="['/pharmacy', pharmacyAllNightPlanning.pharmacy?.id, 'view' ]" >{{pharmacyAllNightPlanning.pharmacy?.id}}</a>

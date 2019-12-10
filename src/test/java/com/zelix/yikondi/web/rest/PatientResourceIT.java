@@ -22,6 +22,8 @@ import org.springframework.util.Base64Utils;
 import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Collections;
 import java.util.List;
 
@@ -53,6 +55,12 @@ public class PatientResourceIT {
     private static final byte[] UPDATED_PICTURE = TestUtil.createByteArray(1, "1");
     private static final String DEFAULT_PICTURE_CONTENT_TYPE = "image/jpg";
     private static final String UPDATED_PICTURE_CONTENT_TYPE = "image/png";
+
+    private static final LocalDate DEFAULT_DATE_OF_BIRTH = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_DATE_OF_BIRTH = LocalDate.now(ZoneId.systemDefault());
+
+    private static final String DEFAULT_PROFESSION = "AAAAAAAAAA";
+    private static final String UPDATED_PROFESSION = "BBBBBBBBBB";
 
     @Autowired
     private PatientRepository patientRepository;
@@ -111,7 +119,9 @@ public class PatientResourceIT {
             .surname(DEFAULT_SURNAME)
             .firstname(DEFAULT_FIRSTNAME)
             .picture(DEFAULT_PICTURE)
-            .pictureContentType(DEFAULT_PICTURE_CONTENT_TYPE);
+            .pictureContentType(DEFAULT_PICTURE_CONTENT_TYPE)
+            .dateOfBirth(DEFAULT_DATE_OF_BIRTH)
+            .profession(DEFAULT_PROFESSION);
         return patient;
     }
     /**
@@ -126,7 +136,9 @@ public class PatientResourceIT {
             .surname(UPDATED_SURNAME)
             .firstname(UPDATED_FIRSTNAME)
             .picture(UPDATED_PICTURE)
-            .pictureContentType(UPDATED_PICTURE_CONTENT_TYPE);
+            .pictureContentType(UPDATED_PICTURE_CONTENT_TYPE)
+            .dateOfBirth(UPDATED_DATE_OF_BIRTH)
+            .profession(UPDATED_PROFESSION);
         return patient;
     }
 
@@ -155,6 +167,8 @@ public class PatientResourceIT {
         assertThat(testPatient.getFirstname()).isEqualTo(DEFAULT_FIRSTNAME);
         assertThat(testPatient.getPicture()).isEqualTo(DEFAULT_PICTURE);
         assertThat(testPatient.getPictureContentType()).isEqualTo(DEFAULT_PICTURE_CONTENT_TYPE);
+        assertThat(testPatient.getDateOfBirth()).isEqualTo(DEFAULT_DATE_OF_BIRTH);
+        assertThat(testPatient.getProfession()).isEqualTo(DEFAULT_PROFESSION);
 
         // Validate the Patient in Elasticsearch
         verify(mockPatientSearchRepository, times(1)).save(testPatient);
@@ -198,7 +212,9 @@ public class PatientResourceIT {
             .andExpect(jsonPath("$.[*].surname").value(hasItem(DEFAULT_SURNAME)))
             .andExpect(jsonPath("$.[*].firstname").value(hasItem(DEFAULT_FIRSTNAME)))
             .andExpect(jsonPath("$.[*].pictureContentType").value(hasItem(DEFAULT_PICTURE_CONTENT_TYPE)))
-            .andExpect(jsonPath("$.[*].picture").value(hasItem(Base64Utils.encodeToString(DEFAULT_PICTURE))));
+            .andExpect(jsonPath("$.[*].picture").value(hasItem(Base64Utils.encodeToString(DEFAULT_PICTURE))))
+            .andExpect(jsonPath("$.[*].dateOfBirth").value(hasItem(DEFAULT_DATE_OF_BIRTH.toString())))
+            .andExpect(jsonPath("$.[*].profession").value(hasItem(DEFAULT_PROFESSION)));
     }
     
     @Test
@@ -216,7 +232,9 @@ public class PatientResourceIT {
             .andExpect(jsonPath("$.surname").value(DEFAULT_SURNAME))
             .andExpect(jsonPath("$.firstname").value(DEFAULT_FIRSTNAME))
             .andExpect(jsonPath("$.pictureContentType").value(DEFAULT_PICTURE_CONTENT_TYPE))
-            .andExpect(jsonPath("$.picture").value(Base64Utils.encodeToString(DEFAULT_PICTURE)));
+            .andExpect(jsonPath("$.picture").value(Base64Utils.encodeToString(DEFAULT_PICTURE)))
+            .andExpect(jsonPath("$.dateOfBirth").value(DEFAULT_DATE_OF_BIRTH.toString()))
+            .andExpect(jsonPath("$.profession").value(DEFAULT_PROFESSION));
     }
 
     @Test
@@ -246,7 +264,9 @@ public class PatientResourceIT {
             .surname(UPDATED_SURNAME)
             .firstname(UPDATED_FIRSTNAME)
             .picture(UPDATED_PICTURE)
-            .pictureContentType(UPDATED_PICTURE_CONTENT_TYPE);
+            .pictureContentType(UPDATED_PICTURE_CONTENT_TYPE)
+            .dateOfBirth(UPDATED_DATE_OF_BIRTH)
+            .profession(UPDATED_PROFESSION);
 
         restPatientMockMvc.perform(put("/api/patients")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -262,6 +282,8 @@ public class PatientResourceIT {
         assertThat(testPatient.getFirstname()).isEqualTo(UPDATED_FIRSTNAME);
         assertThat(testPatient.getPicture()).isEqualTo(UPDATED_PICTURE);
         assertThat(testPatient.getPictureContentType()).isEqualTo(UPDATED_PICTURE_CONTENT_TYPE);
+        assertThat(testPatient.getDateOfBirth()).isEqualTo(UPDATED_DATE_OF_BIRTH);
+        assertThat(testPatient.getProfession()).isEqualTo(UPDATED_PROFESSION);
 
         // Validate the Patient in Elasticsearch
         verify(mockPatientSearchRepository, times(1)).save(testPatient);
@@ -325,6 +347,8 @@ public class PatientResourceIT {
             .andExpect(jsonPath("$.[*].surname").value(hasItem(DEFAULT_SURNAME)))
             .andExpect(jsonPath("$.[*].firstname").value(hasItem(DEFAULT_FIRSTNAME)))
             .andExpect(jsonPath("$.[*].pictureContentType").value(hasItem(DEFAULT_PICTURE_CONTENT_TYPE)))
-            .andExpect(jsonPath("$.[*].picture").value(hasItem(Base64Utils.encodeToString(DEFAULT_PICTURE))));
+            .andExpect(jsonPath("$.[*].picture").value(hasItem(Base64Utils.encodeToString(DEFAULT_PICTURE))))
+            .andExpect(jsonPath("$.[*].dateOfBirth").value(hasItem(DEFAULT_DATE_OF_BIRTH.toString())))
+            .andExpect(jsonPath("$.[*].profession").value(hasItem(DEFAULT_PROFESSION)));
     }
 }

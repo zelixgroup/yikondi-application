@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <!--
+        Added the constraints for entity PatientAllergy.
+    -->
+    <changeSet id="20191210001821-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="patient_id"
+                                 baseTableName="patient_allergy"
+                                 constraintName="fk_patient_allergy_patient_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="patient"/>
+
+        <addForeignKeyConstraint baseColumnNames="allergy_id"
+                                 baseTableName="patient_allergy"
+                                 constraintName="fk_patient_allergy_allergy_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="allergy"/>
+
+    </changeSet>
+</databaseChangeLog>

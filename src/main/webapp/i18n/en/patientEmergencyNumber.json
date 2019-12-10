@@ -1,0 +1,25 @@
+{
+  "yikondiApp": {
+    "patientEmergencyNumber": {
+      "home": {
+        "title": "Patient Emergency Numbers",
+        "createLabel": "Create a new Patient Emergency Number",
+        "createOrEditLabel": "Create or edit a Patient Emergency Number",
+        "search": "Search for Patient Emergency Number",
+        "notFound": "No Patient Emergency Numbers found"
+      },
+      "created": "A new Patient Emergency Number is created with identifier {{ param }}",
+      "updated": "A Patient Emergency Number is updated with identifier {{ param }}",
+      "deleted": "A Patient Emergency Number is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Patient Emergency Number {{ id }}?"
+      },
+      "detail": {
+        "title": "Patient Emergency Number"
+      },
+      "emergencyNumber": "Emergency Number",
+      "fullName": "Full Name",
+      "patient": "Patient"
+    }
+  }
+}

@@ -36,7 +36,8 @@
             <th scope="col" ><span jhiTranslate="global.field.id">ID</span></th>
             <th scope="col" ><span jhiTranslate="yikondiApp.patientAppointement.appointementDateTime">Appointement Date Time</span></th>
             <th scope="col" ><span jhiTranslate="yikondiApp.patientAppointement.appointementMakingDateTime">Appointement Making Date Time</span></th>
-            <th scope="col" ><span jhiTranslate="yikondiApp.patientAppointement.patient">Patient</span></th>
+            <th scope="col" ><span jhiTranslate="yikondiApp.patientAppointement.booker">Booker</span></th>
+            <th scope="col" ><span jhiTranslate="yikondiApp.patientAppointement.consultationPatient">Consultation Patient</span></th>
             <th scope="col" ><span jhiTranslate="yikondiApp.patientAppointement.healthCentreDoctor">Health Centre Doctor</span></th>
             <th scope="col"></th>
             </tr>
@@ -47,8 +48,13 @@
                 <td>{{patientAppointement.appointementDateTime | date:'medium'}}</td>
                 <td>{{patientAppointement.appointementMakingDateTime | date:'medium'}}</td>
                 <td>
-                    <div *ngIf="patientAppointement.patient">
-                        <a [routerLink]="['/patient', patientAppointement.patient?.id, 'view' ]" >{{patientAppointement.patient?.id}}</a>
+                    <div *ngIf="patientAppointement.booker">
+                        <a [routerLink]="['/patient', patientAppointement.booker?.id, 'view' ]" >{{patientAppointement.booker?.id}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="patientAppointement.consultationPatient">
+                        <a [routerLink]="['/patient', patientAppointement.consultationPatient?.id, 'view' ]" >{{patientAppointement.consultationPatient?.id}}</a>
                     </div>
                 </td>
                 <td>

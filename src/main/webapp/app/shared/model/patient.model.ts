@@ -1,3 +1,4 @@
+import { Moment } from 'moment';
 import { IAddress } from 'app/shared/model/address.model';
 import { IUser } from 'app/core/user/user.model';
 import { Civility } from 'app/shared/model/enumerations/civility.model';
@@ -9,6 +10,8 @@ export interface IPatient {
   firstname?: string;
   pictureContentType?: string;
   picture?: any;
+  dateOfBirth?: Moment;
+  profession?: string;
   address?: IAddress;
   correspondingUser?: IUser;
 }
@@ -21,6 +24,8 @@ export class Patient implements IPatient {
     public firstname?: string,
     public pictureContentType?: string,
     public picture?: any,
+    public dateOfBirth?: Moment,
+    public profession?: string,
     public address?: IAddress,
     public correspondingUser?: IUser
   ) {}

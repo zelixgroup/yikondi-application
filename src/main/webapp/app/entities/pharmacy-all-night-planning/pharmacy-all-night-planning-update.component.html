@@ -10,11 +10,20 @@
                         readonly />
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="yikondiApp.pharmacyAllNightPlanning.plannedDate" for="field_plannedDate">Planned Date</label>
+                    <label class="form-control-label" jhiTranslate="yikondiApp.pharmacyAllNightPlanning.plannedStartDate" for="field_plannedStartDate">Planned Start Date</label>
                     <div class="input-group">
-                        <input id="field_plannedDate" type="text" class="form-control" name="plannedDate" ngbDatepicker  #plannedDateDp="ngbDatepicker" formControlName="plannedDate"/>
+                        <input id="field_plannedStartDate" type="text" class="form-control" name="plannedStartDate" ngbDatepicker  #plannedStartDateDp="ngbDatepicker" formControlName="plannedStartDate"/>
                         <span class="input-group-append">
-                            <button type="button" class="btn btn-secondary" (click)="plannedDateDp.toggle()"><fa-icon [icon]="'calendar-alt'"></fa-icon></button>
+                            <button type="button" class="btn btn-secondary" (click)="plannedStartDateDp.toggle()"><fa-icon [icon]="'calendar-alt'"></fa-icon></button>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="yikondiApp.pharmacyAllNightPlanning.plannedEndDate" for="field_plannedEndDate">Planned End Date</label>
+                    <div class="input-group">
+                        <input id="field_plannedEndDate" type="text" class="form-control" name="plannedEndDate" ngbDatepicker  #plannedEndDateDp="ngbDatepicker" formControlName="plannedEndDate"/>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="plannedEndDateDp.toggle()"><fa-icon [icon]="'calendar-alt'"></fa-icon></button>
                         </span>
                     </div>
                 </div>

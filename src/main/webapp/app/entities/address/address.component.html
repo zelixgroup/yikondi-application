@@ -38,6 +38,7 @@
             <th scope="col" ><span jhiTranslate="yikondiApp.address.geolocation">Geolocation</span></th>
             <th scope="col" ><span jhiTranslate="yikondiApp.address.primaryPhoneNumber">Primary Phone Number</span></th>
             <th scope="col" ><span jhiTranslate="yikondiApp.address.secondaryPhoneNumber">Secondary Phone Number</span></th>
+            <th scope="col" ><span jhiTranslate="yikondiApp.address.emailAddress">Email Address</span></th>
             <th scope="col" ><span jhiTranslate="yikondiApp.address.city">City</span></th>
             <th scope="col"></th>
             </tr>
@@ -49,6 +50,7 @@
                 <td>{{address.geolocation}}</td>
                 <td>{{address.primaryPhoneNumber}}</td>
                 <td>{{address.secondaryPhoneNumber}}</td>
+                <td>{{address.emailAddress}}</td>
                 <td>
                     <div *ngIf="address.city">
                         <a [routerLink]="['/city', address.city?.id, 'view' ]" >{{address.city?.id}}</a>

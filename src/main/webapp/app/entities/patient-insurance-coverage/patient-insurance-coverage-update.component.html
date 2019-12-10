@@ -1,0 +1,68 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-patient-insurance-coverage-heading" jhiTranslate="yikondiApp.patientInsuranceCoverage.home.createOrEditLabel">Create or edit a Patient Insurance Coverage</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!editForm.get('id').value">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id"
+                        readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="yikondiApp.patientInsuranceCoverage.startDate" for="field_startDate">Start Date</label>
+                    <div class="input-group">
+                        <input id="field_startDate" type="text" class="form-control" name="startDate" ngbDatepicker  #startDateDp="ngbDatepicker" formControlName="startDate"/>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="startDateDp.toggle()"><fa-icon [icon]="'calendar-alt'"></fa-icon></button>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="yikondiApp.patientInsuranceCoverage.endDate" for="field_endDate">End Date</label>
+                    <div class="input-group">
+                        <input id="field_endDate" type="text" class="form-control" name="endDate" ngbDatepicker  #endDateDp="ngbDatepicker" formControlName="endDate"/>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="endDateDp.toggle()"><fa-icon [icon]="'calendar-alt'"></fa-icon></button>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="yikondiApp.patientInsuranceCoverage.referenceNumber" for="field_referenceNumber">Reference Number</label>
+                    <input type="text" class="form-control" name="referenceNumber" id="field_referenceNumber"
+                           formControlName="referenceNumber"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="yikondiApp.patientInsuranceCoverage.address" for="field_address">Address</label>
+                    <select class="form-control" id="field_address" name="address" formControlName="address">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="addressOption.id === editForm.get('address').value?.id ? editForm.get('address').value : addressOption" *ngFor="let addressOption of addresses; trackBy: trackAddressById">{{addressOption.id}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="yikondiApp.patientInsuranceCoverage.patient" for="field_patient">Patient</label>
+                    <select class="form-control" id="field_patient" name="patient" formControlName="patient">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="patientOption.id === editForm.get('patient').value?.id ? editForm.get('patient').value : patientOption" *ngFor="let patientOption of patients; trackBy: trackPatientById">{{patientOption.id}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="yikondiApp.patientInsuranceCoverage.insurance" for="field_insurance">Insurance</label>
+                    <select class="form-control" id="field_insurance" name="insurance" formControlName="insurance">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="insuranceOption.id === editForm.get('insurance').value?.id ? editForm.get('insurance').value : insuranceOption" *ngFor="let insuranceOption of insurances; trackBy: trackInsuranceById">{{insuranceOption.id}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

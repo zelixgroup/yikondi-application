@@ -37,6 +37,9 @@ public class Address implements Serializable {
     @Column(name = "secondary_phone_number")
     private String secondaryPhoneNumber;
 
+    @Column(name = "email_address")
+    private String emailAddress;
+
     @ManyToOne
     @JsonIgnoreProperties("addresses")
     private City city;
@@ -102,6 +105,19 @@ public class Address implements Serializable {
         this.secondaryPhoneNumber = secondaryPhoneNumber;
     }
 
+    public String getEmailAddress() {
+        return emailAddress;
+    }
+
+    public Address emailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
+        return this;
+    }
+
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
+    }
+
     public City getCity() {
         return city;
     }
@@ -140,6 +156,7 @@ public class Address implements Serializable {
             ", geolocation='" + getGeolocation() + "'" +
             ", primaryPhoneNumber='" + getPrimaryPhoneNumber() + "'" +
             ", secondaryPhoneNumber='" + getSecondaryPhoneNumber() + "'" +
+            ", emailAddress='" + getEmailAddress() + "'" +
             "}";
     }
 }

@@ -40,8 +40,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = YikondiApp.class)
 public class PharmacyAllNightPlanningResourceIT {
 
-    private static final LocalDate DEFAULT_PLANNED_DATE = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_PLANNED_DATE = LocalDate.now(ZoneId.systemDefault());
+    private static final LocalDate DEFAULT_PLANNED_START_DATE = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_PLANNED_START_DATE = LocalDate.now(ZoneId.systemDefault());
+
+    private static final LocalDate DEFAULT_PLANNED_END_DATE = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_PLANNED_END_DATE = LocalDate.now(ZoneId.systemDefault());
 
     @Autowired
     private PharmacyAllNightPlanningRepository pharmacyAllNightPlanningRepository;
@@ -96,7 +99,8 @@ public class PharmacyAllNightPlanningResourceIT {
      */
     public static PharmacyAllNightPlanning createEntity(EntityManager em) {
         PharmacyAllNightPlanning pharmacyAllNightPlanning = new PharmacyAllNightPlanning()
-            .plannedDate(DEFAULT_PLANNED_DATE);
+            .plannedStartDate(DEFAULT_PLANNED_START_DATE)
+            .plannedEndDate(DEFAULT_PLANNED_END_DATE);
         return pharmacyAllNightPlanning;
     }
     /**
@@ -107,7 +111,8 @@ public class PharmacyAllNightPlanningResourceIT {
      */
     public static PharmacyAllNightPlanning createUpdatedEntity(EntityManager em) {
         PharmacyAllNightPlanning pharmacyAllNightPlanning = new PharmacyAllNightPlanning()
-            .plannedDate(UPDATED_PLANNED_DATE);
+            .plannedStartDate(UPDATED_PLANNED_START_DATE)
+            .plannedEndDate(UPDATED_PLANNED_END_DATE);
         return pharmacyAllNightPlanning;
     }
 
@@ -131,7 +136,8 @@ public class PharmacyAllNightPlanningResourceIT {
         List<PharmacyAllNightPlanning> pharmacyAllNightPlanningList = pharmacyAllNightPlanningRepository.findAll();
         assertThat(pharmacyAllNightPlanningList).hasSize(databaseSizeBeforeCreate + 1);
         PharmacyAllNightPlanning testPharmacyAllNightPlanning = pharmacyAllNightPlanningList.get(pharmacyAllNightPlanningList.size() - 1);
-        assertThat(testPharmacyAllNightPlanning.getPlannedDate()).isEqualTo(DEFAULT_PLANNED_DATE);
+        assertThat(testPharmacyAllNightPlanning.getPlannedStartDate()).isEqualTo(DEFAULT_PLANNED_START_DATE);
+        assertThat(testPharmacyAllNightPlanning.getPlannedEndDate()).isEqualTo(DEFAULT_PLANNED_END_DATE);
 
         // Validate the PharmacyAllNightPlanning in Elasticsearch
         verify(mockPharmacyAllNightPlanningSearchRepository, times(1)).save(testPharmacyAllNightPlanning);
@@ -171,7 +177,8 @@ public class PharmacyAllNightPlanningResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(pharmacyAllNightPlanning.getId().intValue())))
-            .andExpect(jsonPath("$.[*].plannedDate").value(hasItem(DEFAULT_PLANNED_DATE.toString())));
+            .andExpect(jsonPath("$.[*].plannedStartDate").value(hasItem(DEFAULT_PLANNED_START_DATE.toString())))
+            .andExpect(jsonPath("$.[*].plannedEndDate").value(hasItem(DEFAULT_PLANNED_END_DATE.toString())));
     }
     
     @Test
@@ -185,7 +192,8 @@ public class PharmacyAllNightPlanningResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(pharmacyAllNightPlanning.getId().intValue()))
-            .andExpect(jsonPath("$.plannedDate").value(DEFAULT_PLANNED_DATE.toString()));
+            .andExpect(jsonPath("$.plannedStartDate").value(DEFAULT_PLANNED_START_DATE.toString()))
+            .andExpect(jsonPath("$.plannedEndDate").value(DEFAULT_PLANNED_END_DATE.toString()));
     }
 
     @Test
@@ -211,7 +219,8 @@ public class PharmacyAllNightPlanningResourceIT {
         // Disconnect from session so that the updates on updatedPharmacyAllNightPlanning are not directly saved in db
         em.detach(updatedPharmacyAllNightPlanning);
         updatedPharmacyAllNightPlanning
-            .plannedDate(UPDATED_PLANNED_DATE);
+            .plannedStartDate(UPDATED_PLANNED_START_DATE)
+            .plannedEndDate(UPDATED_PLANNED_END_DATE);
 
         restPharmacyAllNightPlanningMockMvc.perform(put("/api/pharmacy-all-night-plannings")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -222,7 +231,8 @@ public class PharmacyAllNightPlanningResourceIT {
         List<PharmacyAllNightPlanning> pharmacyAllNightPlanningList = pharmacyAllNightPlanningRepository.findAll();
         assertThat(pharmacyAllNightPlanningList).hasSize(databaseSizeBeforeUpdate);
         PharmacyAllNightPlanning testPharmacyAllNightPlanning = pharmacyAllNightPlanningList.get(pharmacyAllNightPlanningList.size() - 1);
-        assertThat(testPharmacyAllNightPlanning.getPlannedDate()).isEqualTo(UPDATED_PLANNED_DATE);
+        assertThat(testPharmacyAllNightPlanning.getPlannedStartDate()).isEqualTo(UPDATED_PLANNED_START_DATE);
+        assertThat(testPharmacyAllNightPlanning.getPlannedEndDate()).isEqualTo(UPDATED_PLANNED_END_DATE);
 
         // Validate the PharmacyAllNightPlanning in Elasticsearch
         verify(mockPharmacyAllNightPlanningSearchRepository, times(1)).save(testPharmacyAllNightPlanning);
@@ -282,6 +292,7 @@ public class PharmacyAllNightPlanningResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(pharmacyAllNightPlanning.getId().intValue())))
-            .andExpect(jsonPath("$.[*].plannedDate").value(hasItem(DEFAULT_PLANNED_DATE.toString())));
+            .andExpect(jsonPath("$.[*].plannedStartDate").value(hasItem(DEFAULT_PLANNED_START_DATE.toString())))
+            .andExpect(jsonPath("$.[*].plannedEndDate").value(hasItem(DEFAULT_PLANNED_END_DATE.toString())));
     }
 }
