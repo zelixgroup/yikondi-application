@@ -26,6 +26,7 @@ export class AddressUpdateComponent implements OnInit {
     geolocation: [],
     primaryPhoneNumber: [],
     secondaryPhoneNumber: [],
+    emailAddress: [],
     city: []
   });
 
@@ -54,6 +55,7 @@ export class AddressUpdateComponent implements OnInit {
       geolocation: address.geolocation,
       primaryPhoneNumber: address.primaryPhoneNumber,
       secondaryPhoneNumber: address.secondaryPhoneNumber,
+      emailAddress: address.emailAddress,
       city: address.city
     });
   }
@@ -80,6 +82,7 @@ export class AddressUpdateComponent implements OnInit {
       geolocation: this.editForm.get(['geolocation']).value,
       primaryPhoneNumber: this.editForm.get(['primaryPhoneNumber']).value,
       secondaryPhoneNumber: this.editForm.get(['secondaryPhoneNumber']).value,
+      emailAddress: this.editForm.get(['emailAddress']).value,
       city: this.editForm.get(['city']).value
     };
   }

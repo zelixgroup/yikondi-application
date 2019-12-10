@@ -74,6 +74,48 @@ import { RouterModule } from '@angular/router';
         path: 'patient-favorite-doctor',
         loadChildren: () =>
           import('./patient-favorite-doctor/patient-favorite-doctor.module').then(m => m.YikondiPatientFavoriteDoctorModule)
+      },
+      {
+        path: 'emergency-ambulance',
+        loadChildren: () => import('./emergency-ambulance/emergency-ambulance.module').then(m => m.YikondiEmergencyAmbulanceModule)
+      },
+      {
+        path: 'life-constant',
+        loadChildren: () => import('./life-constant/life-constant.module').then(m => m.YikondiLifeConstantModule)
+      },
+      {
+        path: 'patient-life-constant',
+        loadChildren: () => import('./patient-life-constant/patient-life-constant.module').then(m => m.YikondiPatientLifeConstantModule)
+      },
+      {
+        path: 'insurance',
+        loadChildren: () => import('./insurance/insurance.module').then(m => m.YikondiInsuranceModule)
+      },
+      {
+        path: 'patient-insurance-coverage',
+        loadChildren: () =>
+          import('./patient-insurance-coverage/patient-insurance-coverage.module').then(m => m.YikondiPatientInsuranceCoverageModule)
+      },
+      {
+        path: 'allergy',
+        loadChildren: () => import('./allergy/allergy.module').then(m => m.YikondiAllergyModule)
+      },
+      {
+        path: 'patient-allergy',
+        loadChildren: () => import('./patient-allergy/patient-allergy.module').then(m => m.YikondiPatientAllergyModule)
+      },
+      {
+        path: 'pathology',
+        loadChildren: () => import('./pathology/pathology.module').then(m => m.YikondiPathologyModule)
+      },
+      {
+        path: 'patient-pathology',
+        loadChildren: () => import('./patient-pathology/patient-pathology.module').then(m => m.YikondiPatientPathologyModule)
+      },
+      {
+        path: 'patient-emergency-number',
+        loadChildren: () =>
+          import('./patient-emergency-number/patient-emergency-number.module').then(m => m.YikondiPatientEmergencyNumberModule)
       }
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ])

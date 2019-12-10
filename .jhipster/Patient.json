@@ -18,6 +18,14 @@
             "fieldName": "picture",
             "fieldType": "byte[]",
             "fieldTypeBlobContent": "image"
+        },
+        {
+            "fieldName": "dateOfBirth",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "profession",
+            "fieldType": "String"
         }
     ],
     "relationships": [

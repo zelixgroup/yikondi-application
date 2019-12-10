@@ -15,7 +15,10 @@
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="planned_date" type="date">
+            <column name="planned_start_date" type="date">
+                <constraints nullable="true" />
+            </column>
+            <column name="planned_end_date" type="date">
                 <constraints nullable="true" />
             </column>
             <column name="pharmacy_id" type="bigint">
@@ -44,7 +47,8 @@
                   separator=";"
                   tableName="pharmacy_all_night_planning">
             <column name="id" type="numeric"/>
-            <column name="planned_date" type="date"/>
+            <column name="planned_start_date" type="date"/>
+            <column name="planned_end_date" type="date"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here, do not remove-->
         </loadData>
     </changeSet>

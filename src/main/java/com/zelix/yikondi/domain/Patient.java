@@ -6,6 +6,7 @@ import javax.persistence.*;
 
 import org.springframework.data.elasticsearch.annotations.FieldType;
 import java.io.Serializable;
+import java.time.LocalDate;
 
 import com.zelix.yikondi.domain.enumeration.Civility;
 
@@ -42,6 +43,12 @@ public class Patient implements Serializable {
 
     @Column(name = "picture_content_type")
     private String pictureContentType;
+
+    @Column(name = "date_of_birth")
+    private LocalDate dateOfBirth;
+
+    @Column(name = "profession")
+    private String profession;
 
     @OneToOne
     @JoinColumn(unique = true)
@@ -125,6 +132,32 @@ public class Patient implements Serializable {
         this.pictureContentType = pictureContentType;
     }
 
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public Patient dateOfBirth(LocalDate dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+        return this;
+    }
+
+    public void setDateOfBirth(LocalDate dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public String getProfession() {
+        return profession;
+    }
+
+    public Patient profession(String profession) {
+        this.profession = profession;
+        return this;
+    }
+
+    public void setProfession(String profession) {
+        this.profession = profession;
+    }
+
     public Address getAddress() {
         return address;
     }
@@ -177,6 +210,8 @@ public class Patient implements Serializable {
             ", firstname='" + getFirstname() + "'" +
             ", picture='" + getPicture() + "'" +
             ", pictureContentType='" + getPictureContentType() + "'" +
+            ", dateOfBirth='" + getDateOfBirth() + "'" +
+            ", profession='" + getProfession() + "'" +
             "}";
     }
 }

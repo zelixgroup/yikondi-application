@@ -20,11 +20,13 @@ export class PharmacyAllNightPlanningUpdateComponent implements OnInit {
   isSaving: boolean;
 
   pharmacies: IPharmacy[];
-  plannedDateDp: any;
+  plannedStartDateDp: any;
+  plannedEndDateDp: any;
 
   editForm = this.fb.group({
     id: [],
-    plannedDate: [],
+    plannedStartDate: [],
+    plannedEndDate: [],
     pharmacy: []
   });
 
@@ -49,7 +51,8 @@ export class PharmacyAllNightPlanningUpdateComponent implements OnInit {
   updateForm(pharmacyAllNightPlanning: IPharmacyAllNightPlanning) {
     this.editForm.patchValue({
       id: pharmacyAllNightPlanning.id,
-      plannedDate: pharmacyAllNightPlanning.plannedDate,
+      plannedStartDate: pharmacyAllNightPlanning.plannedStartDate,
+      plannedEndDate: pharmacyAllNightPlanning.plannedEndDate,
       pharmacy: pharmacyAllNightPlanning.pharmacy
     });
   }
@@ -72,7 +75,8 @@ export class PharmacyAllNightPlanningUpdateComponent implements OnInit {
     return {
       ...new PharmacyAllNightPlanning(),
       id: this.editForm.get(['id']).value,
-      plannedDate: this.editForm.get(['plannedDate']).value,
+      plannedStartDate: this.editForm.get(['plannedStartDate']).value,
+      plannedEndDate: this.editForm.get(['plannedEndDate']).value,
       pharmacy: this.editForm.get(['pharmacy']).value
     };
   }

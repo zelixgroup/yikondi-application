@@ -30,7 +30,8 @@ export class PatientAppointementUpdateComponent implements OnInit {
     id: [],
     appointementDateTime: [],
     appointementMakingDateTime: [],
-    patient: [],
+    booker: [],
+    consultationPatient: [],
     healthCentreDoctor: []
   });
 
@@ -68,7 +69,8 @@ export class PatientAppointementUpdateComponent implements OnInit {
         patientAppointement.appointementMakingDateTime != null
           ? patientAppointement.appointementMakingDateTime.format(DATE_TIME_FORMAT)
           : null,
-      patient: patientAppointement.patient,
+      booker: patientAppointement.booker,
+      consultationPatient: patientAppointement.consultationPatient,
       healthCentreDoctor: patientAppointement.healthCentreDoctor
     });
   }
@@ -99,7 +101,8 @@ export class PatientAppointementUpdateComponent implements OnInit {
         this.editForm.get(['appointementMakingDateTime']).value != null
           ? moment(this.editForm.get(['appointementMakingDateTime']).value, DATE_TIME_FORMAT)
           : undefined,
-      patient: this.editForm.get(['patient']).value,
+      booker: this.editForm.get(['booker']).value,
+      consultationPatient: this.editForm.get(['consultationPatient']).value,
       healthCentreDoctor: this.editForm.get(['healthCentreDoctor']).value
     };
   }

@@ -5,6 +5,7 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
+import * as moment from 'moment';
 import { JhiAlertService, JhiDataUtils } from 'ng-jhipster';
 import { IPatient, Patient } from 'app/shared/model/patient.model';
 import { PatientService } from './patient.service';
@@ -23,6 +24,7 @@ export class PatientUpdateComponent implements OnInit {
   addresses: IAddress[];
 
   users: IUser[];
+  dateOfBirthDp: any;
 
   editForm = this.fb.group({
     id: [],
@@ -31,6 +33,8 @@ export class PatientUpdateComponent implements OnInit {
     firstname: [],
     picture: [],
     pictureContentType: [],
+    dateOfBirth: [],
+    profession: [],
     address: [],
     correspondingUser: []
   });
@@ -79,6 +83,8 @@ export class PatientUpdateComponent implements OnInit {
       firstname: patient.firstname,
       picture: patient.picture,
       pictureContentType: patient.pictureContentType,
+      dateOfBirth: patient.dateOfBirth,
+      profession: patient.profession,
       address: patient.address,
       correspondingUser: patient.correspondingUser
     });
@@ -150,6 +156,8 @@ export class PatientUpdateComponent implements OnInit {
       firstname: this.editForm.get(['firstname']).value,
       pictureContentType: this.editForm.get(['pictureContentType']).value,
       picture: this.editForm.get(['picture']).value,
+      dateOfBirth: this.editForm.get(['dateOfBirth']).value,
+      profession: this.editForm.get(['profession']).value,
       address: this.editForm.get(['address']).value,
       correspondingUser: this.editForm.get(['correspondingUser']).value
     };

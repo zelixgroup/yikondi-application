@@ -1,0 +1,9 @@
+{
+  "yikondiApp": {
+    "InsuranceType": {
+      "null": "",
+      "MUTUAL": "MUTUAL",
+      "COMMERCIAL": "COMMERCIAL"
+    }
+  }
+}

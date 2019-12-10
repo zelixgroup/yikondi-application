@@ -50,6 +50,9 @@ public class AddressResourceIT {
     private static final String DEFAULT_SECONDARY_PHONE_NUMBER = "AAAAAAAAAA";
     private static final String UPDATED_SECONDARY_PHONE_NUMBER = "BBBBBBBBBB";
 
+    private static final String DEFAULT_EMAIL_ADDRESS = "AAAAAAAAAA";
+    private static final String UPDATED_EMAIL_ADDRESS = "BBBBBBBBBB";
+
     @Autowired
     private AddressRepository addressRepository;
 
@@ -106,7 +109,8 @@ public class AddressResourceIT {
             .location(DEFAULT_LOCATION)
             .geolocation(DEFAULT_GEOLOCATION)
             .primaryPhoneNumber(DEFAULT_PRIMARY_PHONE_NUMBER)
-            .secondaryPhoneNumber(DEFAULT_SECONDARY_PHONE_NUMBER);
+            .secondaryPhoneNumber(DEFAULT_SECONDARY_PHONE_NUMBER)
+            .emailAddress(DEFAULT_EMAIL_ADDRESS);
         return address;
     }
     /**
@@ -120,7 +124,8 @@ public class AddressResourceIT {
             .location(UPDATED_LOCATION)
             .geolocation(UPDATED_GEOLOCATION)
             .primaryPhoneNumber(UPDATED_PRIMARY_PHONE_NUMBER)
-            .secondaryPhoneNumber(UPDATED_SECONDARY_PHONE_NUMBER);
+            .secondaryPhoneNumber(UPDATED_SECONDARY_PHONE_NUMBER)
+            .emailAddress(UPDATED_EMAIL_ADDRESS);
         return address;
     }
 
@@ -148,6 +153,7 @@ public class AddressResourceIT {
         assertThat(testAddress.getGeolocation()).isEqualTo(DEFAULT_GEOLOCATION);
         assertThat(testAddress.getPrimaryPhoneNumber()).isEqualTo(DEFAULT_PRIMARY_PHONE_NUMBER);
         assertThat(testAddress.getSecondaryPhoneNumber()).isEqualTo(DEFAULT_SECONDARY_PHONE_NUMBER);
+        assertThat(testAddress.getEmailAddress()).isEqualTo(DEFAULT_EMAIL_ADDRESS);
 
         // Validate the Address in Elasticsearch
         verify(mockAddressSearchRepository, times(1)).save(testAddress);
@@ -190,7 +196,8 @@ public class AddressResourceIT {
             .andExpect(jsonPath("$.[*].location").value(hasItem(DEFAULT_LOCATION)))
             .andExpect(jsonPath("$.[*].geolocation").value(hasItem(DEFAULT_GEOLOCATION)))
             .andExpect(jsonPath("$.[*].primaryPhoneNumber").value(hasItem(DEFAULT_PRIMARY_PHONE_NUMBER)))
-            .andExpect(jsonPath("$.[*].secondaryPhoneNumber").value(hasItem(DEFAULT_SECONDARY_PHONE_NUMBER)));
+            .andExpect(jsonPath("$.[*].secondaryPhoneNumber").value(hasItem(DEFAULT_SECONDARY_PHONE_NUMBER)))
+            .andExpect(jsonPath("$.[*].emailAddress").value(hasItem(DEFAULT_EMAIL_ADDRESS)));
     }
     
     @Test
@@ -207,7 +214,8 @@ public class AddressResourceIT {
             .andExpect(jsonPath("$.location").value(DEFAULT_LOCATION))
             .andExpect(jsonPath("$.geolocation").value(DEFAULT_GEOLOCATION))
             .andExpect(jsonPath("$.primaryPhoneNumber").value(DEFAULT_PRIMARY_PHONE_NUMBER))
-            .andExpect(jsonPath("$.secondaryPhoneNumber").value(DEFAULT_SECONDARY_PHONE_NUMBER));
+            .andExpect(jsonPath("$.secondaryPhoneNumber").value(DEFAULT_SECONDARY_PHONE_NUMBER))
+            .andExpect(jsonPath("$.emailAddress").value(DEFAULT_EMAIL_ADDRESS));
     }
 
     @Test
@@ -236,7 +244,8 @@ public class AddressResourceIT {
             .location(UPDATED_LOCATION)
             .geolocation(UPDATED_GEOLOCATION)
             .primaryPhoneNumber(UPDATED_PRIMARY_PHONE_NUMBER)
-            .secondaryPhoneNumber(UPDATED_SECONDARY_PHONE_NUMBER);
+            .secondaryPhoneNumber(UPDATED_SECONDARY_PHONE_NUMBER)
+            .emailAddress(UPDATED_EMAIL_ADDRESS);
 
         restAddressMockMvc.perform(put("/api/addresses")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -251,6 +260,7 @@ public class AddressResourceIT {
         assertThat(testAddress.getGeolocation()).isEqualTo(UPDATED_GEOLOCATION);
         assertThat(testAddress.getPrimaryPhoneNumber()).isEqualTo(UPDATED_PRIMARY_PHONE_NUMBER);
         assertThat(testAddress.getSecondaryPhoneNumber()).isEqualTo(UPDATED_SECONDARY_PHONE_NUMBER);
+        assertThat(testAddress.getEmailAddress()).isEqualTo(UPDATED_EMAIL_ADDRESS);
 
         // Validate the Address in Elasticsearch
         verify(mockAddressSearchRepository, times(1)).save(testAddress);
@@ -313,6 +323,7 @@ public class AddressResourceIT {
             .andExpect(jsonPath("$.[*].location").value(hasItem(DEFAULT_LOCATION)))
             .andExpect(jsonPath("$.[*].geolocation").value(hasItem(DEFAULT_GEOLOCATION)))
             .andExpect(jsonPath("$.[*].primaryPhoneNumber").value(hasItem(DEFAULT_PRIMARY_PHONE_NUMBER)))
-            .andExpect(jsonPath("$.[*].secondaryPhoneNumber").value(hasItem(DEFAULT_SECONDARY_PHONE_NUMBER)));
+            .andExpect(jsonPath("$.[*].secondaryPhoneNumber").value(hasItem(DEFAULT_SECONDARY_PHONE_NUMBER)))
+            .andExpect(jsonPath("$.[*].emailAddress").value(hasItem(DEFAULT_EMAIL_ADDRESS)));
     }
 }

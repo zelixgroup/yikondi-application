@@ -23,10 +23,17 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="yikondiApp.patientAppointement.patient" for="field_patient">Patient</label>
-                    <select class="form-control" id="field_patient" name="patient" formControlName="patient">
+                    <label class="form-control-label" jhiTranslate="yikondiApp.patientAppointement.booker" for="field_booker">Booker</label>
+                    <select class="form-control" id="field_booker" name="booker" formControlName="booker">
                         <option [ngValue]="null"></option>
-                        <option [ngValue]="patientOption.id === editForm.get('patient').value?.id ? editForm.get('patient').value : patientOption" *ngFor="let patientOption of patients; trackBy: trackPatientById">{{patientOption.id}}</option>
+                        <option [ngValue]="patientOption.id === editForm.get('booker').value?.id ? editForm.get('booker').value : patientOption" *ngFor="let patientOption of patients; trackBy: trackPatientById">{{patientOption.id}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="yikondiApp.patientAppointement.consultationPatient" for="field_consultationPatient">Consultation Patient</label>
+                    <select class="form-control" id="field_consultationPatient" name="consultationPatient" formControlName="consultationPatient">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="patientOption.id === editForm.get('consultationPatient').value?.id ? editForm.get('consultationPatient').value : patientOption" *ngFor="let patientOption of patients; trackBy: trackPatientById">{{patientOption.id}}</option>
                     </select>
                 </div>
                 <div class="form-group">

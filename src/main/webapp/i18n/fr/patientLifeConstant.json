@@ -1,0 +1,26 @@
+{
+  "yikondiApp": {
+    "patientLifeConstant": {
+      "home": {
+        "title": "PatientLifeConstants",
+        "createLabel": "Créer un nouveau Patient Life Constant",
+        "createOrEditLabel": "Créer ou éditer un Patient Life Constant",
+        "search": "Recherche pour Patient Life Constant",
+        "notFound": "Aucun Patient Life Constant trouvé"
+      },
+      "created": "Un nouveau Patient Life Constant a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Patient Life Constant avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Patient Life Constant avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Patient Life Constant {{ id }} ?"
+      },
+      "detail": {
+        "title": "Patient Life Constant"
+      },
+      "measurementDatetime": "Measurement Datetime",
+      "measuredValue": "Measured Value",
+      "patient": "Patient",
+      "lifeConstant": "Life Constant"
+    }
+  }
+}

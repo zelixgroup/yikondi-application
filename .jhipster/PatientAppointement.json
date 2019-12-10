@@ -15,7 +15,14 @@
             "relationshipType": "many-to-one",
             "otherEntityName": "patient",
             "otherEntityRelationshipName": "patientAppointement",
-            "relationshipName": "patient",
+            "relationshipName": "booker",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "patient",
+            "otherEntityRelationshipName": "patientAppointement",
+            "relationshipName": "consultationPatient",
             "otherEntityField": "id"
         },
         {

@@ -13,10 +13,16 @@
                 <dd>
                     <span>{{patientAppointement.appointementMakingDateTime}}</span>
                 </dd>
-                <dt><span jhiTranslate="yikondiApp.patientAppointement.patient">Patient</span></dt>
+                <dt><span jhiTranslate="yikondiApp.patientAppointement.booker">Booker</span></dt>
                 <dd>
-                    <div *ngIf="patientAppointement.patient">
-                        <a [routerLink]="['/patient', patientAppointement.patient?.id, 'view']">{{patientAppointement.patient?.id}}</a>
+                    <div *ngIf="patientAppointement.booker">
+                        <a [routerLink]="['/patient', patientAppointement.booker?.id, 'view']">{{patientAppointement.booker?.id}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="yikondiApp.patientAppointement.consultationPatient">Consultation Patient</span></dt>
+                <dd>
+                    <div *ngIf="patientAppointement.consultationPatient">
+                        <a [routerLink]="['/patient', patientAppointement.consultationPatient?.id, 'view']">{{patientAppointement.consultationPatient?.id}}</a>
                     </div>
                 </dd>
                 <dt><span jhiTranslate="yikondiApp.patientAppointement.healthCentreDoctor">Health Centre Doctor</span></dt>

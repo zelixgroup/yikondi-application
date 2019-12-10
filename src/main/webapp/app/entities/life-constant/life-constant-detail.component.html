@@ -1,0 +1,31 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="lifeConstant">
+            <h2><span jhiTranslate="yikondiApp.lifeConstant.detail.title">Life Constant</span> {{lifeConstant.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="yikondiApp.lifeConstant.lifeConstantName">Life Constant Name</span></dt>
+                <dd>
+                    <span jhiTranslate="{{'yikondiApp.LifeConstantName.' + lifeConstant.lifeConstantName}}">{{lifeConstant.lifeConstantName}}</span>
+                </dd>
+                <dt><span jhiTranslate="yikondiApp.lifeConstant.lifeConstantUnit">Life Constant Unit</span></dt>
+                <dd>
+                    <span jhiTranslate="{{'yikondiApp.LifeConstantUnit.' + lifeConstant.lifeConstantUnit}}">{{lifeConstant.lifeConstantUnit}}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/life-constant', lifeConstant.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

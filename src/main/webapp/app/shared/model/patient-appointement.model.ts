@@ -6,7 +6,8 @@ export interface IPatientAppointement {
   id?: number;
   appointementDateTime?: Moment;
   appointementMakingDateTime?: Moment;
-  patient?: IPatient;
+  booker?: IPatient;
+  consultationPatient?: IPatient;
   healthCentreDoctor?: IHealthCentreDoctor;
 }
 
@@ -15,7 +16,8 @@ export class PatientAppointement implements IPatientAppointement {
     public id?: number,
     public appointementDateTime?: Moment,
     public appointementMakingDateTime?: Moment,
-    public patient?: IPatient,
+    public booker?: IPatient,
+    public consultationPatient?: IPatient,
     public healthCentreDoctor?: IHealthCentreDoctor
   ) {}
 }

@@ -1,0 +1,24 @@
+{
+  "yikondiApp": {
+    "lifeConstant": {
+      "home": {
+        "title": "LifeConstants",
+        "createLabel": "Créer un nouveau Life Constant",
+        "createOrEditLabel": "Créer ou éditer un Life Constant",
+        "search": "Recherche pour Life Constant",
+        "notFound": "Aucun Life Constant trouvé"
+      },
+      "created": "Un nouveau Life Constant a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Life Constant avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Life Constant avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Life Constant {{ id }} ?"
+      },
+      "detail": {
+        "title": "Life Constant"
+      },
+      "lifeConstantName": "Life Constant Name",
+      "lifeConstantUnit": "Life Constant Unit"
+    }
+  }
+}

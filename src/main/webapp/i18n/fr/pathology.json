@@ -1,0 +1,24 @@
+{
+  "yikondiApp": {
+    "pathology": {
+      "home": {
+        "title": "Pathologies",
+        "createLabel": "Créer un nouveau Pathology",
+        "createOrEditLabel": "Créer ou éditer un Pathology",
+        "search": "Recherche pour Pathology",
+        "notFound": "Aucun Pathology trouvé"
+      },
+      "created": "Un nouveau Pathology a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Pathology avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Pathology avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Pathology {{ id }} ?"
+      },
+      "detail": {
+        "title": "Pathology"
+      },
+      "name": "Name",
+      "description": "Description"
+    }
+  }
+}

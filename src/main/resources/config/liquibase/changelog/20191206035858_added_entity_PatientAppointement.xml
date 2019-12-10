@@ -21,7 +21,10 @@
             <column name="appointement_making_date_time" type="datetime">
                 <constraints nullable="true" />
             </column>
-            <column name="patient_id" type="bigint">
+            <column name="booker_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="consultation_patient_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <column name="health_centre_doctor_id" type="bigint">

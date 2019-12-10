@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <!--
+        Added the constraints for entity PatientLifeConstant.
+    -->
+    <changeSet id="20191210001817-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="patient_id"
+                                 baseTableName="patient_life_constant"
+                                 constraintName="fk_patient_life_constant_patient_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="patient"/>
+
+        <addForeignKeyConstraint baseColumnNames="life_constant_id"
+                                 baseTableName="patient_life_constant"
+                                 constraintName="fk_patient_life_constant_life_constant_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="life_constant"/>
+
+    </changeSet>
+</databaseChangeLog>

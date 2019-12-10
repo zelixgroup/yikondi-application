@@ -26,8 +26,11 @@ public class PharmacyAllNightPlanning implements Serializable {
     @org.springframework.data.elasticsearch.annotations.Field(type = FieldType.Keyword)
     private Long id;
 
-    @Column(name = "planned_date")
-    private LocalDate plannedDate;
+    @Column(name = "planned_start_date")
+    private LocalDate plannedStartDate;
+
+    @Column(name = "planned_end_date")
+    private LocalDate plannedEndDate;
 
     @ManyToOne
     @JsonIgnoreProperties("pharmacyAllNightPlannings")
@@ -42,17 +45,30 @@ public class PharmacyAllNightPlanning implements Serializable {
         this.id = id;
     }
 
-    public LocalDate getPlannedDate() {
-        return plannedDate;
+    public LocalDate getPlannedStartDate() {
+        return plannedStartDate;
     }
 
-    public PharmacyAllNightPlanning plannedDate(LocalDate plannedDate) {
-        this.plannedDate = plannedDate;
+    public PharmacyAllNightPlanning plannedStartDate(LocalDate plannedStartDate) {
+        this.plannedStartDate = plannedStartDate;
         return this;
     }
 
-    public void setPlannedDate(LocalDate plannedDate) {
-        this.plannedDate = plannedDate;
+    public void setPlannedStartDate(LocalDate plannedStartDate) {
+        this.plannedStartDate = plannedStartDate;
+    }
+
+    public LocalDate getPlannedEndDate() {
+        return plannedEndDate;
+    }
+
+    public PharmacyAllNightPlanning plannedEndDate(LocalDate plannedEndDate) {
+        this.plannedEndDate = plannedEndDate;
+        return this;
+    }
+
+    public void setPlannedEndDate(LocalDate plannedEndDate) {
+        this.plannedEndDate = plannedEndDate;
     }
 
     public Pharmacy getPharmacy() {
@@ -89,7 +105,8 @@ public class PharmacyAllNightPlanning implements Serializable {
     public String toString() {
         return "PharmacyAllNightPlanning{" +
             "id=" + getId() +
-            ", plannedDate='" + getPlannedDate() + "'" +
+            ", plannedStartDate='" + getPlannedStartDate() + "'" +
+            ", plannedEndDate='" + getPlannedEndDate() + "'" +
             "}";
     }
 }

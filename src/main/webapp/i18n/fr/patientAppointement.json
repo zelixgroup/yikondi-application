@@ -19,7 +19,8 @@
       },
       "appointementDateTime": "Appointement Date Time",
       "appointementMakingDateTime": "Appointement Making Date Time",
-      "patient": "Patient",
+      "booker": "Booker",
+      "consultationPatient": "Consultation Patient",
       "healthCentreDoctor": "Health Centre Doctor"
     }
   }

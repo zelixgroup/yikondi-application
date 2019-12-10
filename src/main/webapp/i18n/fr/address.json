@@ -21,6 +21,7 @@
       "geolocation": "Geolocation",
       "primaryPhoneNumber": "Primary Phone Number",
       "secondaryPhoneNumber": "Secondary Phone Number",
+      "emailAddress": "Email Address",
       "city": "City"
     }
   }

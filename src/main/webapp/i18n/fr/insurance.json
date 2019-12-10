@@ -1,0 +1,25 @@
+{
+  "yikondiApp": {
+    "insurance": {
+      "home": {
+        "title": "Insurances",
+        "createLabel": "Créer un nouveau Insurance",
+        "createOrEditLabel": "Créer ou éditer un Insurance",
+        "search": "Recherche pour Insurance",
+        "notFound": "Aucun Insurance trouvé"
+      },
+      "created": "Un nouveau Insurance a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Insurance avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Insurance avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Insurance {{ id }} ?"
+      },
+      "detail": {
+        "title": "Insurance"
+      },
+      "name": "Name",
+      "insuranceType": "Insurance Type",
+      "logo": "Logo"
+    }
+  }
+}

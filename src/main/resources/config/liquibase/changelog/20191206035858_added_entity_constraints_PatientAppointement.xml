@@ -8,9 +8,15 @@
     -->
     <changeSet id="20191206035858-2" author="jhipster">
         
-        <addForeignKeyConstraint baseColumnNames="patient_id"
+        <addForeignKeyConstraint baseColumnNames="booker_id"
                                  baseTableName="patient_appointement"
-                                 constraintName="fk_patient_appointement_patient_id"
+                                 constraintName="fk_patient_appointement_booker_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="patient"/>
+
+        <addForeignKeyConstraint baseColumnNames="consultation_patient_id"
+                                 baseTableName="patient_appointement"
+                                 constraintName="fk_patient_appointement_consultation_patient_id"
                                  referencedColumnNames="id"
                                  referencedTableName="patient"/>
 

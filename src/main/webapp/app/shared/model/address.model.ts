@@ -6,6 +6,7 @@ export interface IAddress {
   geolocation?: string;
   primaryPhoneNumber?: string;
   secondaryPhoneNumber?: string;
+  emailAddress?: string;
   city?: ICity;
 }
 
@@ -16,6 +17,7 @@ export class Address implements IAddress {
     public geolocation?: string,
     public primaryPhoneNumber?: string,
     public secondaryPhoneNumber?: string,
+    public emailAddress?: string,
     public city?: ICity
   ) {}
 }
