@@ -35,8 +35,8 @@
             <tr>
             <th scope="col" ><span jhiTranslate="global.field.id">ID</span></th>
             <th scope="col" ><span jhiTranslate="yikondiApp.insurance.name">Name</span></th>
-            <th scope="col" ><span jhiTranslate="yikondiApp.insurance.insuranceType">Insurance Type</span></th>
             <th scope="col" ><span jhiTranslate="yikondiApp.insurance.logo">Logo</span></th>
+            <th scope="col" ><span jhiTranslate="yikondiApp.insurance.insuranceType">Insurance Type</span></th>
             <th scope="col"></th>
             </tr>
             </thead>
@@ -44,12 +44,16 @@
             <tr *ngFor="let insurance of insurances ;trackBy: trackId">
                 <td><a [routerLink]="['/insurance', insurance.id, 'view' ]">{{insurance.id}}</a></td>
                 <td>{{insurance.name}}</td>
-                <td jhiTranslate="{{'yikondiApp.InsuranceType.' + insurance.insuranceType}}">{{insurance.insuranceType}}</td>
                 <td>
                     <a *ngIf="insurance.logo" (click)="openFile(insurance.logoContentType, insurance.logo)">
                         <img [src]="'data:' + insurance.logoContentType + ';base64,' + insurance.logo" style="max-height: 30px;" alt="insurance image"/>
                     </a>
                     <span *ngIf="insurance.logo">{{insurance.logoContentType}}, {{byteSize(insurance.logo)}}</span>
+                </td>
+                <td>
+                    <div *ngIf="insurance.insuranceType">
+                        <a [routerLink]="['/insurance-type', insurance.insuranceType?.id, 'view' ]" >{{insurance.insuranceType?.id}}</a>
+                    </div>
                 </td>
                 <td class="text-right">
                     <div class="btn-group">

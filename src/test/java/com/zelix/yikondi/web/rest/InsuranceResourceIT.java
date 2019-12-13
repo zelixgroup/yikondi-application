@@ -33,7 +33,6 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import com.zelix.yikondi.domain.enumeration.InsuranceType;
 /**
  * Integration tests for the {@link InsuranceResource} REST controller.
  */
@@ -42,9 +41,6 @@ public class InsuranceResourceIT {
 
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
-
-    private static final InsuranceType DEFAULT_INSURANCE_TYPE = InsuranceType.MUTUAL;
-    private static final InsuranceType UPDATED_INSURANCE_TYPE = InsuranceType.COMMERCIAL;
 
     private static final byte[] DEFAULT_LOGO = TestUtil.createByteArray(1, "0");
     private static final byte[] UPDATED_LOGO = TestUtil.createByteArray(1, "1");
@@ -105,7 +101,6 @@ public class InsuranceResourceIT {
     public static Insurance createEntity(EntityManager em) {
         Insurance insurance = new Insurance()
             .name(DEFAULT_NAME)
-            .insuranceType(DEFAULT_INSURANCE_TYPE)
             .logo(DEFAULT_LOGO)
             .logoContentType(DEFAULT_LOGO_CONTENT_TYPE);
         return insurance;
@@ -119,7 +114,6 @@ public class InsuranceResourceIT {
     public static Insurance createUpdatedEntity(EntityManager em) {
         Insurance insurance = new Insurance()
             .name(UPDATED_NAME)
-            .insuranceType(UPDATED_INSURANCE_TYPE)
             .logo(UPDATED_LOGO)
             .logoContentType(UPDATED_LOGO_CONTENT_TYPE);
         return insurance;
@@ -146,7 +140,6 @@ public class InsuranceResourceIT {
         assertThat(insuranceList).hasSize(databaseSizeBeforeCreate + 1);
         Insurance testInsurance = insuranceList.get(insuranceList.size() - 1);
         assertThat(testInsurance.getName()).isEqualTo(DEFAULT_NAME);
-        assertThat(testInsurance.getInsuranceType()).isEqualTo(DEFAULT_INSURANCE_TYPE);
         assertThat(testInsurance.getLogo()).isEqualTo(DEFAULT_LOGO);
         assertThat(testInsurance.getLogoContentType()).isEqualTo(DEFAULT_LOGO_CONTENT_TYPE);
 
@@ -189,7 +182,6 @@ public class InsuranceResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(insurance.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
-            .andExpect(jsonPath("$.[*].insuranceType").value(hasItem(DEFAULT_INSURANCE_TYPE.toString())))
             .andExpect(jsonPath("$.[*].logoContentType").value(hasItem(DEFAULT_LOGO_CONTENT_TYPE)))
             .andExpect(jsonPath("$.[*].logo").value(hasItem(Base64Utils.encodeToString(DEFAULT_LOGO))));
     }
@@ -206,7 +198,6 @@ public class InsuranceResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(insurance.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
-            .andExpect(jsonPath("$.insuranceType").value(DEFAULT_INSURANCE_TYPE.toString()))
             .andExpect(jsonPath("$.logoContentType").value(DEFAULT_LOGO_CONTENT_TYPE))
             .andExpect(jsonPath("$.logo").value(Base64Utils.encodeToString(DEFAULT_LOGO)));
     }
@@ -235,7 +226,6 @@ public class InsuranceResourceIT {
         em.detach(updatedInsurance);
         updatedInsurance
             .name(UPDATED_NAME)
-            .insuranceType(UPDATED_INSURANCE_TYPE)
             .logo(UPDATED_LOGO)
             .logoContentType(UPDATED_LOGO_CONTENT_TYPE);
 
@@ -249,7 +239,6 @@ public class InsuranceResourceIT {
         assertThat(insuranceList).hasSize(databaseSizeBeforeUpdate);
         Insurance testInsurance = insuranceList.get(insuranceList.size() - 1);
         assertThat(testInsurance.getName()).isEqualTo(UPDATED_NAME);
-        assertThat(testInsurance.getInsuranceType()).isEqualTo(UPDATED_INSURANCE_TYPE);
         assertThat(testInsurance.getLogo()).isEqualTo(UPDATED_LOGO);
         assertThat(testInsurance.getLogoContentType()).isEqualTo(UPDATED_LOGO_CONTENT_TYPE);
 
@@ -312,7 +301,6 @@ public class InsuranceResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(insurance.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
-            .andExpect(jsonPath("$.[*].insuranceType").value(hasItem(DEFAULT_INSURANCE_TYPE.toString())))
             .andExpect(jsonPath("$.[*].logoContentType").value(hasItem(DEFAULT_LOGO_CONTENT_TYPE)))
             .andExpect(jsonPath("$.[*].logo").value(hasItem(Base64Utils.encodeToString(DEFAULT_LOGO))));
     }

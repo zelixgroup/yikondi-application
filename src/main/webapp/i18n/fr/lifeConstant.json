@@ -17,7 +17,7 @@
       "detail": {
         "title": "Life Constant"
       },
-      "lifeConstantName": "Life Constant Name",
+      "name": "Name",
       "lifeConstantUnit": "Life Constant Unit"
     }
   }

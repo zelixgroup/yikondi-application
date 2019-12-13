@@ -5,8 +5,11 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
+import { JhiAlertService } from 'ng-jhipster';
 import { ILifeConstant, LifeConstant } from 'app/shared/model/life-constant.model';
 import { LifeConstantService } from './life-constant.service';
+import { ILifeConstantUnit } from 'app/shared/model/life-constant-unit.model';
+import { LifeConstantUnitService } from 'app/entities/life-constant-unit/life-constant-unit.service';
 
 @Component({
   selector: 'jhi-life-constant-update',
@@ -15,25 +18,39 @@ import { LifeConstantService } from './life-constant.service';
 export class LifeConstantUpdateComponent implements OnInit {
   isSaving: boolean;
 
+  lifeconstantunits: ILifeConstantUnit[];
+
   editForm = this.fb.group({
     id: [],
-    lifeConstantName: [],
+    name: [],
     lifeConstantUnit: []
   });
 
-  constructor(protected lifeConstantService: LifeConstantService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
+  constructor(
+    protected jhiAlertService: JhiAlertService,
+    protected lifeConstantService: LifeConstantService,
+    protected lifeConstantUnitService: LifeConstantUnitService,
+    protected activatedRoute: ActivatedRoute,
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit() {
     this.isSaving = false;
     this.activatedRoute.data.subscribe(({ lifeConstant }) => {
       this.updateForm(lifeConstant);
     });
+    this.lifeConstantUnitService
+      .query()
+      .subscribe(
+        (res: HttpResponse<ILifeConstantUnit[]>) => (this.lifeconstantunits = res.body),
+        (res: HttpErrorResponse) => this.onError(res.message)
+      );
   }
 
   updateForm(lifeConstant: ILifeConstant) {
     this.editForm.patchValue({
       id: lifeConstant.id,
-      lifeConstantName: lifeConstant.lifeConstantName,
+      name: lifeConstant.name,
       lifeConstantUnit: lifeConstant.lifeConstantUnit
     });
   }
@@ -56,7 +73,7 @@ export class LifeConstantUpdateComponent implements OnInit {
     return {
       ...new LifeConstant(),
       id: this.editForm.get(['id']).value,
-      lifeConstantName: this.editForm.get(['lifeConstantName']).value,
+      name: this.editForm.get(['name']).value,
       lifeConstantUnit: this.editForm.get(['lifeConstantUnit']).value
     };
   }
@@ -72,5 +89,12 @@ export class LifeConstantUpdateComponent implements OnInit {
 
   protected onSaveError() {
     this.isSaving = false;
+  }
+  protected onError(errorMessage: string) {
+    this.jhiAlertService.error(errorMessage, null, null);
+  }
+
+  trackLifeConstantUnitById(index: number, item: ILifeConstantUnit) {
+    return item.id;
   }
 }

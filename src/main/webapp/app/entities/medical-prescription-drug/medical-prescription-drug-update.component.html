@@ -1,0 +1,43 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-medical-prescription-drug-heading" jhiTranslate="yikondiApp.medicalPrescriptionDrug.home.createOrEditLabel">Create or edit a Medical Prescription Drug</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!editForm.get('id').value">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id"
+                        readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="yikondiApp.medicalPrescriptionDrug.dosage" for="field_dosage">Dosage</label>
+                    <input type="text" class="form-control" name="dosage" id="field_dosage"
+                           formControlName="dosage"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="yikondiApp.medicalPrescriptionDrug.medicalPrescription" for="field_medicalPrescription">Medical Prescription</label>
+                    <select class="form-control" id="field_medicalPrescription" name="medicalPrescription" formControlName="medicalPrescription">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="medicalPrescriptionOption.id === editForm.get('medicalPrescription').value?.id ? editForm.get('medicalPrescription').value : medicalPrescriptionOption" *ngFor="let medicalPrescriptionOption of medicalprescriptions; trackBy: trackMedicalPrescriptionById">{{medicalPrescriptionOption.id}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="yikondiApp.medicalPrescriptionDrug.drug" for="field_drug">Drug</label>
+                    <select class="form-control" id="field_drug" name="drug" formControlName="drug">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="drugOption.id === editForm.get('drug').value?.id ? editForm.get('drug').value : drugOption" *ngFor="let drugOption of drugs; trackBy: trackDrugById">{{drugOption.id}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

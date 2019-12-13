@@ -1,0 +1,84 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="yikondiApp.drug.home.title">Drugs</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-drug" [routerLink]="['/drug/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span class="hidden-sm-down"  jhiTranslate="yikondiApp.drug.home.createLabel">
+            Create a new Drug
+            </span>
+        </button>
+    </h2>
+    <jhi-alert-error></jhi-alert-error>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+        <div class="col-sm-12">
+            <form name="searchForm" class="form-inline">
+                <div class="input-group w-100 mt-3">
+                    <input type="text" class="form-control" [(ngModel)]="currentSearch" id="currentSearch" name="currentSearch" placeholder="{{ 'yikondiApp.drug.home.search' | translate }}">
+                    <button class="input-group-append btn btn-info" (click)="search(currentSearch)">
+                        <fa-icon [icon]="'search'"></fa-icon>
+                    </button>
+                    <button class="input-group-append btn btn-danger" (click)="clear()" *ngIf="currentSearch">
+                        <fa-icon [icon]="'trash-alt'"></fa-icon>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br/>
+    <div class="alert alert-warning" *ngIf="drugs?.length === 0">
+        <span jhiTranslate="yikondiApp.drug.home.notFound">No drugs found</span>
+    </div>
+    <div class="table-responsive" *ngIf="drugs?.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+            <tr>
+            <th scope="col" ><span jhiTranslate="global.field.id">ID</span></th>
+            <th scope="col" ><span jhiTranslate="yikondiApp.drug.name">Name</span></th>
+            <th scope="col" ><span jhiTranslate="yikondiApp.drug.description">Description</span></th>
+            <th scope="col" ><span jhiTranslate="yikondiApp.drug.administrationRoute">Administration Route</span></th>
+            <th scope="col" ><span jhiTranslate="yikondiApp.drug.dosageForm">Dosage Form</span></th>
+            <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let drug of drugs ;trackBy: trackId">
+                <td><a [routerLink]="['/drug', drug.id, 'view' ]">{{drug.id}}</a></td>
+                <td>{{drug.name}}</td>
+                <td>{{drug.description}}</td>
+                <td>
+                    <div *ngIf="drug.administrationRoute">
+                        <a [routerLink]="['/drug-administration-route', drug.administrationRoute?.id, 'view' ]" >{{drug.administrationRoute?.id}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="drug.dosageForm">
+                        <a [routerLink]="['/drug-dosage-form', drug.dosageForm?.id, 'view' ]" >{{drug.dosageForm?.id}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group">
+                        <button type="submit"
+                                [routerLink]="['/drug', drug.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/drug', drug.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit" (click)="delete(drug)"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

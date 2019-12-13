@@ -10,26 +10,18 @@
                         readonly />
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="yikondiApp.lifeConstant.lifeConstantName" for="field_lifeConstantName">Life Constant Name</label>
-                    <select class="form-control" name="lifeConstantName" formControlName="lifeConstantName" id="field_lifeConstantName">
-                        <option value="HEIGHT">{{'yikondiApp.LifeConstantName.HEIGHT' | translate}}</option>
-                        <option value="WEIGHT">{{'yikondiApp.LifeConstantName.WEIGHT' | translate}}</option>
-                        <option value="BLOOD_GROUP">{{'yikondiApp.LifeConstantName.BLOOD_GROUP' | translate}}</option>
-                        <option value="BLOOD_SUGAR">{{'yikondiApp.LifeConstantName.BLOOD_SUGAR' | translate}}</option>
-                        <option value="ELECTROPHORESIS">{{'yikondiApp.LifeConstantName.ELECTROPHORESIS' | translate}}</option>
-                        <option value="CHRONIC_MYELOGENOUS_LEUKEMIA">{{'yikondiApp.LifeConstantName.CHRONIC_MYELOGENOUS_LEUKEMIA' | translate}}</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="yikondiApp.lifeConstant.lifeConstantUnit" for="field_lifeConstantUnit">Life Constant Unit</label>
-                    <select class="form-control" name="lifeConstantUnit" formControlName="lifeConstantUnit" id="field_lifeConstantUnit">
-                        <option value="NONE">{{'yikondiApp.LifeConstantUnit.NONE' | translate}}</option>
-                        <option value="METER">{{'yikondiApp.LifeConstantUnit.METER' | translate}}</option>
-                        <option value="KILOGRAM">{{'yikondiApp.LifeConstantUnit.KILOGRAM' | translate}}</option>
-                        <option value="GRAM_PER_LITER">{{'yikondiApp.LifeConstantUnit.GRAM_PER_LITER' | translate}}</option>
-                    </select>
+                    <label class="form-control-label" jhiTranslate="yikondiApp.lifeConstant.name" for="field_name">Name</label>
+                    <input type="text" class="form-control" name="name" id="field_name"
+                           formControlName="name"/>
                 </div>
 
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="yikondiApp.lifeConstant.lifeConstantUnit" for="field_lifeConstantUnit">Life Constant Unit</label>
+                    <select class="form-control" id="field_lifeConstantUnit" name="lifeConstantUnit" formControlName="lifeConstantUnit">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="lifeConstantUnitOption.id === editForm.get('lifeConstantUnit').value?.id ? editForm.get('lifeConstantUnit').value : lifeConstantUnitOption" *ngFor="let lifeConstantUnitOption of lifeconstantunits; trackBy: trackLifeConstantUnitById">{{lifeConstantUnitOption.id}}</option>
+                    </select>
+                </div>
             </div>
             <div>
                 <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">

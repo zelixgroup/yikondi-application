@@ -1,4 +1,5 @@
 package com.zelix.yikondi.domain;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -6,10 +7,6 @@ import javax.persistence.*;
 
 import org.springframework.data.elasticsearch.annotations.FieldType;
 import java.io.Serializable;
-
-import com.zelix.yikondi.domain.enumeration.LifeConstantName;
-
-import com.zelix.yikondi.domain.enumeration.LifeConstantUnit;
 
 /**
  * A LifeConstant.
@@ -28,12 +25,11 @@ public class LifeConstant implements Serializable {
     @org.springframework.data.elasticsearch.annotations.Field(type = FieldType.Keyword)
     private Long id;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "life_constant_name")
-    private LifeConstantName lifeConstantName;
+    @Column(name = "name")
+    private String name;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "life_constant_unit")
+    @ManyToOne
+    @JsonIgnoreProperties("lifeConstants")
     private LifeConstantUnit lifeConstantUnit;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -45,17 +41,17 @@ public class LifeConstant implements Serializable {
         this.id = id;
     }
 
-    public LifeConstantName getLifeConstantName() {
-        return lifeConstantName;
+    public String getName() {
+        return name;
     }
 
-    public LifeConstant lifeConstantName(LifeConstantName lifeConstantName) {
-        this.lifeConstantName = lifeConstantName;
+    public LifeConstant name(String name) {
+        this.name = name;
         return this;
     }
 
-    public void setLifeConstantName(LifeConstantName lifeConstantName) {
-        this.lifeConstantName = lifeConstantName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public LifeConstantUnit getLifeConstantUnit() {
@@ -92,8 +88,7 @@ public class LifeConstant implements Serializable {
     public String toString() {
         return "LifeConstant{" +
             "id=" + getId() +
-            ", lifeConstantName='" + getLifeConstantName() + "'" +
-            ", lifeConstantUnit='" + getLifeConstantUnit() + "'" +
+            ", name='" + getName() + "'" +
             "}";
     }
 }

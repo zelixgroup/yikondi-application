@@ -32,19 +32,14 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import com.zelix.yikondi.domain.enumeration.LifeConstantName;
-import com.zelix.yikondi.domain.enumeration.LifeConstantUnit;
 /**
  * Integration tests for the {@link LifeConstantResource} REST controller.
  */
 @SpringBootTest(classes = YikondiApp.class)
 public class LifeConstantResourceIT {
 
-    private static final LifeConstantName DEFAULT_LIFE_CONSTANT_NAME = LifeConstantName.HEIGHT;
-    private static final LifeConstantName UPDATED_LIFE_CONSTANT_NAME = LifeConstantName.WEIGHT;
-
-    private static final LifeConstantUnit DEFAULT_LIFE_CONSTANT_UNIT = LifeConstantUnit.NONE;
-    private static final LifeConstantUnit UPDATED_LIFE_CONSTANT_UNIT = LifeConstantUnit.METER;
+    private static final String DEFAULT_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_NAME = "BBBBBBBBBB";
 
     @Autowired
     private LifeConstantRepository lifeConstantRepository;
@@ -99,8 +94,7 @@ public class LifeConstantResourceIT {
      */
     public static LifeConstant createEntity(EntityManager em) {
         LifeConstant lifeConstant = new LifeConstant()
-            .lifeConstantName(DEFAULT_LIFE_CONSTANT_NAME)
-            .lifeConstantUnit(DEFAULT_LIFE_CONSTANT_UNIT);
+            .name(DEFAULT_NAME);
         return lifeConstant;
     }
     /**
@@ -111,8 +105,7 @@ public class LifeConstantResourceIT {
      */
     public static LifeConstant createUpdatedEntity(EntityManager em) {
         LifeConstant lifeConstant = new LifeConstant()
-            .lifeConstantName(UPDATED_LIFE_CONSTANT_NAME)
-            .lifeConstantUnit(UPDATED_LIFE_CONSTANT_UNIT);
+            .name(UPDATED_NAME);
         return lifeConstant;
     }
 
@@ -136,8 +129,7 @@ public class LifeConstantResourceIT {
         List<LifeConstant> lifeConstantList = lifeConstantRepository.findAll();
         assertThat(lifeConstantList).hasSize(databaseSizeBeforeCreate + 1);
         LifeConstant testLifeConstant = lifeConstantList.get(lifeConstantList.size() - 1);
-        assertThat(testLifeConstant.getLifeConstantName()).isEqualTo(DEFAULT_LIFE_CONSTANT_NAME);
-        assertThat(testLifeConstant.getLifeConstantUnit()).isEqualTo(DEFAULT_LIFE_CONSTANT_UNIT);
+        assertThat(testLifeConstant.getName()).isEqualTo(DEFAULT_NAME);
 
         // Validate the LifeConstant in Elasticsearch
         verify(mockLifeConstantSearchRepository, times(1)).save(testLifeConstant);
@@ -177,8 +169,7 @@ public class LifeConstantResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(lifeConstant.getId().intValue())))
-            .andExpect(jsonPath("$.[*].lifeConstantName").value(hasItem(DEFAULT_LIFE_CONSTANT_NAME.toString())))
-            .andExpect(jsonPath("$.[*].lifeConstantUnit").value(hasItem(DEFAULT_LIFE_CONSTANT_UNIT.toString())));
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)));
     }
     
     @Test
@@ -192,8 +183,7 @@ public class LifeConstantResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(lifeConstant.getId().intValue()))
-            .andExpect(jsonPath("$.lifeConstantName").value(DEFAULT_LIFE_CONSTANT_NAME.toString()))
-            .andExpect(jsonPath("$.lifeConstantUnit").value(DEFAULT_LIFE_CONSTANT_UNIT.toString()));
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME));
     }
 
     @Test
@@ -219,8 +209,7 @@ public class LifeConstantResourceIT {
         // Disconnect from session so that the updates on updatedLifeConstant are not directly saved in db
         em.detach(updatedLifeConstant);
         updatedLifeConstant
-            .lifeConstantName(UPDATED_LIFE_CONSTANT_NAME)
-            .lifeConstantUnit(UPDATED_LIFE_CONSTANT_UNIT);
+            .name(UPDATED_NAME);
 
         restLifeConstantMockMvc.perform(put("/api/life-constants")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -231,8 +220,7 @@ public class LifeConstantResourceIT {
         List<LifeConstant> lifeConstantList = lifeConstantRepository.findAll();
         assertThat(lifeConstantList).hasSize(databaseSizeBeforeUpdate);
         LifeConstant testLifeConstant = lifeConstantList.get(lifeConstantList.size() - 1);
-        assertThat(testLifeConstant.getLifeConstantName()).isEqualTo(UPDATED_LIFE_CONSTANT_NAME);
-        assertThat(testLifeConstant.getLifeConstantUnit()).isEqualTo(UPDATED_LIFE_CONSTANT_UNIT);
+        assertThat(testLifeConstant.getName()).isEqualTo(UPDATED_NAME);
 
         // Validate the LifeConstant in Elasticsearch
         verify(mockLifeConstantSearchRepository, times(1)).save(testLifeConstant);
@@ -292,7 +280,6 @@ public class LifeConstantResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(lifeConstant.getId().intValue())))
-            .andExpect(jsonPath("$.[*].lifeConstantName").value(hasItem(DEFAULT_LIFE_CONSTANT_NAME.toString())))
-            .andExpect(jsonPath("$.[*].lifeConstantUnit").value(hasItem(DEFAULT_LIFE_CONSTANT_UNIT.toString())));
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)));
     }
 }

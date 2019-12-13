@@ -116,6 +116,64 @@ import { RouterModule } from '@angular/router';
         path: 'patient-emergency-number',
         loadChildren: () =>
           import('./patient-emergency-number/patient-emergency-number.module').then(m => m.YikondiPatientEmergencyNumberModule)
+      },
+      {
+        path: 'life-constant-unit',
+        loadChildren: () => import('./life-constant-unit/life-constant-unit.module').then(m => m.YikondiLifeConstantUnitModule)
+      },
+      {
+        path: 'insurance-type',
+        loadChildren: () => import('./insurance-type/insurance-type.module').then(m => m.YikondiInsuranceTypeModule)
+      },
+      {
+        path: 'medical-record-authorization',
+        loadChildren: () =>
+          import('./medical-record-authorization/medical-record-authorization.module').then(m => m.YikondiMedicalRecordAuthorizationModule)
+      },
+      {
+        path: 'drug-administration-route',
+        loadChildren: () =>
+          import('./drug-administration-route/drug-administration-route.module').then(m => m.YikondiDrugAdministrationRouteModule)
+      },
+      {
+        path: 'drug-dosage-form',
+        loadChildren: () => import('./drug-dosage-form/drug-dosage-form.module').then(m => m.YikondiDrugDosageFormModule)
+      },
+      {
+        path: 'drug',
+        loadChildren: () => import('./drug/drug.module').then(m => m.YikondiDrugModule)
+      },
+      {
+        path: 'analysis',
+        loadChildren: () => import('./analysis/analysis.module').then(m => m.YikondiAnalysisModule)
+      },
+      {
+        path: 'medical-prescription',
+        loadChildren: () => import('./medical-prescription/medical-prescription.module').then(m => m.YikondiMedicalPrescriptionModule)
+      },
+      {
+        path: 'medical-prescription-drug',
+        loadChildren: () =>
+          import('./medical-prescription-drug/medical-prescription-drug.module').then(m => m.YikondiMedicalPrescriptionDrugModule)
+      },
+      {
+        path: 'medical-prescription-analysis',
+        loadChildren: () =>
+          import('./medical-prescription-analysis/medical-prescription-analysis.module').then(
+            m => m.YikondiMedicalPrescriptionAnalysisModule
+          )
+      },
+      {
+        path: 'doctor-assistant',
+        loadChildren: () => import('./doctor-assistant/doctor-assistant.module').then(m => m.YikondiDoctorAssistantModule)
+      },
+      {
+        path: 'family-relationship',
+        loadChildren: () => import('./family-relationship/family-relationship.module').then(m => m.YikondiFamilyRelationshipModule)
+      },
+      {
+        path: 'family-member',
+        loadChildren: () => import('./family-member/family-member.module').then(m => m.YikondiFamilyMemberModule)
       }
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ])

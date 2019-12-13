@@ -3,7 +3,6 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { take, map } from 'rxjs/operators';
 import { InsuranceService } from 'app/entities/insurance/insurance.service';
 import { IInsurance, Insurance } from 'app/shared/model/insurance.model';
-import { InsuranceType } from 'app/shared/model/enumerations/insurance-type.model';
 
 describe('Service Tests', () => {
   describe('Insurance Service', () => {
@@ -21,7 +20,7 @@ describe('Service Tests', () => {
       service = injector.get(InsuranceService);
       httpMock = injector.get(HttpTestingController);
 
-      elemDefault = new Insurance(0, 'AAAAAAA', InsuranceType.MUTUAL, 'image/png', 'AAAAAAA');
+      elemDefault = new Insurance(0, 'AAAAAAA', 'image/png', 'AAAAAAA');
     });
 
     describe('Service methods', () => {
@@ -58,7 +57,6 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             name: 'BBBBBB',
-            insuranceType: 'BBBBBB',
             logo: 'BBBBBB'
           },
           elemDefault
@@ -78,7 +76,6 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             name: 'BBBBBB',
-            insuranceType: 'BBBBBB',
             logo: 'BBBBBB'
           },
           elemDefault

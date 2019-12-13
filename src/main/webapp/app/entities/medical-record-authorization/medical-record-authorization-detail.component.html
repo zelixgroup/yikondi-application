@@ -1,0 +1,51 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="medicalRecordAuthorization">
+            <h2><span jhiTranslate="yikondiApp.medicalRecordAuthorization.detail.title">Medical Record Authorization</span> {{medicalRecordAuthorization.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="yikondiApp.medicalRecordAuthorization.authorizationDateTime">Authorization Date Time</span></dt>
+                <dd>
+                    <span>{{medicalRecordAuthorization.authorizationDateTime}}</span>
+                </dd>
+                <dt><span jhiTranslate="yikondiApp.medicalRecordAuthorization.authorizationStartDateTime">Authorization Start Date Time</span></dt>
+                <dd>
+                    <span>{{medicalRecordAuthorization.authorizationStartDateTime}}</span>
+                </dd>
+                <dt><span jhiTranslate="yikondiApp.medicalRecordAuthorization.authorizationEndDateTime">Authorization End Date Time</span></dt>
+                <dd>
+                    <span>{{medicalRecordAuthorization.authorizationEndDateTime}}</span>
+                </dd>
+                <dt><span jhiTranslate="yikondiApp.medicalRecordAuthorization.observations">Observations</span></dt>
+                <dd>
+                    <span>{{medicalRecordAuthorization.observations}}</span>
+                </dd>
+                <dt><span jhiTranslate="yikondiApp.medicalRecordAuthorization.recordOwner">Record Owner</span></dt>
+                <dd>
+                    <div *ngIf="medicalRecordAuthorization.recordOwner">
+                        <a [routerLink]="['/patient', medicalRecordAuthorization.recordOwner?.id, 'view']">{{medicalRecordAuthorization.recordOwner?.id}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="yikondiApp.medicalRecordAuthorization.authorizationGrantee">Authorization Grantee</span></dt>
+                <dd>
+                    <div *ngIf="medicalRecordAuthorization.authorizationGrantee">
+                        <a [routerLink]="['/patient', medicalRecordAuthorization.authorizationGrantee?.id, 'view']">{{medicalRecordAuthorization.authorizationGrantee?.id}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/medical-record-authorization', medicalRecordAuthorization.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,43 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-doctor-assistant-heading" jhiTranslate="yikondiApp.doctorAssistant.home.createOrEditLabel">Create or edit a Doctor Assistant</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!editForm.get('id').value">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id"
+                        readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="yikondiApp.doctorAssistant.canPrescribe" for="field_canPrescribe">Can Prescribe</label>
+                    <input type="checkbox" class="form-control" name="canPrescribe" id="field_canPrescribe"
+                           formControlName="canPrescribe"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="yikondiApp.doctorAssistant.healthCentreDoctor" for="field_healthCentreDoctor">Health Centre Doctor</label>
+                    <select class="form-control" id="field_healthCentreDoctor" name="healthCentreDoctor" formControlName="healthCentreDoctor">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="healthCentreDoctorOption.id === editForm.get('healthCentreDoctor').value?.id ? editForm.get('healthCentreDoctor').value : healthCentreDoctorOption" *ngFor="let healthCentreDoctorOption of healthcentredoctors; trackBy: trackHealthCentreDoctorById">{{healthCentreDoctorOption.id}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="yikondiApp.doctorAssistant.patient" for="field_patient">Patient</label>
+                    <select class="form-control" id="field_patient" name="patient" formControlName="patient">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="patientOption.id === editForm.get('patient').value?.id ? editForm.get('patient').value : patientOption" *ngFor="let patientOption of patients; trackBy: trackPatientById">{{patientOption.id}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

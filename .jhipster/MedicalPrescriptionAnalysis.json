@@ -1,0 +1,30 @@
+{
+    "name": "MedicalPrescriptionAnalysis",
+    "fields": [],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "medicalPrescription",
+            "otherEntityRelationshipName": "medicalPrescriptionAnalysis",
+            "relationshipName": "medicalPrescription",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "analysis",
+            "otherEntityRelationshipName": "medicalPrescriptionAnalysis",
+            "relationshipName": "analysis",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20191213154325",
+    "entityTableName": "medical_prescription_analysis",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

@@ -1,4 +1,5 @@
 package com.zelix.yikondi.domain;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -6,8 +7,6 @@ import javax.persistence.*;
 
 import org.springframework.data.elasticsearch.annotations.FieldType;
 import java.io.Serializable;
-
-import com.zelix.yikondi.domain.enumeration.InsuranceType;
 
 /**
  * A Insurance.
@@ -29,16 +28,16 @@ public class Insurance implements Serializable {
     @Column(name = "name")
     private String name;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "insurance_type")
-    private InsuranceType insuranceType;
-
     @Lob
     @Column(name = "logo")
     private byte[] logo;
 
     @Column(name = "logo_content_type")
     private String logoContentType;
+
+    @ManyToOne
+    @JsonIgnoreProperties("insurances")
+    private InsuranceType insuranceType;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -60,19 +59,6 @@ public class Insurance implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public InsuranceType getInsuranceType() {
-        return insuranceType;
-    }
-
-    public Insurance insuranceType(InsuranceType insuranceType) {
-        this.insuranceType = insuranceType;
-        return this;
-    }
-
-    public void setInsuranceType(InsuranceType insuranceType) {
-        this.insuranceType = insuranceType;
     }
 
     public byte[] getLogo() {
@@ -100,6 +86,19 @@ public class Insurance implements Serializable {
     public void setLogoContentType(String logoContentType) {
         this.logoContentType = logoContentType;
     }
+
+    public InsuranceType getInsuranceType() {
+        return insuranceType;
+    }
+
+    public Insurance insuranceType(InsuranceType insuranceType) {
+        this.insuranceType = insuranceType;
+        return this;
+    }
+
+    public void setInsuranceType(InsuranceType insuranceType) {
+        this.insuranceType = insuranceType;
+    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -123,7 +122,6 @@ public class Insurance implements Serializable {
         return "Insurance{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
-            ", insuranceType='" + getInsuranceType() + "'" +
             ", logo='" + getLogo() + "'" +
             ", logoContentType='" + getLogoContentType() + "'" +
             "}";

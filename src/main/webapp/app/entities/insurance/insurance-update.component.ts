@@ -8,6 +8,8 @@ import { Observable } from 'rxjs';
 import { JhiAlertService, JhiDataUtils } from 'ng-jhipster';
 import { IInsurance, Insurance } from 'app/shared/model/insurance.model';
 import { InsuranceService } from './insurance.service';
+import { IInsuranceType } from 'app/shared/model/insurance-type.model';
+import { InsuranceTypeService } from 'app/entities/insurance-type/insurance-type.service';
 
 @Component({
   selector: 'jhi-insurance-update',
@@ -16,18 +18,21 @@ import { InsuranceService } from './insurance.service';
 export class InsuranceUpdateComponent implements OnInit {
   isSaving: boolean;
 
+  insurancetypes: IInsuranceType[];
+
   editForm = this.fb.group({
     id: [],
     name: [],
-    insuranceType: [],
     logo: [],
-    logoContentType: []
+    logoContentType: [],
+    insuranceType: []
   });
 
   constructor(
     protected dataUtils: JhiDataUtils,
     protected jhiAlertService: JhiAlertService,
     protected insuranceService: InsuranceService,
+    protected insuranceTypeService: InsuranceTypeService,
     protected elementRef: ElementRef,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
@@ -38,15 +43,21 @@ export class InsuranceUpdateComponent implements OnInit {
     this.activatedRoute.data.subscribe(({ insurance }) => {
       this.updateForm(insurance);
     });
+    this.insuranceTypeService
+      .query()
+      .subscribe(
+        (res: HttpResponse<IInsuranceType[]>) => (this.insurancetypes = res.body),
+        (res: HttpErrorResponse) => this.onError(res.message)
+      );
   }
 
   updateForm(insurance: IInsurance) {
     this.editForm.patchValue({
       id: insurance.id,
       name: insurance.name,
-      insuranceType: insurance.insuranceType,
       logo: insurance.logo,
-      logoContentType: insurance.logoContentType
+      logoContentType: insurance.logoContentType,
+      insuranceType: insurance.insuranceType
     });
   }
 
@@ -112,9 +123,9 @@ export class InsuranceUpdateComponent implements OnInit {
       ...new Insurance(),
       id: this.editForm.get(['id']).value,
       name: this.editForm.get(['name']).value,
-      insuranceType: this.editForm.get(['insuranceType']).value,
       logoContentType: this.editForm.get(['logoContentType']).value,
-      logo: this.editForm.get(['logo']).value
+      logo: this.editForm.get(['logo']).value,
+      insuranceType: this.editForm.get(['insuranceType']).value
     };
   }
 
@@ -132,5 +143,9 @@ export class InsuranceUpdateComponent implements OnInit {
   }
   protected onError(errorMessage: string) {
     this.jhiAlertService.error(errorMessage, null, null);
+  }
+
+  trackInsuranceTypeById(index: number, item: IInsuranceType) {
+    return item.id;
   }
 }

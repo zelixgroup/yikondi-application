@@ -1,0 +1,35 @@
+{
+    "name": "DoctorAssistant",
+    "fields": [
+        {
+            "fieldName": "canPrescribe",
+            "fieldType": "Boolean"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "healthCentreDoctor",
+            "otherEntityRelationshipName": "doctorAssistant",
+            "relationshipName": "healthCentreDoctor",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "patient",
+            "otherEntityRelationshipName": "doctorAssistant",
+            "relationshipName": "patient",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20191213154326",
+    "entityTableName": "doctor_assistant",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

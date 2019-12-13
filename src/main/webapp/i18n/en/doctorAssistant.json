@@ -1,0 +1,25 @@
+{
+  "yikondiApp": {
+    "doctorAssistant": {
+      "home": {
+        "title": "Doctor Assistants",
+        "createLabel": "Create a new Doctor Assistant",
+        "createOrEditLabel": "Create or edit a Doctor Assistant",
+        "search": "Search for Doctor Assistant",
+        "notFound": "No Doctor Assistants found"
+      },
+      "created": "A new Doctor Assistant is created with identifier {{ param }}",
+      "updated": "A Doctor Assistant is updated with identifier {{ param }}",
+      "deleted": "A Doctor Assistant is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Doctor Assistant {{ id }}?"
+      },
+      "detail": {
+        "title": "Doctor Assistant"
+      },
+      "canPrescribe": "Can Prescribe",
+      "healthCentreDoctor": "Health Centre Doctor",
+      "patient": "Patient"
+    }
+  }
+}

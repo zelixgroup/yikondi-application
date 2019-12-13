@@ -18,8 +18,8 @@
         "title": "Insurance"
       },
       "name": "Name",
-      "insuranceType": "Insurance Type",
-      "logo": "Logo"
+      "logo": "Logo",
+      "insuranceType": "Insurance Type"
     }
   }
 }

@@ -15,13 +15,6 @@
                            formControlName="name"/>
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="yikondiApp.insurance.insuranceType" for="field_insuranceType">Insurance Type</label>
-                    <select class="form-control" name="insuranceType" formControlName="insuranceType" id="field_insuranceType">
-                        <option value="MUTUAL">{{'yikondiApp.InsuranceType.MUTUAL' | translate}}</option>
-                        <option value="COMMERCIAL">{{'yikondiApp.InsuranceType.COMMERCIAL' | translate}}</option>
-                    </select>
-                </div>
-                <div class="form-group">
                     <label class="form-control-label" jhiTranslate="yikondiApp.insurance.logo" for="field_logo">Logo</label>
                     <div>
                         <img [src]="'data:' + editForm.get('logoContentType').value + ';base64,' + editForm.get('logo').value" style="max-height: 100px;" *ngIf="editForm.get('logo').value" alt="insurance image"/>
@@ -39,6 +32,13 @@
                            formControlName="logoContentType" />
                 </div>
 
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="yikondiApp.insurance.insuranceType" for="field_insuranceType">Insurance Type</label>
+                    <select class="form-control" id="field_insuranceType" name="insuranceType" formControlName="insuranceType">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="insuranceTypeOption.id === editForm.get('insuranceType').value?.id ? editForm.get('insuranceType').value : insuranceTypeOption" *ngFor="let insuranceTypeOption of insurancetypes; trackBy: trackInsuranceTypeById">{{insuranceTypeOption.id}}</option>
+                    </select>
+                </div>
             </div>
             <div>
                 <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">

@@ -1,0 +1,26 @@
+{
+  "yikondiApp": {
+    "familyMember": {
+      "home": {
+        "title": "FamilyMembers",
+        "createLabel": "Créer un nouveau Family Member",
+        "createOrEditLabel": "Créer ou éditer un Family Member",
+        "search": "Recherche pour Family Member",
+        "notFound": "Aucun Family Member trouvé"
+      },
+      "created": "Un nouveau Family Member a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Family Member avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Family Member avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Family Member {{ id }} ?"
+      },
+      "detail": {
+        "title": "Family Member"
+      },
+      "observations": "Observations",
+      "owner": "Owner",
+      "member": "Member",
+      "relationship": "Relationship"
+    }
+  }
+}

@@ -34,7 +34,7 @@
             <thead>
             <tr>
             <th scope="col" ><span jhiTranslate="global.field.id">ID</span></th>
-            <th scope="col" ><span jhiTranslate="yikondiApp.lifeConstant.lifeConstantName">Life Constant Name</span></th>
+            <th scope="col" ><span jhiTranslate="yikondiApp.lifeConstant.name">Name</span></th>
             <th scope="col" ><span jhiTranslate="yikondiApp.lifeConstant.lifeConstantUnit">Life Constant Unit</span></th>
             <th scope="col"></th>
             </tr>
@@ -42,8 +42,12 @@
             <tbody>
             <tr *ngFor="let lifeConstant of lifeConstants ;trackBy: trackId">
                 <td><a [routerLink]="['/life-constant', lifeConstant.id, 'view' ]">{{lifeConstant.id}}</a></td>
-                <td jhiTranslate="{{'yikondiApp.LifeConstantName.' + lifeConstant.lifeConstantName}}">{{lifeConstant.lifeConstantName}}</td>
-                <td jhiTranslate="{{'yikondiApp.LifeConstantUnit.' + lifeConstant.lifeConstantUnit}}">{{lifeConstant.lifeConstantUnit}}</td>
+                <td>{{lifeConstant.name}}</td>
+                <td>
+                    <div *ngIf="lifeConstant.lifeConstantUnit">
+                        <a [routerLink]="['/life-constant-unit', lifeConstant.lifeConstantUnit?.id, 'view' ]" >{{lifeConstant.lifeConstantUnit?.id}}</a>
+                    </div>
+                </td>
                 <td class="text-right">
                     <div class="btn-group">
                         <button type="submit"
