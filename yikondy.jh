@@ -219,4 +219,62 @@ entity PatientEmergencyNumber {
 relationship ManyToOne {
 	PatientEmergencyNumber{patient} to Patient   
 }
+entity MedicalRecordAuthorization {
+	authorizationDateTime ZonedDateTime
+	authorizationStartDateTime ZonedDateTime
+	authorizationEndDateTime ZonedDateTime	
+	observations String
+}
+relationship ManyToOne {
+	MedicalRecordAuthorization{recordOwner} to Patient
+	MedicalRecordAuthorization{authorizationGrantee} to Patient
+}
+entity DrugAdministrationRoute {
+	name String
+}
+entity DrugDosageForm {
+	name String
+}
+entity Drug {
+	name String
+    description String    
+}
+relationship ManyToOne {
+	Drug{administrationRoute} to DrugAdministrationRoute
+	Drug{dosageForm} to DrugDosageForm
+}
+entity Analysis {
+	name String
+    description String
+}
+entity MedicalPrescription {
+	prescriptionDateTime ZonedDateTime
+    observations TextBlob
+}
+relationship ManyToOne {
+	MedicalPrescription{doctor} to Doctor
+	MedicalPrescription{patient} to Patient
+    MedicalPrescription{appointement} to PatientAppointement
+}
+entity MedicalPrescriptionDrug {
+	dosage String
+}
+relationship ManyToOne {
+	MedicalPrescriptionDrug{medicalPrescription} to MedicalPrescription
+	MedicalPrescriptionDrug{drug} to Drug
+}
+entity MedicalPrescriptionAnalysis {
+}
+relationship ManyToOne {
+	MedicalPrescriptionAnalysis{medicalPrescription} to MedicalPrescription
+	MedicalPrescriptionAnalysis{analysis} to Analysis
+}
+
+entity DoctorAssistant {
+	canPrescribe Boolean
+}
+relationship ManyToOne {
+	DoctorAssistant{healthCentreDoctor} to HealthCentreDoctor
+	DoctorAssistant{patient} to Patient
+}
 service all with serviceImpl
