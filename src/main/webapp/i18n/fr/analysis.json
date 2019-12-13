@@ -1,0 +1,24 @@
+{
+  "yikondiApp": {
+    "analysis": {
+      "home": {
+        "title": "Analyses",
+        "createLabel": "Créer un nouveau Analysis",
+        "createOrEditLabel": "Créer ou éditer un Analysis",
+        "search": "Recherche pour Analysis",
+        "notFound": "Aucun Analysis trouvé"
+      },
+      "created": "Un nouveau Analysis a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Analysis avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Analysis avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Analysis {{ id }} ?"
+      },
+      "detail": {
+        "title": "Analysis"
+      },
+      "name": "Name",
+      "description": "Description"
+    }
+  }
+}

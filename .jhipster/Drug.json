@@ -1,0 +1,39 @@
+{
+    "name": "Drug",
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "drugAdministrationRoute",
+            "otherEntityRelationshipName": "drug",
+            "relationshipName": "administrationRoute",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "drugDosageForm",
+            "otherEntityRelationshipName": "drug",
+            "relationshipName": "dosageForm",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20191213115302",
+    "entityTableName": "drug",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

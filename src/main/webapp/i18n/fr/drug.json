@@ -1,0 +1,26 @@
+{
+  "yikondiApp": {
+    "drug": {
+      "home": {
+        "title": "Drugs",
+        "createLabel": "Créer un nouveau Drug",
+        "createOrEditLabel": "Créer ou éditer un Drug",
+        "search": "Recherche pour Drug",
+        "notFound": "Aucun Drug trouvé"
+      },
+      "created": "Un nouveau Drug a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Drug avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Drug avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Drug {{ id }} ?"
+      },
+      "detail": {
+        "title": "Drug"
+      },
+      "name": "Name",
+      "description": "Description",
+      "administrationRoute": "Administration Route",
+      "dosageForm": "Dosage Form"
+    }
+  }
+}

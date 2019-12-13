@@ -1,0 +1,27 @@
+{
+  "yikondiApp": {
+    "medicalPrescription": {
+      "home": {
+        "title": "MedicalPrescriptions",
+        "createLabel": "Créer un nouveau Medical Prescription",
+        "createOrEditLabel": "Créer ou éditer un Medical Prescription",
+        "search": "Recherche pour Medical Prescription",
+        "notFound": "Aucun Medical Prescription trouvé"
+      },
+      "created": "Un nouveau Medical Prescription a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Medical Prescription avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Medical Prescription avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Medical Prescription {{ id }} ?"
+      },
+      "detail": {
+        "title": "Medical Prescription"
+      },
+      "prescriptionDateTime": "Prescription Date Time",
+      "observations": "Observations",
+      "doctor": "Doctor",
+      "patient": "Patient",
+      "appointement": "Appointement"
+    }
+  }
+}

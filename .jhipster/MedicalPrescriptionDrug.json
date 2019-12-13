@@ -1,0 +1,35 @@
+{
+    "name": "MedicalPrescriptionDrug",
+    "fields": [
+        {
+            "fieldName": "dosage",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "medicalPrescription",
+            "otherEntityRelationshipName": "medicalPrescriptionDrug",
+            "relationshipName": "medicalPrescription",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "drug",
+            "otherEntityRelationshipName": "medicalPrescriptionDrug",
+            "relationshipName": "drug",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20191213115305",
+    "entityTableName": "medical_prescription_drug",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

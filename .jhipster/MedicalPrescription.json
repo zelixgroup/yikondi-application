@@ -1,0 +1,47 @@
+{
+    "name": "MedicalPrescription",
+    "fields": [
+        {
+            "fieldName": "prescriptionDateTime",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "observations",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "text"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "doctor",
+            "otherEntityRelationshipName": "medicalPrescription",
+            "relationshipName": "doctor",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "patient",
+            "otherEntityRelationshipName": "medicalPrescription",
+            "relationshipName": "patient",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "patientAppointement",
+            "otherEntityRelationshipName": "medicalPrescription",
+            "relationshipName": "appointement",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20191213115304",
+    "entityTableName": "medical_prescription",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

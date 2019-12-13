@@ -1,0 +1,47 @@
+{
+    "name": "MedicalRecordAuthorization",
+    "fields": [
+        {
+            "fieldName": "authorizationDateTime",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "authorizationStartDateTime",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "authorizationEndDateTime",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "observations",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "patient",
+            "otherEntityRelationshipName": "medicalRecordAuthorization",
+            "relationshipName": "recordOwner",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "patient",
+            "otherEntityRelationshipName": "medicalRecordAuthorization",
+            "relationshipName": "authorizationGrantee",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20191213115259",
+    "entityTableName": "medical_record_authorization",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

@@ -1,0 +1,56 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-medical-prescription-heading" jhiTranslate="yikondiApp.medicalPrescription.home.createOrEditLabel">Create or edit a Medical Prescription</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!editForm.get('id').value">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id"
+                        readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="yikondiApp.medicalPrescription.prescriptionDateTime" for="field_prescriptionDateTime">Prescription Date Time</label>
+                    <div class="d-flex">
+                        <input id="field_prescriptionDateTime" type="datetime-local" class="form-control" name="prescriptionDateTime" formControlName="prescriptionDateTime" placeholder="YYYY-MM-DD HH:mm"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="yikondiApp.medicalPrescription.observations" for="field_observations">Observations</label>
+                    <textarea class="form-control" name="observations" id="field_observations"
+                              formControlName="observations"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="yikondiApp.medicalPrescription.doctor" for="field_doctor">Doctor</label>
+                    <select class="form-control" id="field_doctor" name="doctor" formControlName="doctor">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="doctorOption.id === editForm.get('doctor').value?.id ? editForm.get('doctor').value : doctorOption" *ngFor="let doctorOption of doctors; trackBy: trackDoctorById">{{doctorOption.id}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="yikondiApp.medicalPrescription.patient" for="field_patient">Patient</label>
+                    <select class="form-control" id="field_patient" name="patient" formControlName="patient">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="patientOption.id === editForm.get('patient').value?.id ? editForm.get('patient').value : patientOption" *ngFor="let patientOption of patients; trackBy: trackPatientById">{{patientOption.id}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="yikondiApp.medicalPrescription.appointement" for="field_appointement">Appointement</label>
+                    <select class="form-control" id="field_appointement" name="appointement" formControlName="appointement">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="patientAppointementOption.id === editForm.get('appointement').value?.id ? editForm.get('appointement').value : patientAppointementOption" *ngFor="let patientAppointementOption of patientappointements; trackBy: trackPatientAppointementById">{{patientAppointementOption.id}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

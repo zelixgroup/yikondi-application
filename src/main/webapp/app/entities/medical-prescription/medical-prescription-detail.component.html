@@ -1,0 +1,49 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="medicalPrescription">
+            <h2><span jhiTranslate="yikondiApp.medicalPrescription.detail.title">Medical Prescription</span> {{medicalPrescription.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="yikondiApp.medicalPrescription.prescriptionDateTime">Prescription Date Time</span></dt>
+                <dd>
+                    <span>{{medicalPrescription.prescriptionDateTime}}</span>
+                </dd>
+                <dt><span jhiTranslate="yikondiApp.medicalPrescription.observations">Observations</span></dt>
+                <dd>
+                    <span>{{medicalPrescription.observations}}</span>
+                </dd>
+                <dt><span jhiTranslate="yikondiApp.medicalPrescription.doctor">Doctor</span></dt>
+                <dd>
+                    <div *ngIf="medicalPrescription.doctor">
+                        <a [routerLink]="['/doctor', medicalPrescription.doctor?.id, 'view']">{{medicalPrescription.doctor?.id}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="yikondiApp.medicalPrescription.patient">Patient</span></dt>
+                <dd>
+                    <div *ngIf="medicalPrescription.patient">
+                        <a [routerLink]="['/patient', medicalPrescription.patient?.id, 'view']">{{medicalPrescription.patient?.id}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="yikondiApp.medicalPrescription.appointement">Appointement</span></dt>
+                <dd>
+                    <div *ngIf="medicalPrescription.appointement">
+                        <a [routerLink]="['/patient-appointement', medicalPrescription.appointement?.id, 'view']">{{medicalPrescription.appointement?.id}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/medical-prescription', medicalPrescription.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

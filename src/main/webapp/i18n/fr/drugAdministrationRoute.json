@@ -1,0 +1,23 @@
+{
+  "yikondiApp": {
+    "drugAdministrationRoute": {
+      "home": {
+        "title": "DrugAdministrationRoutes",
+        "createLabel": "Créer un nouveau Drug Administration Route",
+        "createOrEditLabel": "Créer ou éditer un Drug Administration Route",
+        "search": "Recherche pour Drug Administration Route",
+        "notFound": "Aucun Drug Administration Route trouvé"
+      },
+      "created": "Un nouveau Drug Administration Route a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Drug Administration Route avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Drug Administration Route avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Drug Administration Route {{ id }} ?"
+      },
+      "detail": {
+        "title": "Drug Administration Route"
+      },
+      "name": "Name"
+    }
+  }
+}

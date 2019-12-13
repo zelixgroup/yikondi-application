@@ -1,0 +1,28 @@
+{
+  "yikondiApp": {
+    "medicalRecordAuthorization": {
+      "home": {
+        "title": "MedicalRecordAuthorizations",
+        "createLabel": "Créer un nouveau Medical Record Authorization",
+        "createOrEditLabel": "Créer ou éditer un Medical Record Authorization",
+        "search": "Recherche pour Medical Record Authorization",
+        "notFound": "Aucun Medical Record Authorization trouvé"
+      },
+      "created": "Un nouveau Medical Record Authorization a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Medical Record Authorization avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Medical Record Authorization avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Medical Record Authorization {{ id }} ?"
+      },
+      "detail": {
+        "title": "Medical Record Authorization"
+      },
+      "authorizationDateTime": "Authorization Date Time",
+      "authorizationStartDateTime": "Authorization Start Date Time",
+      "authorizationEndDateTime": "Authorization End Date Time",
+      "observations": "Observations",
+      "recordOwner": "Record Owner",
+      "authorizationGrantee": "Authorization Grantee"
+    }
+  }
+}

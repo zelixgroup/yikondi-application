@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <!--
+        Added the constraints for entity Drug.
+    -->
+    <changeSet id="20191213115302-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="administration_route_id"
+                                 baseTableName="drug"
+                                 constraintName="fk_drug_administration_route_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="drug_administration_route"/>
+
+        <addForeignKeyConstraint baseColumnNames="dosage_form_id"
+                                 baseTableName="drug"
+                                 constraintName="fk_drug_dosage_form_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="drug_dosage_form"/>
+
+    </changeSet>
+</databaseChangeLog>

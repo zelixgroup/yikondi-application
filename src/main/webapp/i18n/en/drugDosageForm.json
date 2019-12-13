@@ -1,0 +1,23 @@
+{
+  "yikondiApp": {
+    "drugDosageForm": {
+      "home": {
+        "title": "Drug Dosage Forms",
+        "createLabel": "Create a new Drug Dosage Form",
+        "createOrEditLabel": "Create or edit a Drug Dosage Form",
+        "search": "Search for Drug Dosage Form",
+        "notFound": "No Drug Dosage Forms found"
+      },
+      "created": "A new Drug Dosage Form is created with identifier {{ param }}",
+      "updated": "A Drug Dosage Form is updated with identifier {{ param }}",
+      "deleted": "A Drug Dosage Form is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Drug Dosage Form {{ id }}?"
+      },
+      "detail": {
+        "title": "Drug Dosage Form"
+      },
+      "name": "Name"
+    }
+  }
+}

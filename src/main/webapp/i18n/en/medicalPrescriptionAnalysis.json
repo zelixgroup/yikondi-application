@@ -1,0 +1,24 @@
+{
+  "yikondiApp": {
+    "medicalPrescriptionAnalysis": {
+      "home": {
+        "title": "Medical Prescription Analyses",
+        "createLabel": "Create a new Medical Prescription Analysis",
+        "createOrEditLabel": "Create or edit a Medical Prescription Analysis",
+        "search": "Search for Medical Prescription Analysis",
+        "notFound": "No Medical Prescription Analyses found"
+      },
+      "created": "A new Medical Prescription Analysis is created with identifier {{ param }}",
+      "updated": "A Medical Prescription Analysis is updated with identifier {{ param }}",
+      "deleted": "A Medical Prescription Analysis is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Medical Prescription Analysis {{ id }}?"
+      },
+      "detail": {
+        "title": "Medical Prescription Analysis"
+      },
+      "medicalPrescription": "Medical Prescription",
+      "analysis": "Analysis"
+    }
+  }
+}

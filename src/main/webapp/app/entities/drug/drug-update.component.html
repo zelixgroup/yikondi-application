@@ -1,0 +1,48 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-drug-heading" jhiTranslate="yikondiApp.drug.home.createOrEditLabel">Create or edit a Drug</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!editForm.get('id').value">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id"
+                        readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="yikondiApp.drug.name" for="field_name">Name</label>
+                    <input type="text" class="form-control" name="name" id="field_name"
+                           formControlName="name"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="yikondiApp.drug.description" for="field_description">Description</label>
+                    <input type="text" class="form-control" name="description" id="field_description"
+                           formControlName="description"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="yikondiApp.drug.administrationRoute" for="field_administrationRoute">Administration Route</label>
+                    <select class="form-control" id="field_administrationRoute" name="administrationRoute" formControlName="administrationRoute">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="drugAdministrationRouteOption.id === editForm.get('administrationRoute').value?.id ? editForm.get('administrationRoute').value : drugAdministrationRouteOption" *ngFor="let drugAdministrationRouteOption of drugadministrationroutes; trackBy: trackDrugAdministrationRouteById">{{drugAdministrationRouteOption.id}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="yikondiApp.drug.dosageForm" for="field_dosageForm">Dosage Form</label>
+                    <select class="form-control" id="field_dosageForm" name="dosageForm" formControlName="dosageForm">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="drugDosageFormOption.id === editForm.get('dosageForm').value?.id ? editForm.get('dosageForm').value : drugDosageFormOption" *ngFor="let drugDosageFormOption of drugdosageforms; trackBy: trackDrugDosageFormById">{{drugDosageFormOption.id}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
