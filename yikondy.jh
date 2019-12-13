@@ -140,23 +140,27 @@ relationship ManyToOne {
 	PatientFavoriteDoctor{patient} to Patient
     PatientFavoriteDoctor{doctor} to Doctor
 }
-enum LifeConstantUnit {
-    NONE,
-    METER,
-    KILOGRAM,
-    GRAM_PER_LITER
+entity LifeConstantUnit {
+    /**NONE,
+    *METER,
+    *KILOGRAM,
+    *GRAM_PER_LITER*
+    name String
+    description String
 }
-enum LifeConstantName {
-	HEIGHT,
-    WEIGHT,
-    BLOOD_GROUP,
-    BLOOD_SUGAR,    
-    ELECTROPHORESIS,    
-    CHRONIC_MYELOGENOUS_LEUKEMIA
+entity LifeConstantName {
+	/**HEIGHT,
+    *WEIGHT,
+    *BLOOD_GROUP,
+    *BLOOD_SUGAR,    
+    *ELECTROPHORESIS,    
+    *CHRONIC_MYELOGENOUS_LEUKEMIA*
 }
 entity LifeConstant {
-	lifeConstantName LifeConstantName
-    lifeConstantUnit LifeConstantUnit
+	name String
+}
+relationship ManyToOne {
+	LifeConstant{lifeConstantUnit} to LifeConstantUnit
 }
 entity PatientLifeConstant {
 	measurementDatetime ZonedDateTime
@@ -166,14 +170,18 @@ relationship ManyToOne {
 	PatientLifeConstant{patient} to Patient
     PatientLifeConstant{lifeConstant} to LifeConstant
 }
-enum InsuranceType {
-	MUTUAL,
-    COMMERCIAL
+entity InsuranceType {
+	/**MUTUAL,
+    *COMMERCIAL*
+    name String
+    description String
 }
 entity Insurance {
  	name String
-    insuranceType InsuranceType
     logo ImageBlob
+}
+relationship ManyToOne {
+	Insurance{insuranceType} to InsuranceType
 }
 entity PatientInsuranceCoverage {
 	startDate LocalDate
@@ -218,5 +226,75 @@ entity PatientEmergencyNumber {
 }
 relationship ManyToOne {
 	PatientEmergencyNumber{patient} to Patient   
+}
+entity MedicalRecordAuthorization {
+	authorizationDateTime ZonedDateTime
+	authorizationStartDateTime ZonedDateTime
+	authorizationEndDateTime ZonedDateTime	
+	observations String
+}
+relationship ManyToOne {
+	MedicalRecordAuthorization{recordOwner} to Patient
+	MedicalRecordAuthorization{authorizationGrantee} to Patient
+}
+entity DrugAdministrationRoute {
+	name String
+}
+entity DrugDosageForm {
+	name String
+}
+entity Drug {
+	name String
+    description String    
+}
+relationship ManyToOne {
+	Drug{administrationRoute} to DrugAdministrationRoute
+	Drug{dosageForm} to DrugDosageForm
+}
+entity Analysis {
+	name String
+    description String
+}
+entity MedicalPrescription {
+	prescriptionDateTime ZonedDateTime
+    observations TextBlob
+}
+relationship ManyToOne {
+	MedicalPrescription{doctor} to Doctor
+	MedicalPrescription{patient} to Patient
+    MedicalPrescription{appointement} to PatientAppointement
+}
+entity MedicalPrescriptionDrug {
+	dosage String
+}
+relationship ManyToOne {
+	MedicalPrescriptionDrug{medicalPrescription} to MedicalPrescription
+	MedicalPrescriptionDrug{drug} to Drug
+}
+entity MedicalPrescriptionAnalysis {
+}
+relationship ManyToOne {
+	MedicalPrescriptionAnalysis{medicalPrescription} to MedicalPrescription
+	MedicalPrescriptionAnalysis{analysis} to Analysis
+}
+
+entity DoctorAssistant {
+	canPrescribe Boolean
+}
+relationship ManyToOne {
+	DoctorAssistant{healthCentreDoctor} to HealthCentreDoctor
+	DoctorAssistant{patient} to Patient
+}
+entity FamilyRelationship {
+	name String
+	description String
+}
+entity FamilyMember {
+	observations String
+}
+relationship ManyToOne {
+	FamilyMember{owner} to Patient
+	FamilyMember{member} to Patient
+	FamilyMember{relationship} to FamilyRelationship
 }
 service all with serviceImpl
