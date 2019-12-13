@@ -15,13 +15,6 @@
                            formControlName="name"/>
                 </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="yikondiApp.city.country" for="field_country">Country</label>
-                    <select class="form-control" id="field_country" name="country" formControlName="country">
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="countryOption.id === editForm.get('country').value?.id ? editForm.get('country').value : countryOption" *ngFor="let countryOption of countries; trackBy: trackCountryById">{{countryOption.id}}</option>
-                    </select>
-                </div>
             </div>
             <div>
                 <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">

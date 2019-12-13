@@ -9,12 +9,6 @@
                 <dd>
                     <span>{{city.name}}</span>
                 </dd>
-                <dt><span jhiTranslate="yikondiApp.city.country">Country</span></dt>
-                <dd>
-                    <div *ngIf="city.country">
-                        <a [routerLink]="['/country', city.country?.id, 'view']">{{city.country?.id}}</a>
-                    </div>
-                </dd>
             </dl>
 
             <button type="submit"

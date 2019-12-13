@@ -22,7 +22,8 @@
       "primaryPhoneNumber": "Primary Phone Number",
       "secondaryPhoneNumber": "Secondary Phone Number",
       "emailAddress": "Email Address",
-      "city": "City"
+      "city": "City",
+      "country": "Country"
     }
   }
 }
