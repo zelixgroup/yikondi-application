@@ -41,6 +41,19 @@
     <include file="config/liquibase/changelog/20191210001822_added_entity_Pathology.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20191210001823_added_entity_PatientPathology.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20191210001824_added_entity_PatientEmergencyNumber.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191213154307_added_entity_LifeConstantUnit.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191213154310_added_entity_InsuranceType.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191213154318_added_entity_MedicalRecordAuthorization.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191213154319_added_entity_DrugAdministrationRoute.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191213154320_added_entity_DrugDosageForm.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191213154321_added_entity_Drug.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191213154322_added_entity_Analysis.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191213154323_added_entity_MedicalPrescription.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191213154324_added_entity_MedicalPrescriptionDrug.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191213154325_added_entity_MedicalPrescriptionAnalysis.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191213154326_added_entity_DoctorAssistant.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191213154327_added_entity_FamilyRelationship.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191213154328_added_entity_FamilyMember.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20191206035846_added_entity_constraints_City.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20191206035847_added_entity_constraints_Address.xml" relativeToChangelogFile="false"/>
@@ -60,5 +73,14 @@
     <include file="config/liquibase/changelog/20191210001821_added_entity_constraints_PatientAllergy.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20191210001823_added_entity_constraints_PatientPathology.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20191210001824_added_entity_constraints_PatientEmergencyNumber.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191210001816_added_entity_constraints_LifeConstant.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191210001818_added_entity_constraints_Insurance.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191213154318_added_entity_constraints_MedicalRecordAuthorization.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191213154321_added_entity_constraints_Drug.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191213154323_added_entity_constraints_MedicalPrescription.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191213154324_added_entity_constraints_MedicalPrescriptionDrug.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191213154325_added_entity_constraints_MedicalPrescriptionAnalysis.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191213154326_added_entity_constraints_DoctorAssistant.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191213154328_added_entity_constraints_FamilyMember.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

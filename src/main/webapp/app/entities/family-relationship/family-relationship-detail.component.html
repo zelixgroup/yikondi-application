@@ -1,0 +1,31 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="familyRelationship">
+            <h2><span jhiTranslate="yikondiApp.familyRelationship.detail.title">Family Relationship</span> {{familyRelationship.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="yikondiApp.familyRelationship.name">Name</span></dt>
+                <dd>
+                    <span>{{familyRelationship.name}}</span>
+                </dd>
+                <dt><span jhiTranslate="yikondiApp.familyRelationship.description">Description</span></dt>
+                <dd>
+                    <span>{{familyRelationship.description}}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/family-relationship', familyRelationship.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

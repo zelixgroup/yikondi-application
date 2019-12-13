@@ -1,11 +1,24 @@
 {
   "yikondiApp": {
-    "LifeConstantUnit": {
-      "null": "",
-      "NONE": "NONE",
-      "METER": "METER",
-      "KILOGRAM": "KILOGRAM",
-      "GRAM_PER_LITER": "GRAM_PER_LITER"
+    "lifeConstantUnit": {
+      "home": {
+        "title": "LifeConstantUnits",
+        "createLabel": "Créer un nouveau Life Constant Unit",
+        "createOrEditLabel": "Créer ou éditer un Life Constant Unit",
+        "search": "Recherche pour Life Constant Unit",
+        "notFound": "Aucun Life Constant Unit trouvé"
+      },
+      "created": "Un nouveau Life Constant Unit a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Life Constant Unit avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Life Constant Unit avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Life Constant Unit {{ id }} ?"
+      },
+      "detail": {
+        "title": "Life Constant Unit"
+      },
+      "name": "Name",
+      "description": "Description"
     }
   }
 }

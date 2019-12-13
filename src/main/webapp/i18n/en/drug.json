@@ -1,0 +1,26 @@
+{
+  "yikondiApp": {
+    "drug": {
+      "home": {
+        "title": "Drugs",
+        "createLabel": "Create a new Drug",
+        "createOrEditLabel": "Create or edit a Drug",
+        "search": "Search for Drug",
+        "notFound": "No Drugs found"
+      },
+      "created": "A new Drug is created with identifier {{ param }}",
+      "updated": "A Drug is updated with identifier {{ param }}",
+      "deleted": "A Drug is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Drug {{ id }}?"
+      },
+      "detail": {
+        "title": "Drug"
+      },
+      "name": "Name",
+      "description": "Description",
+      "administrationRoute": "Administration Route",
+      "dosageForm": "Dosage Form"
+    }
+  }
+}

@@ -6,17 +6,20 @@
             "fieldType": "String"
         },
         {
-            "fieldName": "insuranceType",
-            "fieldType": "InsuranceType",
-            "fieldValues": "MUTUAL,COMMERCIAL"
-        },
-        {
             "fieldName": "logo",
             "fieldType": "byte[]",
             "fieldTypeBlobContent": "image"
         }
     ],
-    "relationships": [],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "insuranceType",
+            "otherEntityRelationshipName": "insurance",
+            "relationshipName": "insuranceType",
+            "otherEntityField": "id"
+        }
+    ],
     "changelogDate": "20191210001818",
     "entityTableName": "insurance",
     "dto": "no",

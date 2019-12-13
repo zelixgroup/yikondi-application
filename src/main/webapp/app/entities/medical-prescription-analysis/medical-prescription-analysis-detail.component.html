@@ -1,0 +1,35 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="medicalPrescriptionAnalysis">
+            <h2><span jhiTranslate="yikondiApp.medicalPrescriptionAnalysis.detail.title">Medical Prescription Analysis</span> {{medicalPrescriptionAnalysis.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="yikondiApp.medicalPrescriptionAnalysis.medicalPrescription">Medical Prescription</span></dt>
+                <dd>
+                    <div *ngIf="medicalPrescriptionAnalysis.medicalPrescription">
+                        <a [routerLink]="['/medical-prescription', medicalPrescriptionAnalysis.medicalPrescription?.id, 'view']">{{medicalPrescriptionAnalysis.medicalPrescription?.id}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="yikondiApp.medicalPrescriptionAnalysis.analysis">Analysis</span></dt>
+                <dd>
+                    <div *ngIf="medicalPrescriptionAnalysis.analysis">
+                        <a [routerLink]="['/analysis', medicalPrescriptionAnalysis.analysis?.id, 'view']">{{medicalPrescriptionAnalysis.analysis?.id}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/medical-prescription-analysis', medicalPrescriptionAnalysis.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

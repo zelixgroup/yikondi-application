@@ -1,0 +1,24 @@
+{
+  "yikondiApp": {
+    "familyRelationship": {
+      "home": {
+        "title": "Family Relationships",
+        "createLabel": "Create a new Family Relationship",
+        "createOrEditLabel": "Create or edit a Family Relationship",
+        "search": "Search for Family Relationship",
+        "notFound": "No Family Relationships found"
+      },
+      "created": "A new Family Relationship is created with identifier {{ param }}",
+      "updated": "A Family Relationship is updated with identifier {{ param }}",
+      "deleted": "A Family Relationship is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Family Relationship {{ id }}?"
+      },
+      "detail": {
+        "title": "Family Relationship"
+      },
+      "name": "Name",
+      "description": "Description"
+    }
+  }
+}

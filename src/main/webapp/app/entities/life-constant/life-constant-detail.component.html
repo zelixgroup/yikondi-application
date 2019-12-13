@@ -5,13 +5,15 @@
             <hr>
             <jhi-alert-error></jhi-alert-error>
             <dl class="row-md jh-entity-details">
-                <dt><span jhiTranslate="yikondiApp.lifeConstant.lifeConstantName">Life Constant Name</span></dt>
+                <dt><span jhiTranslate="yikondiApp.lifeConstant.name">Name</span></dt>
                 <dd>
-                    <span jhiTranslate="{{'yikondiApp.LifeConstantName.' + lifeConstant.lifeConstantName}}">{{lifeConstant.lifeConstantName}}</span>
+                    <span>{{lifeConstant.name}}</span>
                 </dd>
                 <dt><span jhiTranslate="yikondiApp.lifeConstant.lifeConstantUnit">Life Constant Unit</span></dt>
                 <dd>
-                    <span jhiTranslate="{{'yikondiApp.LifeConstantUnit.' + lifeConstant.lifeConstantUnit}}">{{lifeConstant.lifeConstantUnit}}</span>
+                    <div *ngIf="lifeConstant.lifeConstantUnit">
+                        <a [routerLink]="['/life-constant-unit', lifeConstant.lifeConstantUnit?.id, 'view']">{{lifeConstant.lifeConstantUnit?.id}}</a>
+                    </div>
                 </dd>
             </dl>
 

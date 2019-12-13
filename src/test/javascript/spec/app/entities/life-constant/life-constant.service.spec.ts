@@ -3,8 +3,6 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { take, map } from 'rxjs/operators';
 import { LifeConstantService } from 'app/entities/life-constant/life-constant.service';
 import { ILifeConstant, LifeConstant } from 'app/shared/model/life-constant.model';
-import { LifeConstantName } from 'app/shared/model/enumerations/life-constant-name.model';
-import { LifeConstantUnit } from 'app/shared/model/enumerations/life-constant-unit.model';
 
 describe('Service Tests', () => {
   describe('LifeConstant Service', () => {
@@ -22,7 +20,7 @@ describe('Service Tests', () => {
       service = injector.get(LifeConstantService);
       httpMock = injector.get(HttpTestingController);
 
-      elemDefault = new LifeConstant(0, LifeConstantName.HEIGHT, LifeConstantUnit.NONE);
+      elemDefault = new LifeConstant(0, 'AAAAAAA');
     });
 
     describe('Service methods', () => {
@@ -58,8 +56,7 @@ describe('Service Tests', () => {
       it('should update a LifeConstant', () => {
         const returnedFromService = Object.assign(
           {
-            lifeConstantName: 'BBBBBB',
-            lifeConstantUnit: 'BBBBBB'
+            name: 'BBBBBB'
           },
           elemDefault
         );
@@ -77,8 +74,7 @@ describe('Service Tests', () => {
       it('should return a list of LifeConstant', () => {
         const returnedFromService = Object.assign(
           {
-            lifeConstantName: 'BBBBBB',
-            lifeConstantUnit: 'BBBBBB'
+            name: 'BBBBBB'
           },
           elemDefault
         );

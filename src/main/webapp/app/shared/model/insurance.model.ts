@@ -1,19 +1,19 @@
-import { InsuranceType } from 'app/shared/model/enumerations/insurance-type.model';
+import { IInsuranceType } from 'app/shared/model/insurance-type.model';
 
 export interface IInsurance {
   id?: number;
   name?: string;
-  insuranceType?: InsuranceType;
   logoContentType?: string;
   logo?: any;
+  insuranceType?: IInsuranceType;
 }
 
 export class Insurance implements IInsurance {
   constructor(
     public id?: number,
     public name?: string,
-    public insuranceType?: InsuranceType,
     public logoContentType?: string,
-    public logo?: any
+    public logo?: any,
+    public insuranceType?: IInsuranceType
   ) {}
 }

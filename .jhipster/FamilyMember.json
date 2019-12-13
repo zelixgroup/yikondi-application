@@ -1,0 +1,42 @@
+{
+    "name": "FamilyMember",
+    "fields": [
+        {
+            "fieldName": "observations",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "patient",
+            "otherEntityRelationshipName": "familyMember",
+            "relationshipName": "owner",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "patient",
+            "otherEntityRelationshipName": "familyMember",
+            "relationshipName": "member",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "familyRelationship",
+            "otherEntityRelationshipName": "familyMember",
+            "relationshipName": "relationship",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20191213154328",
+    "entityTableName": "family_member",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

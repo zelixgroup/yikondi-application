@@ -1,0 +1,25 @@
+{
+  "yikondiApp": {
+    "medicalPrescriptionDrug": {
+      "home": {
+        "title": "MedicalPrescriptionDrugs",
+        "createLabel": "Créer un nouveau Medical Prescription Drug",
+        "createOrEditLabel": "Créer ou éditer un Medical Prescription Drug",
+        "search": "Recherche pour Medical Prescription Drug",
+        "notFound": "Aucun Medical Prescription Drug trouvé"
+      },
+      "created": "Un nouveau Medical Prescription Drug a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Medical Prescription Drug avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Medical Prescription Drug avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Medical Prescription Drug {{ id }} ?"
+      },
+      "detail": {
+        "title": "Medical Prescription Drug"
+      },
+      "dosage": "Dosage",
+      "medicalPrescription": "Medical Prescription",
+      "drug": "Drug"
+    }
+  }
+}

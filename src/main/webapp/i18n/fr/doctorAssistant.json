@@ -1,0 +1,25 @@
+{
+  "yikondiApp": {
+    "doctorAssistant": {
+      "home": {
+        "title": "DoctorAssistants",
+        "createLabel": "Créer un nouveau Doctor Assistant",
+        "createOrEditLabel": "Créer ou éditer un Doctor Assistant",
+        "search": "Recherche pour Doctor Assistant",
+        "notFound": "Aucun Doctor Assistant trouvé"
+      },
+      "created": "Un nouveau Doctor Assistant a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Doctor Assistant avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Doctor Assistant avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Doctor Assistant {{ id }} ?"
+      },
+      "detail": {
+        "title": "Doctor Assistant"
+      },
+      "canPrescribe": "Can Prescribe",
+      "healthCentreDoctor": "Health Centre Doctor",
+      "patient": "Patient"
+    }
+  }
+}
