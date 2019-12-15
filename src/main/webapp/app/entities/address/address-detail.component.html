@@ -31,6 +31,12 @@
                         <a [routerLink]="['/city', address.city?.id, 'view']">{{address.city?.id}}</a>
                     </div>
                 </dd>
+                <dt><span jhiTranslate="yikondiApp.address.country">Country</span></dt>
+                <dd>
+                    <div *ngIf="address.country">
+                        <a [routerLink]="['/country', address.country?.id, 'view']">{{address.country?.id}}</a>
+                    </div>
+                </dd>
             </dl>
 
             <button type="submit"

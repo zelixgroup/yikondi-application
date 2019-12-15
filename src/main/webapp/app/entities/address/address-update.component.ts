@@ -10,6 +10,8 @@ import { IAddress, Address } from 'app/shared/model/address.model';
 import { AddressService } from './address.service';
 import { ICity } from 'app/shared/model/city.model';
 import { CityService } from 'app/entities/city/city.service';
+import { ICountry } from 'app/shared/model/country.model';
+import { CountryService } from 'app/entities/country/country.service';
 
 @Component({
   selector: 'jhi-address-update',
@@ -20,6 +22,8 @@ export class AddressUpdateComponent implements OnInit {
 
   cities: ICity[];
 
+  countries: ICountry[];
+
   editForm = this.fb.group({
     id: [],
     location: [],
@@ -27,13 +31,15 @@ export class AddressUpdateComponent implements OnInit {
     primaryPhoneNumber: [],
     secondaryPhoneNumber: [],
     emailAddress: [],
-    city: []
+    city: [],
+    country: []
   });
 
   constructor(
     protected jhiAlertService: JhiAlertService,
     protected addressService: AddressService,
     protected cityService: CityService,
+    protected countryService: CountryService,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
   ) {}
@@ -46,6 +52,9 @@ export class AddressUpdateComponent implements OnInit {
     this.cityService
       .query()
       .subscribe((res: HttpResponse<ICity[]>) => (this.cities = res.body), (res: HttpErrorResponse) => this.onError(res.message));
+    this.countryService
+      .query()
+      .subscribe((res: HttpResponse<ICountry[]>) => (this.countries = res.body), (res: HttpErrorResponse) => this.onError(res.message));
   }
 
   updateForm(address: IAddress) {
@@ -56,7 +65,8 @@ export class AddressUpdateComponent implements OnInit {
       primaryPhoneNumber: address.primaryPhoneNumber,
       secondaryPhoneNumber: address.secondaryPhoneNumber,
       emailAddress: address.emailAddress,
-      city: address.city
+      city: address.city,
+      country: address.country
     });
   }
 
@@ -83,7 +93,8 @@ export class AddressUpdateComponent implements OnInit {
       primaryPhoneNumber: this.editForm.get(['primaryPhoneNumber']).value,
       secondaryPhoneNumber: this.editForm.get(['secondaryPhoneNumber']).value,
       emailAddress: this.editForm.get(['emailAddress']).value,
-      city: this.editForm.get(['city']).value
+      city: this.editForm.get(['city']).value,
+      country: this.editForm.get(['country']).value
     };
   }
 
@@ -104,6 +115,10 @@ export class AddressUpdateComponent implements OnInit {
   }
 
   trackCityById(index: number, item: ICity) {
+    return item.id;
+  }
+
+  trackCountryById(index: number, item: ICountry) {
     return item.id;
   }
 }

@@ -40,6 +40,7 @@
             <th scope="col" ><span jhiTranslate="yikondiApp.address.secondaryPhoneNumber">Secondary Phone Number</span></th>
             <th scope="col" ><span jhiTranslate="yikondiApp.address.emailAddress">Email Address</span></th>
             <th scope="col" ><span jhiTranslate="yikondiApp.address.city">City</span></th>
+            <th scope="col" ><span jhiTranslate="yikondiApp.address.country">Country</span></th>
             <th scope="col"></th>
             </tr>
             </thead>
@@ -54,6 +55,11 @@
                 <td>
                     <div *ngIf="address.city">
                         <a [routerLink]="['/city', address.city?.id, 'view' ]" >{{address.city?.id}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="address.country">
+                        <a [routerLink]="['/country', address.country?.id, 'view' ]" >{{address.country?.id}}</a>
                     </div>
                 </td>
                 <td class="text-right">

@@ -29,6 +29,13 @@
             "otherEntityRelationshipName": "address",
             "relationshipName": "city",
             "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "country",
+            "otherEntityRelationshipName": "address",
+            "relationshipName": "country",
+            "otherEntityField": "id"
         }
     ],
     "changelogDate": "20191206035847",

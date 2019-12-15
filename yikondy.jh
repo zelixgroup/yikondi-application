@@ -15,9 +15,7 @@ entity Country {
 entity City {
     name String
 }
-relationship ManyToOne {
-	City{country} to Country
-}
+
 entity Address {
 	location String
     geolocation String
@@ -27,6 +25,7 @@ entity Address {
 }
 relationship ManyToOne {
 	Address{city} to City
+    Address{country} to Country
 }
 entity HealthCentreCategory {
 	name String

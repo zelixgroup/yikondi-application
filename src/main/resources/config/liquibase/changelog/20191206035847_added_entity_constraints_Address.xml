@@ -14,5 +14,11 @@
                                  referencedColumnNames="id"
                                  referencedTableName="city"/>
 
+        <addForeignKeyConstraint baseColumnNames="country_id"
+                                 baseTableName="address"
+                                 constraintName="fk_address_country_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="country"/>
+
     </changeSet>
 </databaseChangeLog>
