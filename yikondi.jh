@@ -1,0 +1,286 @@
+entity Holiday{
+	label String
+    correspondingDate LocalDate
+}
+entity EmergencyAmbulance{
+	name String
+    description LocalDate
+    phoneNumber String
+}
+entity Country {
+	isoCode String
+    name String
+    phoneReferenceNumber String
+}
+entity City {
+    name String
+}
+
+entity Address {
+	location String
+    geolocation String
+    primaryPhoneNumber String
+    secondaryPhoneNumber String
+    emailAddress String
+}
+relationship ManyToOne {
+	Address{city} to City
+    Address{country} to Country
+}
+entity HealthCentreCategory {
+	name String
+}
+entity HealthCentre {
+	name String
+    logo ImageBlob
+}
+relationship OneToOne {
+	HealthCentre{address} to Address
+}
+relationship ManyToOne {
+	HealthCentre{category} to HealthCentreCategory
+}
+entity Pharmacy {
+	name String
+    logo ImageBlob
+}
+relationship OneToOne {
+	Pharmacy{address} to Address
+}
+entity PharmacyAllNightPlanning {
+    plannedStartDate LocalDate
+    plannedEndDate LocalDate
+}
+relationship ManyToOne {
+	PharmacyAllNightPlanning{pharmacy} to Pharmacy
+}
+enum Title{
+	DOCTOR,
+	PROFESSOR
+}
+entity Speciality {
+	name String
+    description String
+}
+entity Doctor {
+	title Title   
+}
+relationship ManyToOne {
+	Doctor{speciality} to Speciality
+}
+relationship OneToOne {
+	Doctor{patient} to Patient
+}
+enum Civility {
+	MISTER,
+	MISS,
+    MADAM
+}
+entity Patient {
+	civility Civility
+    surname String
+    firstname String
+    picture ImageBlob
+    dateOfBirth LocalDate
+    profession String
+}
+relationship OneToOne {
+	Patient{address} to Address
+    Patient{correspondingUser} to User
+}
+entity HealthCentreDoctor {
+    startDate LocalDate
+    endDate LocalDate
+    consultingFees BigDecimal
+}
+relationship ManyToOne {
+	HealthCentreDoctor{healthCentre} to HealthCentre
+    HealthCentreDoctor{doctor} to Doctor
+}
+enum DayOfTheWeek {
+	MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY
+}
+entity DoctorSchedule {
+    scheduleStartDate ZonedDateTime
+    scheduleEndDate ZonedDateTime
+}
+relationship ManyToOne {
+	DoctorSchedule{healthCentreDoctor} to HealthCentreDoctor
+}
+entity DoctorWorkingSlot {
+	dayOfTheWeek DayOfTheWeek
+    startTime String
+    endTime String
+    description String
+}
+relationship ManyToOne {
+	DoctorWorkingSlot{doctorSchedule} to DoctorSchedule
+}
+entity PatientAppointement {
+    appointementDateTime ZonedDateTime
+    appointementMakingDateTime ZonedDateTime
+}
+relationship ManyToOne {
+	PatientAppointement{booker} to Patient
+    PatientAppointement{consultationPatient} to Patient
+    PatientAppointement{healthCentreDoctor} to HealthCentreDoctor
+}
+entity PatientFavoritePharmacy {
+	activationDate ZonedDateTime
+}
+relationship ManyToOne {
+	PatientFavoritePharmacy{patient} to Patient
+    PatientFavoritePharmacy{pharmacy} to Pharmacy
+}
+entity PatientFavoriteDoctor {
+	activationDate ZonedDateTime
+}
+relationship ManyToOne {
+	PatientFavoriteDoctor{patient} to Patient
+    PatientFavoriteDoctor{doctor} to Doctor
+}
+entity LifeConstantUnit {
+    name String
+    description String
+}
+
+entity LifeConstant {
+	name String
+}
+relationship ManyToOne {
+	LifeConstant{lifeConstantUnit} to LifeConstantUnit
+}
+entity PatientLifeConstant {
+	measurementDatetime ZonedDateTime
+    measuredValue String
+}
+relationship ManyToOne {
+	PatientLifeConstant{patient} to Patient
+    PatientLifeConstant{lifeConstant} to LifeConstant
+}
+entity InsuranceType {
+    name String
+    description String
+}
+entity Insurance {
+ 	name String
+    logo ImageBlob
+}
+relationship ManyToOne {
+	Insurance{insuranceType} to InsuranceType
+}
+entity PatientInsuranceCoverage {
+	startDate LocalDate
+    endDate LocalDate
+    referenceNumber String
+}
+relationship ManyToOne {
+	PatientInsuranceCoverage{patient} to Patient
+    PatientInsuranceCoverage{insurance} to Insurance    
+}
+
+relationship OneToOne {
+	PatientInsuranceCoverage{address} to Address
+}
+entity Allergy {
+	name String
+    description String
+}
+entity PatientAllergy {
+	observationDate LocalDate
+    observations String
+}
+relationship ManyToOne {
+	PatientAllergy{patient} to Patient
+    PatientAllergy{allergy} to Allergy    
+}
+entity Pathology {
+	name String
+    description String
+}
+entity PatientPathology {
+	observationDate LocalDate
+    observations String
+}
+relationship ManyToOne {
+	PatientPathology{patient} to Patient
+    PatientPathology{pathology} to Pathology    
+}
+entity PatientEmergencyNumber {
+	emergencyNumber String
+    fullName String
+}
+relationship ManyToOne {
+	PatientEmergencyNumber{patient} to Patient   
+}
+entity MedicalRecordAuthorization {
+	authorizationDateTime ZonedDateTime
+	authorizationStartDateTime ZonedDateTime
+	authorizationEndDateTime ZonedDateTime	
+	observations String
+}
+relationship ManyToOne {
+	MedicalRecordAuthorization{recordOwner} to Patient
+	MedicalRecordAuthorization{authorizationGrantee} to Patient
+}
+entity DrugAdministrationRoute {
+	name String
+}
+entity DrugDosageForm {
+	name String
+}
+entity Drug {
+	name String
+    description String    
+}
+relationship ManyToOne {
+	Drug{administrationRoute} to DrugAdministrationRoute
+	Drug{dosageForm} to DrugDosageForm
+}
+entity Analysis {
+	name String
+    description String
+}
+entity MedicalPrescription {
+	prescriptionDateTime ZonedDateTime
+    observations TextBlob
+}
+relationship ManyToOne {
+	MedicalPrescription{doctor} to Doctor
+	MedicalPrescription{patient} to Patient
+    MedicalPrescription{appointement} to PatientAppointement
+}
+entity MedicalPrescriptionDrug {
+	dosage String
+}
+relationship ManyToOne {
+	MedicalPrescriptionDrug{medicalPrescription} to MedicalPrescription
+	MedicalPrescriptionDrug{drug} to Drug
+}
+entity MedicalPrescriptionAnalysis {
+}
+relationship ManyToOne {
+	MedicalPrescriptionAnalysis{medicalPrescription} to MedicalPrescription
+	MedicalPrescriptionAnalysis{analysis} to Analysis
+}
+
+entity DoctorAssistant {
+	canPrescribe Boolean
+}
+relationship ManyToOne {
+	DoctorAssistant{healthCentreDoctor} to HealthCentreDoctor
+	DoctorAssistant{patient} to Patient
+}
+entity FamilyRelationship {
+	name String
+	description String
+}
+entity FamilyMember {
+	observations String
+}
+relationship ManyToOne {
+	FamilyMember{owner} to Patient
+	FamilyMember{member} to Patient
+	FamilyMember{relationship} to FamilyRelationship
+}
+service all with serviceImpl
